@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Tareas y Categorías</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- SortableJS -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <!-- PapaParse for CSV -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <style>
+        .sortable-ghost {
+            opacity: 0.4;
+            background-color: #f3f4f6;
+        }
+        .task-expand-enter {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .task-expand-enter-active {
+            max-height: 500px;
+        }
+        .task-expand-leave {
+            max-height: 500px;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in;
+        }
+        .task-expand-leave-active {
+            max-height: 0;
+        }
+        /* Custom scrollbar for better look */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-indigo-600 text-white shadow-md py-4 px-6 flex justify-between items-center sticky top-0 z-10">
+        <h1 class="text-2xl font-bold"><i class="fas fa-tasks mr-2"></i> Mis Tareas</h1>
+        <div class="flex space-x-3">
+            <button id="btn-add-category" class="bg-indigo-500 hover:bg-indigo-400 px-4 py-2 rounded shadow transition text-sm flex items-center">
+                <i class="fas fa-plus mr-2"></i> Añadir Categoría
+            </button>
+            <button id="btn-import-csv" class="bg-emerald-600 hover:bg-emerald-500 px-4 py-2 rounded shadow transition text-sm flex items-center">
+                <i class="fas fa-file-import mr-2"></i> Importar CSV
+            </button>
+            <button id="btn-export-csv" class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded shadow transition text-sm flex items-center">
+                <i class="fas fa-file-export mr-2"></i> Exportar CSV
+            </button>
+            <button id="btn-view-deleted" class="bg-gray-600 hover:bg-gray-500 px-4 py-2 rounded shadow transition text-sm flex items-center">
+                <i class="fas fa-trash-restore mr-2"></i> Ver Borrados
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Board -->
+    <main class="flex-grow p-6 overflow-x-auto flex flex-col">
+        <!-- Horizontal Scrollable Container for Kanban style columns -->
+        <div id="board" class="flex gap-6 pb-4 items-start h-full">
+            <!-- Categories will be rendered here by JS -->
+        </div>
+    </main>
+
+    <!-- Hidden Input for File Upload -->
+    <input type="file" id="file-upload" accept=".csv" class="hidden">
+
+    <!-- Modal for CSV Import Options -->
+    <div id="modal-import" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 w-96 shadow-xl">
+            <h2 class="text-xl font-bold mb-4">Opciones de Importación</h2>
+            <p class="text-sm text-gray-600 mb-6">Elige cómo deseas importar los datos del archivo CSV.</p>
+            <div class="flex flex-col space-y-3">
+                <button id="btn-import-merge" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded shadow transition">
+                    Añadir y Unificar
+                </button>
+                <button id="btn-import-overwrite" class="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded shadow transition">
+                    Borrar Todo y Sobrescribir
+                </button>
+                <button id="btn-import-cancel" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded shadow transition mt-4">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Deleted Items -->
+    <div id="modal-deleted" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 w-3/4 max-w-4xl max-h-[80vh] flex flex-col shadow-xl">
+            <div class="flex justify-between items-center mb-4 border-b pb-2">
+                <h2 class="text-xl font-bold text-gray-800"><i class="fas fa-trash-alt mr-2 text-red-500"></i> Elementos Borrados</h2>
+                <button id="btn-close-deleted" class="text-gray-500 hover:text-gray-800"><i class="fas fa-times fa-lg"></i></button>
+            </div>
+            <div class="flex-grow overflow-y-auto pr-2" id="deleted-items-container">
+                <!-- Deleted items will be rendered here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Template for Category -->
+    <template id="tpl-category">
+        <div class="category-column bg-gray-200 rounded-lg shadow-sm flex flex-col w-80 min-w-[320px] max-h-full" data-id="">
+            <!-- Category Header -->
+            <div class="category-header p-3 flex justify-between items-center cursor-move border-b border-gray-300 bg-gray-200 rounded-t-lg">
+                <div class="flex-grow mr-2">
+                    <input type="text" class="category-name font-bold text-gray-700 bg-transparent border-none outline-none w-full focus:ring-2 focus:ring-indigo-300 rounded px-1" value="">
+                </div>
+                <button class="btn-delete-category text-gray-400 hover:text-red-500 transition px-1">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+            <!-- Task List Container -->
+            <div class="task-list flex-grow p-2 overflow-y-auto min-h-[50px] space-y-2">
+                <!-- Tasks will be injected here -->
+            </div>
+            <!-- Add Task Button -->
+            <div class="p-2 border-t border-gray-300">
+                <button class="btn-add-task w-full text-left text-gray-600 hover:text-gray-800 hover:bg-gray-300 py-1 px-2 rounded transition">
+                    <i class="fas fa-plus mr-1"></i> Añadir tarea...
+                </button>
+            </div>
+        </div>
+    </template>
+
+    <!-- Template for Task -->
+    <template id="tpl-task">
+        <div class="task-item bg-white p-3 rounded shadow-sm border border-gray-200 cursor-move" data-id="">
+            <div class="flex items-start">
+                <div class="pt-1">
+                    <input type="checkbox" class="task-checkbox w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500 cursor-pointer">
+                </div>
+                <div class="ml-3 flex-grow min-w-0">
+                    <input type="text" class="task-name text-sm text-gray-800 w-full border-none p-0 focus:ring-0 bg-transparent mb-1" value="" placeholder="Nombre de la tarea">
+                    <!-- Badges for extra info -->
+                    <div class="flex space-x-2 text-xs text-gray-500 mt-1 task-badges cursor-pointer">
+                        <span class="badge-counter" title="Veces realizada"><i class="fas fa-redo-alt mr-1"></i> <span class="counter-val">0</span></span>
+                        <span class="badge-percentage" title="Progreso"><i class="fas fa-percent mr-1"></i> <span class="percentage-val">0</span>%</span>
+                        <span class="badge-note text-indigo-400 hidden" title="Tiene nota"><i class="fas fa-sticky-note"></i></span>
+                    </div>
+                </div>
+                <div class="flex flex-col space-y-2 ml-2">
+                    <button class="btn-expand-task text-gray-400 hover:text-indigo-600 transition" title="Expandir opciones">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <button class="btn-delete-task text-gray-400 hover:text-red-500 transition" title="Borrar tarea">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Expanded Area -->
+            <div class="task-expanded hidden mt-3 pt-3 border-t border-gray-100 space-y-3 cursor-default">
+                <div class="flex items-center justify-between">
+                    <label class="text-xs font-semibold text-gray-600">Contador</label>
+                    <div class="flex items-center space-x-2">
+                        <button class="btn-counter-dec w-6 h-6 rounded bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-gray-600">-</button>
+                        <input type="number" class="input-counter w-12 text-center text-sm border-gray-300 rounded px-1 py-0.5" value="0" min="0">
+                        <button class="btn-counter-inc w-6 h-6 rounded bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-gray-600">+</button>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex justify-between items-center mb-1">
+                        <label class="text-xs font-semibold text-gray-600">Progreso</label>
+                        <span class="text-xs text-gray-500"><span class="label-percentage">0</span>%</span>
+                    </div>
+                    <input type="range" class="input-percentage w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" min="0" max="100" value="0" step="5">
+                </div>
+                <div>
+                    <label class="text-xs font-semibold text-gray-600 mb-1 block">Nota</label>
+                    <textarea class="input-note w-full border border-gray-300 rounded p-2 text-sm focus:ring-indigo-500 focus:border-indigo-500" rows="2" placeholder="Añadir nota adicional..."></textarea>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script src="app.js"></script>
+</body>
+</html>
