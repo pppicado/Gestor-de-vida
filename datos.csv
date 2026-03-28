@@ -1,226 +1,226 @@
-Id,Type,ParentId,Name,Order,Completed,Counter,Percentage,Note,Deleted
-6729627f-f2c2-4fab-b99e-355c7fce61f7,category,,Salud y Bienestar (Personal),0,False,0,0,,False
-726ab114-d667-4b01-a31f-be3f09f2f815,category,,Tecnología y Desarrollo (Software/IA),1,False,0,0,,False
-6cf296ec-1c19-4ed8-811b-3399ef7747a9,category,,Reformas y Construcción (Interior),2,False,0,0,,False
-a24bc5f3-56fc-4aa9-a635-0ea98e7ac0eb,category,,Obras y Estructuras (Exteriores),3,False,0,0,,False
-88396aa6-c80e-4c71-b884-d1863cc18104,category,,Jardinería y Huerto (Plantas),4,False,0,0,,False
-5d7a2359-e014-4965-99fa-20a5cdf3cb09,category,,Mantenimiento y Reparaciones (Hogar/Taller),5,False,0,0,,False
-18167c66-b9fa-40d4-92d8-76906358cc53,category,,Organización y Limpieza (Hogar),6,False,0,0,,False
-fb0c361a-1ec0-4dac-ab35-a0144937e691,category,,Proyectos con Madera (Diseño),7,False,0,0,,False
-a59b1984-82ac-455c-bedb-18777a7940db,category,,Vehículos (Coche/Furgoneta),8,False,0,0,,False
-579b120a-48c3-49b4-a677-bcbc63d79148,category,,Asuntos Financieros (Trámites),9,False,0,0,,False
-74168259-72e1-44d1-a7bd-369f2d01dba2,category,,Bebé (Maria),10,False,0,0,,False
-d3b825a9-2a83-4f06-a333-fd116ace3af6,category,,Mascotas (Tortuga),11,False,0,0,,False
-b8c736b6-1258-4318-8b56-6b394295dbd9,category,,Asuntos Familiares (Padres),12,False,0,0,,False
-976fdfc2-4307-4212-b688-65d5ccb46d58,category,,Rol y Ocio (Específico),13,False,0,0,,False
-8c99c642-7c0f-4fd3-8e55-3066c7b7f19a,category,,Adquisiciones (Compras),14,False,0,0,,False
-7714f003-f6d2-4677-9ffc-02043b658253,category,,Mantenimiento y Acondicionamiento (Terreno/Exterior),15,False,0,0,,False
-b6cd1e74-a4b9-44f8-b6ae-e4f35fbc093b,category,,Alimentos (Conservas),16,False,0,0,,False
-e85a2261-663f-4c6a-ab57-f2a69bd928a9,category,,Bodas (Celebraciones),17,False,0,0,,False
-d29c8237-f6bf-43c4-84de-c6b664c46c44,category,,Emprendimiento (Negocios),18,False,0,0,,False
-85eb53b9-ba59-4b67-b7ce-10b0a6e2f782,category,,Varios (Otros Aprendizajes),19,False,0,0,,False
-2977ef26-ef4c-45a4-bb7c-102ad5bbc4fb,task,6729627f-f2c2-4fab-b99e-355c7fce61f7,Dejar de fumar,0,False,0,0,,False
-1dec9cf4-7c1b-4e6f-a626-1ddb9d2895dd,task,6729627f-f2c2-4fab-b99e-355c7fce61f7,Usar la CPAP todas las noches,1,False,0,0,,False
-c5584f33-b7dd-4ee2-8731-65ef590f371f,task,6729627f-f2c2-4fab-b99e-355c7fce61f7,Sacar cita para la revisión del CPAP,2,False,0,0,,False
-8c4b5254-d575-42d8-bb86-c130f37ce575,task,6729627f-f2c2-4fab-b99e-355c7fce61f7,Planificar zonas ejercicios y acondicionadas para practicar yoga,3,False,0,0,,False
-1c9be344-ebab-42e8-abda-8dad6d84f947,task,6729627f-f2c2-4fab-b99e-355c7fce61f7,Pedir cita médica para almorranas,4,False,0,0,,False
-4ab3ff11-c55a-4213-b07d-04e178d15c6f,task,6729627f-f2c2-4fab-b99e-355c7fce61f7,Revisar cita operación nariz,5,False,0,0,,False
-c1ab1b8e-f7d8-484b-893e-23d6aabe5f95,task,6729627f-f2c2-4fab-b99e-355c7fce61f7,Diseñar y ejecutar plan de entrenamiento,6,False,0,0,,False
-f1dd9ace-5aba-4db0-9e6e-ca4dfad41dde,task,6729627f-f2c2-4fab-b99e-355c7fce61f7,Ir a la Peluquería,7,False,0,0,,False
-ae800cc5-4de9-409d-959f-a2cfd835785e,task,726ab114-d667-4b01-a31f-be3f09f2f815,Conseguir un teletrabajo: Echar curriculums,0,False,0,0,,False
-7409762b-712e-489e-bd47-dfc202f51334,task,726ab114-d667-4b01-a31f-be3f09f2f815,Crear librerías Angular (redimensionables),1,False,0,0,,False
-64590a74-c98a-4a37-acf4-b60b0b072f10,task,726ab114-d667-4b01-a31f-be3f09f2f815,Desarrollar agente autónomo de IA (clawbot),2,False,0,0,,False
-092a11f1-2bae-42b4-909a-4b10cdebea48,task,726ab114-d667-4b01-a31f-be3f09f2f815,Continuar con formación en desarrollo IA,3,False,0,0,,False
-76f984b5-9044-4a3b-a440-0b5df831944b,task,726ab114-d667-4b01-a31f-be3f09f2f815,Reparar repetidor de cobertura móvil,4,False,0,0,,False
-2d37bc8a-b572-435e-bdff-a66bc0e2a8e5,task,726ab114-d667-4b01-a31f-be3f09f2f815,Configurar red y VPN ferretería Carmen,5,False,0,0,,False
-f275feb0-f55c-4c6a-8f0d-f40ff1269669,task,726ab114-d667-4b01-a31f-be3f09f2f815,Organización de mensajes y correos,6,False,0,0,,False
-a750a521-511e-4fe6-a802-9b0d62f515c5,task,726ab114-d667-4b01-a31f-be3f09f2f815,Organizar proyectos GitHub,7,False,0,0,,False
-ccef6c2c-d635-453f-80e1-ee00f062946b,task,726ab114-d667-4b01-a31f-be3f09f2f815,Crear portafolios propio,8,False,0,0,,False
-63122562-beea-41b6-a5e3-2db6ad723781,task,726ab114-d667-4b01-a31f-be3f09f2f815,Instalar máquinas virtuales oracle,9,False,0,0,,False
-f6f42e2a-42df-43cb-835e-095fbcb0d238,task,726ab114-d667-4b01-a31f-be3f09f2f815,Comprar maquinas oracle Carmen,10,False,0,0,,False
-a64aab0e-992b-4e64-a47d-c9af395402d4,task,726ab114-d667-4b01-a31f-be3f09f2f815,Crear página web Carmen,11,False,0,0,,False
-cfed65ac-7a6a-417b-bd52-35b4ec9c3aca,task,726ab114-d667-4b01-a31f-be3f09f2f815,Formarse en IA,12,False,0,0,,False
-5c871101-24f9-43f8-b662-2f2723831198,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Construir la ducha del cuarto de baño,0,False,0,0,,False
-8edbec61-1c4d-4524-8790-5fb4eaea38f4,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Fabricar taburetes para la taza del váter,1,False,0,0,,False
-56f47a5b-47fd-40ea-8c03-da74701e3786,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Remates azulejos cuarto de baño,2,False,0,0,,False
-3427a472-ba16-4403-a89f-02ddaa79da98,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Instalación agua lavamanos cuarto de baño,3,False,0,0,,False
-ea0b16b5-9505-49c0-8bd6-b37008df87c0,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Lavamanos cuarto de baño,4,False,0,0,,False
-2a00eedb-4526-4d7f-9b70-190998f91b3a,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Toallero electrico,5,False,0,0,,False
-5b968279-5b03-4670-8a21-1a94e11c13a0,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Restaurar ventana habitación,6,False,0,0,,False
-1e808ca1-8168-48e0-807b-d60f28c40050,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Restaurar suelo habitación,7,False,0,0,,False
-a9672138-ea52-4c40-9e55-ef622492a1ab,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Restaurar pared y techo habitación,8,False,0,0,,False
-4e1f36b1-f8ba-4dde-a8db-7004a14c602d,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Pintar habitación,9,False,0,0,,False
-2c7a1edb-e4d7-4e61-8bdc-c6d44522465a,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Arreglar humedades en la escalera y pintar,10,False,0,0,,False
-77a26a62-e926-4ec0-8755-a1381c1ae7cf,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,"Acondicionar desván fantasma, suelo y pared",11,False,0,0,,False
-637e2204-261f-44d3-967c-280ae76c36e3,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Cementar suelo encima del aljibe,12,False,0,0,,False
-7bf656f2-44ec-4415-9463-3e791d33ec9f,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Buscar puerta para horno de leña en la cocina,13,False,0,0,,False
-d713383e-2c42-40eb-be79-cf448231c776,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Chimenea cocina conectar con horno,14,False,0,0,,False
-2560f03c-7222-48d5-b8b1-8bf63bf8eec7,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Arreglar viga del salón,15,False,0,0,,False
-7b914ac5-fdac-4171-a5bc-8b9e81d8bbaf,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Arreglar Techo del salón,16,False,0,0,,False
-fd24beb6-d5ba-4153-b253-365bd48e6cee,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Acondicionar espacio de la estufa,17,False,0,0,,False
-d2159a48-af3d-42dd-8350-e3ec3f76c04a,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Poner y fijar tubo estufa,18,False,0,0,,False
-c5078121-eae7-4b25-ab00-bb302e9f8f7a,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Tapar secciones del tubo de la estufa y abrir arriba,19,False,0,0,,False
-473c1722-43c5-44d7-822f-ba8dd02fe872,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Buscar rejilla seguridad estufa,20,False,0,0,,False
-38955fe1-149e-44d2-9980-33413c205679,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Buscar nuevo fregadero para la cocina,21,False,0,0,,False
-8ccde26b-9b92-4997-9203-f8818e179405,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Buscar nueva encimera para la cocina,22,False,0,0,,False
-39624565-b36d-47bc-a867-de9542376950,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Comprar un espejo para el salón,23,False,0,0,,False
-c269ed85-33ed-4e17-8753-eb0a7f2a464d,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Fabricar y comprar espejos habitación invitados,24,False,0,0,,False
-aa263c5a-d506-4ccb-a0ec-a7524b79e091,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Abrir paso entre casa y taller,25,False,0,0,,False
-46fea051-4236-4028-9db8-c617a4249fcb,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Aislar techo buhardilla,26,False,0,0,,False
-aea0c2c3-ad8f-476b-b12c-6448b314504f,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Fabricar mesa plegable para el salón,27,False,0,0,,False
-6e5f012d-3601-4a5b-bf97-d256d545c6a7,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Poner ventana ático en la habitación,28,False,0,0,,False
-2d88b4f6-6033-4341-9728-74e3fc6753b4,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Poner ventana atico estudio,29,False,0,0,,False
-70781174-1bfd-4bad-9a79-239ef1a4fb3a,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Poner luz salón a instalación,30,False,0,0,,False
-7ae037d9-56ee-42ea-a685-fda574eb16e8,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Mejorar mueble cocina,31,False,0,0,,False
-6426ad71-812b-4f3a-b4f0-8c6c9fc38e79,task,a24bc5f3-56fc-4aa9-a635-0ea98e7ac0eb,Construir pergola madera solar con diseños 3D realizado,0,False,0,0,,False
-c572727e-18d4-4674-9626-99cb8dec935c,task,a24bc5f3-56fc-4aa9-a635-0ea98e7ac0eb,Construir Invernadero de 3x8 con plásticos y tubos,1,False,0,0,,False
-17e8cff2-c92a-4b96-95da-cfc3cbf1c11b,task,a24bc5f3-56fc-4aa9-a635-0ea98e7ac0eb,Construir entrada a patio cocina con pilares de madera y puerta de hierro,2,False,0,0,,False
-cadaf633-5194-4e28-a120-9b4254c10789,task,a24bc5f3-56fc-4aa9-a635-0ea98e7ac0eb,Cementar patio cocina,3,False,0,0,,False
-74857930-1cb9-4f58-9e36-14151391d058,task,a24bc5f3-56fc-4aa9-a635-0ea98e7ac0eb,Construir ribazo línea camino,4,False,0,0,,False
-f28b6650-600a-41f9-8e39-1947ae8b9ade,task,a24bc5f3-56fc-4aa9-a635-0ea98e7ac0eb,Construir ducha externa verano de obra,5,False,0,0,,False
-2594f56c-9488-4cba-aac0-57eae37a4ba1,task,a24bc5f3-56fc-4aa9-a635-0ea98e7ac0eb,Construir potabilizadora de aguas grises,6,False,0,0,,False
-d30acf74-f82a-4fe3-932f-cb5d16c1e4d1,task,a24bc5f3-56fc-4aa9-a635-0ea98e7ac0eb,Arreglar techo de hierros pintar y enlucir,7,False,0,0,,False
-aa4de309-3607-4aa3-86fa-cc5f33b00814,task,a24bc5f3-56fc-4aa9-a635-0ea98e7ac0eb,Construir balsa riego,8,False,0,0,,False
-ef0a2148-f8a0-4cee-bb07-44c51df24326,task,a24bc5f3-56fc-4aa9-a635-0ea98e7ac0eb,Construir fuente trasera,9,False,0,0,,False
-395d6a4d-b493-4743-aec2-d079cb783549,task,a24bc5f3-56fc-4aa9-a635-0ea98e7ac0eb,Construir muro contención tierra detrás de casa,10,False,0,0,,False
-d686d1e3-c9ec-43b3-aca0-fdf6cb148c8c,task,a24bc5f3-56fc-4aa9-a635-0ea98e7ac0eb,Arreglar techo horno de leña,11,False,0,0,,False
-2669124c-b7d6-4ab7-91ef-d783f1817500,task,88396aa6-c80e-4c71-b884-d1863cc18104,Plantar semilleros,0,False,0,0,,False
-fc6c0584-6df8-49cc-8b14-409890c28fa0,task,88396aa6-c80e-4c71-b884-d1863cc18104,Plantar lentisco línea cerca Invernadero,1,False,0,0,,False
-19decba1-3483-4917-bb3a-8ddd2dd803ce,task,88396aa6-c80e-4c71-b884-d1863cc18104,Plantar florecitas línea camino,2,False,0,0,,False
-61b9978a-4670-49e9-a973-7e6022abcfe1,task,88396aa6-c80e-4c71-b884-d1863cc18104,Ir a por adelfas,3,False,0,0,,False
-8ac117d7-39a9-432b-9e74-9dd0a18c41c5,task,88396aa6-c80e-4c71-b884-d1863cc18104,Plantar adelfas,4,False,0,0,,False
-874f1dd8-e70f-4bcd-a244-b691fd8753f9,task,88396aa6-c80e-4c71-b884-d1863cc18104,"Plantar membrillo ,",5,False,0,0,,False
-b6396967-eb1e-4598-8626-ab5e75b7449e,task,88396aa6-c80e-4c71-b884-d1863cc18104,Plantar viñas,6,False,0,0,,False
-b1b11041-f0d2-4e45-a194-6847fafebc3e,task,88396aa6-c80e-4c71-b884-d1863cc18104,Plantar pepinos y otras cosas con Sabrina,7,False,0,0,,False
-dfb01694-c303-410c-8f8a-85a4122c9898,task,88396aa6-c80e-4c71-b884-d1863cc18104,Plantar chumberas a lo largo del camino,8,False,0,0,,False
-d208eca8-ef0b-45d4-a039-2156a85ef77d,task,88396aa6-c80e-4c71-b884-d1863cc18104,Plantar pinos a lo largo del camino,9,False,0,0,,False
-b73b42c5-e18c-4bce-8650-4bdb74815b9c,task,88396aa6-c80e-4c71-b884-d1863cc18104,Enraizar esquejes lentisco,10,False,0,0,,False
-6c4a5e89-ea82-4ba6-9a73-dc5871b1b51f,task,88396aa6-c80e-4c71-b884-d1863cc18104,Regar esquejes lentisco,11,False,0,0,,False
-d5e12ec4-8a77-47d7-ba56-53455a03c73f,task,88396aa6-c80e-4c71-b884-d1863cc18104,Injertos pistacho,12,False,0,0,,False
-457e3597-a491-4dea-a470-7bcb16a5b3e2,task,88396aa6-c80e-4c71-b884-d1863cc18104,Comprar pistachos y plantarlos,13,False,0,0,,False
-ffe4a96c-281a-4c9e-8601-69e3038c4356,task,88396aa6-c80e-4c71-b884-d1863cc18104,Comprar guindos y plantarlos,14,False,0,0,,False
-88d24c1f-59dc-4a5b-a29c-7dc517233c4e,task,88396aa6-c80e-4c71-b884-d1863cc18104,Comprar cerezos y plantarlos,15,False,0,0,,False
-060b4e86-0f2b-4804-a94f-9841904d92d4,task,88396aa6-c80e-4c71-b884-d1863cc18104,Poner maceteros ventana y plantar flores,16,False,0,0,,False
-1132eec4-8cef-48ad-9343-4029e876ed9f,task,88396aa6-c80e-4c71-b884-d1863cc18104,Plantar ciruelos en la fuente,17,False,0,0,,False
-2310e037-1786-40fb-82b7-3e1dcb71a434,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Restaurar Puerta Principal,0,False,0,0,,False
-3170527b-cce6-4550-a1b7-d8a03aa49c78,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Restaurar Puerta cocina,1,False,0,0,,False
-b65b3695-4b94-4a53-8c37-187a5627c708,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Instalar filtro de agua para beber,2,False,0,0,,False
-4c29f8c3-e190-4b7c-b4d2-84ee618d3bea,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Arreglar esquina casa con canal,3,False,0,0,,False
-9f68e592-232c-405b-9a72-386c9bfc3785,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Arreglo del canal del porche de la lavadora,4,False,0,0,,False
-802b000e-8a58-4b48-90d4-fa728abe21a2,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Arreglar la luz del taller,5,False,0,0,,False
-437bc2de-bc33-4e7c-8e50-ca91444d057a,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Arreglar la impresora D,6,False,0,0,,False
-3f80a195-772c-4ccd-ba5d-86bf3cbbf41c,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Arreglar goteras del taller,7,False,0,0,,False
-960d7997-119e-417c-ad63-dca55bf6f146,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Mejorar cuadro eléctrico,8,False,0,0,,False
-69c54b34-3831-4736-b31f-8c8f45045366,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Pensar en la iluminación de la parte delantera casa,9,False,0,0,,False
-6d507ad3-58d6-4f0e-b15e-a3505f548fac,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Luces cama y mesita,10,False,0,0,,False
-b91421a8-98b7-4c2a-8094-d50bfe96ca3b,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Poner toma de luz cafetera,11,False,0,0,,False
-6a6e2251-9671-47f6-a84a-0f383877d82b,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Arreglar enrollador eléctrico,12,False,0,0,,False
-64010fa8-7ee8-4fea-9872-a802641a210a,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Reparar aspiradora Carmen,13,False,0,0,,False
-9daddfd9-f609-4857-a002-d63bed26a131,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Poner red y WIFI en casa,14,False,0,0,,False
-6568e42c-8804-42ef-917b-2f4677f3b28c,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Pensar en una solución para la luz en la entrada de la casa,15,False,0,0,,False
-d78d6931-6216-44da-a263-73bc41a99f5d,task,18167c66-b9fa-40d4-92d8-76906358cc53,Poner 2 mas lavadoras,0,False,0,0,,False
-3b8fca10-59af-4d4b-92eb-4fbfcca5b782,task,18167c66-b9fa-40d4-92d8-76906358cc53,Recoger y poner lavavajillas diariamente,1,False,0,0,,False
-4dafeeca-d7cf-4fb5-bdaf-29d002743eaf,task,18167c66-b9fa-40d4-92d8-76906358cc53,Ordenar taller,2,False,0,0,,False
-8cece707-8f62-473a-b2e6-146c781bae6a,task,18167c66-b9fa-40d4-92d8-76906358cc53,Organizar mi ropa,3,False,0,0,,False
-a24f9cf8-5ef0-438f-8e66-33cb1fef0519,task,18167c66-b9fa-40d4-92d8-76906358cc53,Ordenar cables y cosas PC. Puesto múltiple de carga USB,4,False,0,0,,False
-7cb0b219-3a77-483f-95ff-e5110b320c82,task,18167c66-b9fa-40d4-92d8-76906358cc53,Organizar especias,5,False,0,0,,False
-dfff8b74-f0c4-468f-b961-d0f9ddfabdc1,task,18167c66-b9fa-40d4-92d8-76906358cc53,Organizar mueble despensa,6,False,0,0,,False
-c91fe0d6-0c9e-470d-816a-0866cd00166a,task,18167c66-b9fa-40d4-92d8-76906358cc53,Hacer estanterias despensa,7,False,0,0,,False
-29ce4257-cdcd-47f0-bd71-dd649e18e022,task,18167c66-b9fa-40d4-92d8-76906358cc53,Limpiar fogones,8,False,0,0,,False
-8a024e11-7d4c-42fe-a41f-4bd947df594c,task,18167c66-b9fa-40d4-92d8-76906358cc53,Poner cubos para separar basura reciclaje,9,False,0,0,,False
-9a8ad418-c030-467f-804a-49df4e4b6f75,task,fb0c361a-1ec0-4dac-ab35-a0144937e691,Construir pergola madera solar con diseños 3D realizado,0,False,0,0,,False
-f2b105c9-6833-4430-9419-de794350ee5c,task,fb0c361a-1ec0-4dac-ab35-a0144937e691,Fabricar maceteros autorriego con Sabrina,1,False,0,0,,False
-d35dac9e-98c1-45f2-abf0-8291792fc3a7,task,fb0c361a-1ec0-4dac-ab35-a0144937e691,Hacer adorno de cabeza de cabra,2,False,0,0,,False
-fb250318-1d1a-4bb6-b717-5cfd17800570,task,a59b1984-82ac-455c-bedb-18777a7940db,Camperizar furgoneta de Carmen,0,False,0,0,,False
-a8db2ea8-2ab8-42ea-bd23-3dfafe633e69,task,a59b1984-82ac-455c-bedb-18777a7940db,Limpiar mi coche y reparaciones varias,1,False,0,0,,False
-d4d2d6aa-b369-47d2-b807-f95b88e0d880,task,a59b1984-82ac-455c-bedb-18777a7940db,Comprar Aceite motosierra,2,False,0,0,,False
-f1916a22-5a1d-4004-8c91-555c9d50964b,task,a59b1984-82ac-455c-bedb-18777a7940db,Componer cajas emergencia para los coches,3,False,0,0,,False
-f5e8b3a0-83ac-4c69-8ffd-71b5bb514f8a,task,a59b1984-82ac-455c-bedb-18777a7940db,Limpiar coche Sabrina,4,False,0,0,,False
-1193bc38-bbd7-43c6-ae49-69f14951f36a,task,579b120a-48c3-49b4-a677-bcbc63d79148,Indagar subvenciones negocio y casa,0,False,0,0,,False
-a3692ab5-4a75-4684-b5e6-357977fa2c18,task,579b120a-48c3-49b4-a677-bcbc63d79148,Revisar multas,1,False,0,0,,False
-26c0aa9c-68c5-4174-a630-620d696fb3e0,task,579b120a-48c3-49b4-a677-bcbc63d79148,Revisar IMV,2,False,0,0,,False
-f0110c94-6c7d-4bf8-8dfd-b0733cebd30f,task,579b120a-48c3-49b4-a677-bcbc63d79148,Revisar negocio autónomo IT,3,False,0,0,,False
-8ebb41d3-435f-4f93-9794-53eba2cd7369,task,579b120a-48c3-49b4-a677-bcbc63d79148,Pagar electricista Requena,4,False,0,0,,False
-edc68e35-b487-493c-81bb-da8a350a0c20,task,74168259-72e1-44d1-a7bd-369f2d01dba2,Preparar cosas Maria. Muy importante,0,False,0,0,,False
-dcc30b1c-ef41-487b-a304-9416ecfa7ce6,task,74168259-72e1-44d1-a7bd-369f2d01dba2,Construir valla zona segura para Maria,1,False,0,0,,False
-272046a5-d7ce-4434-8118-56986f3f828f,task,74168259-72e1-44d1-a7bd-369f2d01dba2,Motar cuna Maria,2,False,0,0,,False
-8c0b3833-f4b4-4c79-a276-40c11582a36f,task,74168259-72e1-44d1-a7bd-369f2d01dba2,Organizar ropa Maria,3,False,0,0,,False
-2255ed7a-6f51-415f-8fed-0914e375fd8f,task,74168259-72e1-44d1-a7bd-369f2d01dba2,"Preguntas para matrona, pañales tela y perilla mocos",4,False,0,0,,False
-e58a40d2-436d-44db-bb4c-969264471927,task,d3b825a9-2a83-4f06-a333-fd116ace3af6,Mejorar condiciones tortuga,0,False,0,0,,False
-2b6fb314-5b85-4943-9567-21f07fd28bec,task,d3b825a9-2a83-4f06-a333-fd116ace3af6,Limpiar estanque tortuga,1,False,0,0,,False
-9ba07957-e56f-4acf-8ab2-57608cbbde0d,task,d3b825a9-2a83-4f06-a333-fd116ace3af6,Sistema de reciclado de agua con bomba estanque tortuga,2,False,0,0,,False
-636252f7-6310-44f4-97bc-52903369ecd2,task,d3b825a9-2a83-4f06-a333-fd116ace3af6,Mejorar alimentación tortuga,3,False,0,0,,False
-b6d18fb8-52bc-431a-9b96-0598bd946789,task,b8c736b6-1258-4318-8b56-6b394295dbd9,Ayudar con tareas de casa de mis padres,0,False,0,0,,False
-00128344-2be2-4de1-a968-fc361edcda6f,task,b8c736b6-1258-4318-8b56-6b394295dbd9,Ordenar cosas almacenadas en casa de mis padres,1,False,0,0,,False
-28d8959a-a156-468a-bd45-7bd7b215a9c1,task,b8c736b6-1258-4318-8b56-6b394295dbd9,Tratar humedades de casa de mis padres,2,False,0,0,,False
-94e23aa3-8063-49f1-916f-6fdcb4d4ce87,task,b8c736b6-1258-4318-8b56-6b394295dbd9,Reparar invernadero de mi padre,3,False,0,0,,False
-96f2e2ed-7a89-49e1-926f-4f620e5b5c12,task,b8c736b6-1258-4318-8b56-6b394295dbd9,Viernes llevar mamá al médico,4,False,0,0,,False
-98a6f229-e67e-4d85-acf5-b762f6d40005,task,976fdfc2-4307-4212-b688-65d5ccb46d58,Mejorar mi personaje del Rol,0,False,0,0,,False
-ec564d77-e090-44d6-9629-7a29768b326b,task,976fdfc2-4307-4212-b688-65d5ccb46d58,Asistir a algún evento de Rol,1,False,0,0,,False
-d74eb7c5-33e7-41e8-b7c2-b3195a26dc6d,task,976fdfc2-4307-4212-b688-65d5ccb46d58,Planear reunión desarrollo web Rol,2,False,0,0,,False
-d590b515-2af4-402d-8a77-861bc089fae9,task,976fdfc2-4307-4212-b688-65d5ccb46d58,Organizar cosas del rol en aspe,3,False,0,0,,False
-92302f55-e497-4bff-8b77-af34ae394075,task,976fdfc2-4307-4212-b688-65d5ccb46d58,Construir almacén para cosas el rol en aspe,4,False,0,0,,False
-d2dcf249-08b8-4844-9fc9-87452f9b2b5f,task,976fdfc2-4307-4212-b688-65d5ccb46d58,Organizar cosas del rol en casa,5,False,0,0,,False
-b7e318bd-cab1-4a0d-b9ad-c5d8d1de413a,task,976fdfc2-4307-4212-b688-65d5ccb46d58,Terminar reglas personaje rol Sangre negra,6,False,0,0,,False
-508349fb-bf38-4e4c-9c9c-701afad0b43f,task,976fdfc2-4307-4212-b688-65d5ccb46d58,Colaborar con proyecto de rol,7,False,0,0,,False
-87bc8df0-ddbb-4288-9b6e-d71650c7fcf4,task,8c99c642-7c0f-4fd3-8e55-3066c7b7f19a,Gestionar compra nevera,0,False,0,0,,False
-7e66fb8f-91cd-44fe-b4f7-0a4d32d6a458,task,8c99c642-7c0f-4fd3-8e55-3066c7b7f19a,Comprar una placa solar para pérgola solar,1,False,0,0,,False
-7fc6fe8b-cab1-4419-9ad4-a855005f2520,task,8c99c642-7c0f-4fd3-8e55-3066c7b7f19a,Comprar Portatil,2,False,0,0,,False
-51ef5849-dc5d-4d57-adc0-8db4f6d952ca,task,8c99c642-7c0f-4fd3-8e55-3066c7b7f19a,Comprar aire acondicionado,3,False,0,0,,False
-93185cd4-e942-4d54-95f7-45e8b35967eb,task,8c99c642-7c0f-4fd3-8e55-3066c7b7f19a,Comprar calzado para trabajar,4,False,0,0,,False
-e1860c4d-2097-4b51-89c8-d39bb1e39df3,task,8c99c642-7c0f-4fd3-8e55-3066c7b7f19a,Comprarme ropa nueva,5,False,0,0,,False
-67165020-c29d-49eb-bc16-d632aaf4965b,task,8c99c642-7c0f-4fd3-8e55-3066c7b7f19a,Comprar alcachofa grifo cocina,6,False,0,0,,False
-3fcf7f8f-a9f9-402f-8761-e43a454f15ad,task,7714f003-f6d2-4677-9ffc-02043b658253,"Proveer leña, ir a por viñas y otros",0,False,0,0,,False
-3bbf57c9-32a8-422a-9dd5-c495b28c347c,task,7714f003-f6d2-4677-9ffc-02043b658253,Poner 2 sombras patio cocina,1,False,0,0,,False
-f5a3955e-8b36-4992-9184-ae66bce8af97,task,7714f003-f6d2-4677-9ffc-02043b658253,Poner tierra para adelfas y construir ribazo de piedra,2,False,0,0,,False
-f41cfce1-a997-48fd-a565-1f9fe12435f0,task,7714f003-f6d2-4677-9ffc-02043b658253,"Huerta secano, adecuar sitio",3,False,0,0,,False
-466af8a9-8b59-4e00-a6ce-187587143278,task,7714f003-f6d2-4677-9ffc-02043b658253,Canalización agua ducha externa para huerta,4,False,0,0,,False
-d4189026-ed37-4ff6-ab28-9c34c836d4ff,task,7714f003-f6d2-4677-9ffc-02043b658253,Instalar una toma de agua en la parte de delante de la casa,5,False,0,0,,False
-4be0c26e-708f-4711-a541-71dc72e22bf2,task,7714f003-f6d2-4677-9ffc-02043b658253,Instalar una toma de luz para la motosierra en el lateral de la casa,6,False,0,0,,False
-d445d56c-f963-46df-800c-577465b2fdcc,task,7714f003-f6d2-4677-9ffc-02043b658253,Acondicionar zona para orquídeas parte trasera taller,7,False,0,0,,False
-9049538e-e3bd-4429-9f90-2ee8f4359fca,task,7714f003-f6d2-4677-9ffc-02043b658253,Arreglar tumbonas,8,False,0,0,,False
-3d300746-c438-42b2-a006-c12c860fa200,task,7714f003-f6d2-4677-9ffc-02043b658253,Quitar raíz camino,9,False,0,0,,False
-5d1f55b1-3042-411b-95d0-54f6ece54dca,task,7714f003-f6d2-4677-9ffc-02043b658253,"Acondicionar hueco nevera, agrandar y separar espacio",10,False,0,0,,False
-7ff80bc8-6f18-4caf-8796-d3d68e3fd719,task,7714f003-f6d2-4677-9ffc-02043b658253,Instalar placas en Pergola,11,False,0,0,,False
-f34ef965-6d32-457e-ad41-63440e9e0d3b,task,7714f003-f6d2-4677-9ffc-02043b658253,Poner maceteros ventanas frontal casa,12,False,0,0,,False
-85b6f135-9618-4bc6-9c6f-fd205eb67d00,task,7714f003-f6d2-4677-9ffc-02043b658253,Pintar fachada de casa,13,False,0,0,,False
-1e9f5ff1-4e76-426f-ba21-53790d446aac,task,7714f003-f6d2-4677-9ffc-02043b658253,Nivelar zona pinar,14,False,0,0,,False
-d7aef323-0ef6-46f7-aef0-7be6c3fab6b5,task,7714f003-f6d2-4677-9ffc-02043b658253,"Acondicionar zona entrada camino nivelando, tapando ceniza y otros",15,False,0,0,,False
-58d2a43d-50af-41bd-99a0-83859b524754,task,7714f003-f6d2-4677-9ffc-02043b658253,Instalar toma de luz zona pinares,16,False,0,0,,False
-a5873cdb-c476-49cf-be8c-788577204b61,task,7714f003-f6d2-4677-9ffc-02043b658253,Fabricar soporte manguera,17,False,0,0,,False
-3084ed16-1ea9-43e9-80ec-3db81ae559d9,task,7714f003-f6d2-4677-9ffc-02043b658253,Recoger poda,18,False,0,0,,False
-10979558-d2b2-4040-be51-2670d3ca2854,task,7714f003-f6d2-4677-9ffc-02043b658253,Arreglar poda,19,False,0,0,,False
-9b0e5f50-9091-4577-8173-b04d0b9e8983,task,7714f003-f6d2-4677-9ffc-02043b658253,Arreglar jardineras enfrente de casa,20,False,0,0,,False
-23d0aa93-e935-42e0-bcc0-8a99b4f90a13,task,7714f003-f6d2-4677-9ffc-02043b658253,Poner canal recogida aguas pluviales,21,False,0,0,,False
-adf91946-2c68-4f73-ac07-ed4126c72fa1,task,7714f003-f6d2-4677-9ffc-02043b658253,Acondicionar zonas para recogida aguas pluviales,22,False,0,0,,False
-18a1f406-e5cf-4d2a-ab9c-1f555e254678,task,7714f003-f6d2-4677-9ffc-02043b658253,Triturar acolchado,23,False,0,0,,False
-c62ee459-0621-4eeb-a33f-6e178d0a527e,task,7714f003-f6d2-4677-9ffc-02043b658253,Probar trituradora de ramas para poliestireno,24,False,0,0,,False
-a25ae6ef-9e95-4ecd-b25a-b570a495265f,task,7714f003-f6d2-4677-9ffc-02043b658253,Mantenimiento de mesa redonda de madera blanca,25,False,0,0,,False
-840c0c16-c22d-4b6e-8384-0a7e7ff0598f,task,7714f003-f6d2-4677-9ffc-02043b658253,Restaurar mesa pinares,26,False,0,0,,False
-b50479dc-e6b1-47ff-a5ea-999084a5e7f3,task,7714f003-f6d2-4677-9ffc-02043b658253,Arreglar sombrilla naranja,27,False,0,0,,False
-d56f7e23-5501-44f4-a923-726c372302b5,task,b6cd1e74-a4b9-44f8-b6ae-e4f35fbc093b,Crear huerta en fuente cercana,0,False,0,0,,False
-ee306ecd-7e09-4413-ae95-59dbee5227f2,task,b6cd1e74-a4b9-44f8-b6ae-e4f35fbc093b,Hacer conservas de aceitunas,1,False,0,0,,False
-4418d45c-eeef-4ea5-aced-f03bf40be101,task,b6cd1e74-a4b9-44f8-b6ae-e4f35fbc093b,Ir a por naranjas a Murcia,2,False,0,0,,False
-af90c773-2084-4831-bced-063fa0030eb7,task,b6cd1e74-a4b9-44f8-b6ae-e4f35fbc093b,Hacer conserva de naranjas,3,False,0,0,,False
-df05fdc8-4d4c-460d-b487-7e6c4e7e3c59,task,b6cd1e74-a4b9-44f8-b6ae-e4f35fbc093b,Procesar almendras,4,False,0,0,,False
-a0eaf011-57ad-4c12-828b-302b9143593e,task,b6cd1e74-a4b9-44f8-b6ae-e4f35fbc093b,Cocinar cosas ricas para mi amor,5,False,0,0,,False
-60318247-f4a2-44c7-a705-9a4d8b1c51cb,task,b6cd1e74-a4b9-44f8-b6ae-e4f35fbc093b,Ocuparme del compost,6,False,0,0,,False
-015f9d59-da00-4e95-8c9e-81df54a09629,task,e85a2261-663f-4c6a-ab57-f2a69bd928a9,Viajar con Sabrina,0,False,0,0,,False
-9869753e-8f63-41a5-9647-f6486782b222,task,e85a2261-663f-4c6a-ab57-f2a69bd928a9,Planear fecha para la boda,1,False,0,0,,False
-d8ab6536-676e-435c-8448-185ec94ffe0d,task,e85a2261-663f-4c6a-ab57-f2a69bd928a9,Planear la celebración de boda,2,False,0,0,,False
-3bca3a47-4604-4ccd-a992-54962041cc9b,task,e85a2261-663f-4c6a-ab57-f2a69bd928a9,Firmar los papeles de boda,3,False,0,0,,False
-75372215-73aa-4374-851e-87e29fb0e809,task,e85a2261-663f-4c6a-ab57-f2a69bd928a9,Celebrar mi cumpleaños,4,False,0,0,,False
-75f22bc5-00cd-4125-a999-01be974347f2,task,d29c8237-f6bf-43c4-84de-c6b664c46c44,Organizar y ejecutar planificación para implantación del ERP Odoo 17 de Carmen,0,False,0,0,,False
-0f4b9ad1-9c0d-4952-ace0-8353476ccc38,task,d29c8237-f6bf-43c4-84de-c6b664c46c44,Pensar en proyecto empresa Infomoto e infovalle,1,False,0,0,,False
-d743fb5c-15d1-44be-aa80-99d4c4888ea1,task,85eb53b9-ba59-4b67-b7ce-10b0a6e2f782,Aprender Ingles,0,False,0,0,,False
-95594ba0-f884-4c68-94d9-eae8623c2c35,task,85eb53b9-ba59-4b67-b7ce-10b0a6e2f782,Fabricar placas pladur de cartón y polietileno,1,False,0,0,,False
-c0bfc6dd-bdac-4a56-afeb-5674987d32a3,task,85eb53b9-ba59-4b67-b7ce-10b0a6e2f782,Salir de fiesta y Jugar a juegos de mesa con mi hermana Carmen,2,False,0,0,,False
-df4c3c7e-1602-4b53-8691-1e6aaa1c7736,task,85eb53b9-ba59-4b67-b7ce-10b0a6e2f782,Colgar las casetas murciélagos,3,False,0,0,,False
-ea9a4597-c245-46b9-bd54-947c47ef4adc,task,85eb53b9-ba59-4b67-b7ce-10b0a6e2f782,Evaluar entretecho,4,False,0,0,,False
-47fa7846-6512-4aa6-9fe2-393a6d84c850,task,85eb53b9-ba59-4b67-b7ce-10b0a6e2f782,Utilizar agua para la cisterna reciclada,5,False,0,0,,False
-d44c6f89-6eb6-420a-a9fe-a8ce05e9ac93,task,85eb53b9-ba59-4b67-b7ce-10b0a6e2f782,Conducir aguas grises para la purificadora,6,False,0,0,,False
-e0f75633-e6d2-4c99-aeca-07ca6c0c1f9c,task,85eb53b9-ba59-4b67-b7ce-10b0a6e2f782,Quitarme las faltas de ortografía,7,False,0,0,,False
-631a2ba1-1ea6-40aa-9795-75d33a390122,task,85eb53b9-ba59-4b67-b7ce-10b0a6e2f782,Aprender algo de Ucraniano,8,False,0,0,,False
-468a5cb2-55e9-4d68-9d55-72741cf71c07,task,85eb53b9-ba59-4b67-b7ce-10b0a6e2f782,Retomar relación con ana y edu de Alcoy,9,False,0,0,,False
-b4f02ebc-d55a-49a1-b4fe-97053b4c7187,task,85eb53b9-ba59-4b67-b7ce-10b0a6e2f782,Retomar relación con amigos de albacete,10,False,0,0,,False
-47e64a5e-0834-411b-baa1-7807a2ce107a,task,85eb53b9-ba59-4b67-b7ce-10b0a6e2f782,Fabricar trampas para las avispas,11,False,0,0,,False
+Id,Type,ParentId,Name,Order,Completed,Counter,Percentage,Note,Deleted,Priority,CreationDate,IterationDate,ResetDays,Collapsed
+6729627f-f2c2-4fab-b99e-355c7fce61f7,category,,Salud y Bienestar (Personal),0,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+726ab114-d667-4b01-a31f-be3f09f2f815,category,,Tecnología y Desarrollo (Software/IA),1,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+6cf296ec-1c19-4ed8-811b-3399ef7747a9,category,,Reformas y Construcción (Interior),2,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+a24bc5f3-56fc-4aa9-a635-0ea98e7ac0eb,category,,Obras y Estructuras (Exteriores),3,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+88396aa6-c80e-4c71-b884-d1863cc18104,category,,Jardinería y Huerto (Plantas),4,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+5d7a2359-e014-4965-99fa-20a5cdf3cb09,category,,Mantenimiento y Reparaciones (Hogar/Taller),5,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+18167c66-b9fa-40d4-92d8-76906358cc53,category,,Organización y Limpieza (Hogar),6,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+fb0c361a-1ec0-4dac-ab35-a0144937e691,category,,Proyectos con Madera (Diseño),7,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+a59b1984-82ac-455c-bedb-18777a7940db,category,,Vehículos (Coche/Furgoneta),8,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+579b120a-48c3-49b4-a677-bcbc63d79148,category,,Asuntos Financieros (Trámites),9,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+74168259-72e1-44d1-a7bd-369f2d01dba2,category,,Bebé (Maria),10,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+d3b825a9-2a83-4f06-a333-fd116ace3af6,category,,Mascotas (Tortuga),11,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+b8c736b6-1258-4318-8b56-6b394295dbd9,category,,Asuntos Familiares (Padres),12,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+976fdfc2-4307-4212-b688-65d5ccb46d58,category,,Rol y Ocio (Específico),13,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+8c99c642-7c0f-4fd3-8e55-3066c7b7f19a,category,,Adquisiciones (Compras),14,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+7714f003-f6d2-4677-9ffc-02043b658253,category,,Mantenimiento y Acondicionamiento (Terreno/Exterior),15,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+b6cd1e74-a4b9-44f8-b6ae-e4f35fbc093b,category,,Alimentos (Conservas),16,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+e85a2261-663f-4c6a-ab57-f2a69bd928a9,category,,Bodas (Celebraciones),17,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+d29c8237-f6bf-43c4-84de-c6b664c46c44,category,,Emprendimiento (Negocios),18,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+85eb53b9-ba59-4b67-b7ce-10b0a6e2f782,category,,Varios (Otros Aprendizajes),19,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+2977ef26-ef4c-45a4-bb7c-102ad5bbc4fb,task,6729627f-f2c2-4fab-b99e-355c7fce61f7,Dejar de fumar,0,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+1dec9cf4-7c1b-4e6f-a626-1ddb9d2895dd,task,6729627f-f2c2-4fab-b99e-355c7fce61f7,Usar la CPAP todas las noches,1,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+c5584f33-b7dd-4ee2-8731-65ef590f371f,task,6729627f-f2c2-4fab-b99e-355c7fce61f7,Sacar cita para la revisión del CPAP,2,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+8c4b5254-d575-42d8-bb86-c130f37ce575,task,6729627f-f2c2-4fab-b99e-355c7fce61f7,Planificar zonas ejercicios y acondicionadas para practicar yoga,3,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+1c9be344-ebab-42e8-abda-8dad6d84f947,task,6729627f-f2c2-4fab-b99e-355c7fce61f7,Pedir cita médica para almorranas,4,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+4ab3ff11-c55a-4213-b07d-04e178d15c6f,task,6729627f-f2c2-4fab-b99e-355c7fce61f7,Revisar cita operación nariz,5,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+c1ab1b8e-f7d8-484b-893e-23d6aabe5f95,task,6729627f-f2c2-4fab-b99e-355c7fce61f7,Diseñar y ejecutar plan de entrenamiento,6,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+f1dd9ace-5aba-4db0-9e6e-ca4dfad41dde,task,6729627f-f2c2-4fab-b99e-355c7fce61f7,Ir a la Peluquería,7,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+ae800cc5-4de9-409d-959f-a2cfd835785e,task,726ab114-d667-4b01-a31f-be3f09f2f815,Conseguir un teletrabajo: Echar curriculums,0,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+7409762b-712e-489e-bd47-dfc202f51334,task,726ab114-d667-4b01-a31f-be3f09f2f815,Crear librerías Angular (redimensionables),1,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+64590a74-c98a-4a37-acf4-b60b0b072f10,task,726ab114-d667-4b01-a31f-be3f09f2f815,Desarrollar agente autónomo de IA (clawbot),2,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+092a11f1-2bae-42b4-909a-4b10cdebea48,task,726ab114-d667-4b01-a31f-be3f09f2f815,Continuar con formación en desarrollo IA,3,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+76f984b5-9044-4a3b-a440-0b5df831944b,task,726ab114-d667-4b01-a31f-be3f09f2f815,Reparar repetidor de cobertura móvil,4,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+2d37bc8a-b572-435e-bdff-a66bc0e2a8e5,task,726ab114-d667-4b01-a31f-be3f09f2f815,Configurar red y VPN ferretería Carmen,5,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+f275feb0-f55c-4c6a-8f0d-f40ff1269669,task,726ab114-d667-4b01-a31f-be3f09f2f815,Organización de mensajes y correos,6,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+a750a521-511e-4fe6-a802-9b0d62f515c5,task,726ab114-d667-4b01-a31f-be3f09f2f815,Organizar proyectos GitHub,7,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+ccef6c2c-d635-453f-80e1-ee00f062946b,task,726ab114-d667-4b01-a31f-be3f09f2f815,Crear portafolios propio,8,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+63122562-beea-41b6-a5e3-2db6ad723781,task,726ab114-d667-4b01-a31f-be3f09f2f815,Instalar máquinas virtuales oracle,9,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+f6f42e2a-42df-43cb-835e-095fbcb0d238,task,726ab114-d667-4b01-a31f-be3f09f2f815,Comprar maquinas oracle Carmen,10,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+a64aab0e-992b-4e64-a47d-c9af395402d4,task,726ab114-d667-4b01-a31f-be3f09f2f815,Crear página web Carmen,11,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+cfed65ac-7a6a-417b-bd52-35b4ec9c3aca,task,726ab114-d667-4b01-a31f-be3f09f2f815,Formarse en IA,12,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+5c871101-24f9-43f8-b662-2f2723831198,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Construir la ducha del cuarto de baño,0,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+8edbec61-1c4d-4524-8790-5fb4eaea38f4,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Fabricar taburetes para la taza del váter,1,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+56f47a5b-47fd-40ea-8c03-da74701e3786,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Remates azulejos cuarto de baño,2,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+3427a472-ba16-4403-a89f-02ddaa79da98,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Instalación agua lavamanos cuarto de baño,3,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+ea0b16b5-9505-49c0-8bd6-b37008df87c0,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Lavamanos cuarto de baño,4,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+2a00eedb-4526-4d7f-9b70-190998f91b3a,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Toallero electrico,5,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+5b968279-5b03-4670-8a21-1a94e11c13a0,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Restaurar ventana habitación,6,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+1e808ca1-8168-48e0-807b-d60f28c40050,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Restaurar suelo habitación,7,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+a9672138-ea52-4c40-9e55-ef622492a1ab,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Restaurar pared y techo habitación,8,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+4e1f36b1-f8ba-4dde-a8db-7004a14c602d,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Pintar habitación,9,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+2c7a1edb-e4d7-4e61-8bdc-c6d44522465a,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Arreglar humedades en la escalera y pintar,10,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+77a26a62-e926-4ec0-8755-a1381c1ae7cf,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,"Acondicionar desván fantasma, suelo y pared",11,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+637e2204-261f-44d3-967c-280ae76c36e3,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Cementar suelo encima del aljibe,12,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+7bf656f2-44ec-4415-9463-3e791d33ec9f,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Buscar puerta para horno de leña en la cocina,13,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+d713383e-2c42-40eb-be79-cf448231c776,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Chimenea cocina conectar con horno,14,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+2560f03c-7222-48d5-b8b1-8bf63bf8eec7,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Arreglar viga del salón,15,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+7b914ac5-fdac-4171-a5bc-8b9e81d8bbaf,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Arreglar Techo del salón,16,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+fd24beb6-d5ba-4153-b253-365bd48e6cee,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Acondicionar espacio de la estufa,17,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+d2159a48-af3d-42dd-8350-e3ec3f76c04a,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Poner y fijar tubo estufa,18,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+c5078121-eae7-4b25-ab00-bb302e9f8f7a,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Tapar secciones del tubo de la estufa y abrir arriba,19,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+473c1722-43c5-44d7-822f-ba8dd02fe872,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Buscar rejilla seguridad estufa,20,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+38955fe1-149e-44d2-9980-33413c205679,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Buscar nuevo fregadero para la cocina,21,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+8ccde26b-9b92-4997-9203-f8818e179405,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Buscar nueva encimera para la cocina,22,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+39624565-b36d-47bc-a867-de9542376950,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Comprar un espejo para el salón,23,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+c269ed85-33ed-4e17-8753-eb0a7f2a464d,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Fabricar y comprar espejos habitación invitados,24,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+aa263c5a-d506-4ccb-a0ec-a7524b79e091,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Abrir paso entre casa y taller,25,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+46fea051-4236-4028-9db8-c617a4249fcb,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Aislar techo buhardilla,26,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+aea0c2c3-ad8f-476b-b12c-6448b314504f,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Fabricar mesa plegable para el salón,27,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+6e5f012d-3601-4a5b-bf97-d256d545c6a7,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Poner ventana ático en la habitación,28,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+2d88b4f6-6033-4341-9728-74e3fc6753b4,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Poner ventana atico estudio,29,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+70781174-1bfd-4bad-9a79-239ef1a4fb3a,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Poner luz salón a instalación,30,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+7ae037d9-56ee-42ea-a685-fda574eb16e8,task,6cf296ec-1c19-4ed8-811b-3399ef7747a9,Mejorar mueble cocina,31,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+6426ad71-812b-4f3a-b4f0-8c6c9fc38e79,task,a24bc5f3-56fc-4aa9-a635-0ea98e7ac0eb,Construir pergola madera solar con diseños 3D realizado,0,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+c572727e-18d4-4674-9626-99cb8dec935c,task,a24bc5f3-56fc-4aa9-a635-0ea98e7ac0eb,Construir Invernadero de 3x8 con plásticos y tubos,1,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+17e8cff2-c92a-4b96-95da-cfc3cbf1c11b,task,a24bc5f3-56fc-4aa9-a635-0ea98e7ac0eb,Construir entrada a patio cocina con pilares de madera y puerta de hierro,2,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+cadaf633-5194-4e28-a120-9b4254c10789,task,a24bc5f3-56fc-4aa9-a635-0ea98e7ac0eb,Cementar patio cocina,3,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+74857930-1cb9-4f58-9e36-14151391d058,task,a24bc5f3-56fc-4aa9-a635-0ea98e7ac0eb,Construir ribazo línea camino,4,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+f28b6650-600a-41f9-8e39-1947ae8b9ade,task,a24bc5f3-56fc-4aa9-a635-0ea98e7ac0eb,Construir ducha externa verano de obra,5,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+2594f56c-9488-4cba-aac0-57eae37a4ba1,task,a24bc5f3-56fc-4aa9-a635-0ea98e7ac0eb,Construir potabilizadora de aguas grises,6,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+d30acf74-f82a-4fe3-932f-cb5d16c1e4d1,task,a24bc5f3-56fc-4aa9-a635-0ea98e7ac0eb,Arreglar techo de hierros pintar y enlucir,7,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+aa4de309-3607-4aa3-86fa-cc5f33b00814,task,a24bc5f3-56fc-4aa9-a635-0ea98e7ac0eb,Construir balsa riego,8,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+ef0a2148-f8a0-4cee-bb07-44c51df24326,task,a24bc5f3-56fc-4aa9-a635-0ea98e7ac0eb,Construir fuente trasera,9,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+395d6a4d-b493-4743-aec2-d079cb783549,task,a24bc5f3-56fc-4aa9-a635-0ea98e7ac0eb,Construir muro contención tierra detrás de casa,10,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+d686d1e3-c9ec-43b3-aca0-fdf6cb148c8c,task,a24bc5f3-56fc-4aa9-a635-0ea98e7ac0eb,Arreglar techo horno de leña,11,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+2669124c-b7d6-4ab7-91ef-d783f1817500,task,88396aa6-c80e-4c71-b884-d1863cc18104,Plantar semilleros,0,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+fc6c0584-6df8-49cc-8b14-409890c28fa0,task,88396aa6-c80e-4c71-b884-d1863cc18104,Plantar lentisco línea cerca Invernadero,1,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+19decba1-3483-4917-bb3a-8ddd2dd803ce,task,88396aa6-c80e-4c71-b884-d1863cc18104,Plantar florecitas línea camino,2,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+61b9978a-4670-49e9-a973-7e6022abcfe1,task,88396aa6-c80e-4c71-b884-d1863cc18104,Ir a por adelfas,3,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+8ac117d7-39a9-432b-9e74-9dd0a18c41c5,task,88396aa6-c80e-4c71-b884-d1863cc18104,Plantar adelfas,4,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+874f1dd8-e70f-4bcd-a244-b691fd8753f9,task,88396aa6-c80e-4c71-b884-d1863cc18104,"Plantar membrillo ,",5,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+b6396967-eb1e-4598-8626-ab5e75b7449e,task,88396aa6-c80e-4c71-b884-d1863cc18104,Plantar viñas,6,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+b1b11041-f0d2-4e45-a194-6847fafebc3e,task,88396aa6-c80e-4c71-b884-d1863cc18104,Plantar pepinos y otras cosas con Sabrina,7,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+dfb01694-c303-410c-8f8a-85a4122c9898,task,88396aa6-c80e-4c71-b884-d1863cc18104,Plantar chumberas a lo largo del camino,8,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+d208eca8-ef0b-45d4-a039-2156a85ef77d,task,88396aa6-c80e-4c71-b884-d1863cc18104,Plantar pinos a lo largo del camino,9,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+b73b42c5-e18c-4bce-8650-4bdb74815b9c,task,88396aa6-c80e-4c71-b884-d1863cc18104,Enraizar esquejes lentisco,10,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+6c4a5e89-ea82-4ba6-9a73-dc5871b1b51f,task,88396aa6-c80e-4c71-b884-d1863cc18104,Regar esquejes lentisco,11,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+d5e12ec4-8a77-47d7-ba56-53455a03c73f,task,88396aa6-c80e-4c71-b884-d1863cc18104,Injertos pistacho,12,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+457e3597-a491-4dea-a470-7bcb16a5b3e2,task,88396aa6-c80e-4c71-b884-d1863cc18104,Comprar pistachos y plantarlos,13,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+ffe4a96c-281a-4c9e-8601-69e3038c4356,task,88396aa6-c80e-4c71-b884-d1863cc18104,Comprar guindos y plantarlos,14,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+88d24c1f-59dc-4a5b-a29c-7dc517233c4e,task,88396aa6-c80e-4c71-b884-d1863cc18104,Comprar cerezos y plantarlos,15,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+060b4e86-0f2b-4804-a94f-9841904d92d4,task,88396aa6-c80e-4c71-b884-d1863cc18104,Poner maceteros ventana y plantar flores,16,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+1132eec4-8cef-48ad-9343-4029e876ed9f,task,88396aa6-c80e-4c71-b884-d1863cc18104,Plantar ciruelos en la fuente,17,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+2310e037-1786-40fb-82b7-3e1dcb71a434,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Restaurar Puerta Principal,0,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+3170527b-cce6-4550-a1b7-d8a03aa49c78,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Restaurar Puerta cocina,1,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+b65b3695-4b94-4a53-8c37-187a5627c708,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Instalar filtro de agua para beber,2,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+4c29f8c3-e190-4b7c-b4d2-84ee618d3bea,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Arreglar esquina casa con canal,3,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+9f68e592-232c-405b-9a72-386c9bfc3785,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Arreglo del canal del porche de la lavadora,4,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+802b000e-8a58-4b48-90d4-fa728abe21a2,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Arreglar la luz del taller,5,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+437bc2de-bc33-4e7c-8e50-ca91444d057a,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Arreglar la impresora D,6,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+3f80a195-772c-4ccd-ba5d-86bf3cbbf41c,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Arreglar goteras del taller,7,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+960d7997-119e-417c-ad63-dca55bf6f146,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Mejorar cuadro eléctrico,8,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+69c54b34-3831-4736-b31f-8c8f45045366,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Pensar en la iluminación de la parte delantera casa,9,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+6d507ad3-58d6-4f0e-b15e-a3505f548fac,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Luces cama y mesita,10,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+b91421a8-98b7-4c2a-8094-d50bfe96ca3b,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Poner toma de luz cafetera,11,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+6a6e2251-9671-47f6-a84a-0f383877d82b,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Arreglar enrollador eléctrico,12,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+64010fa8-7ee8-4fea-9872-a802641a210a,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Reparar aspiradora Carmen,13,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+9daddfd9-f609-4857-a002-d63bed26a131,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Poner red y WIFI en casa,14,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+6568e42c-8804-42ef-917b-2f4677f3b28c,task,5d7a2359-e014-4965-99fa-20a5cdf3cb09,Pensar en una solución para la luz en la entrada de la casa,15,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+d78d6931-6216-44da-a263-73bc41a99f5d,task,18167c66-b9fa-40d4-92d8-76906358cc53,Poner 2 mas lavadoras,0,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+3b8fca10-59af-4d4b-92eb-4fbfcca5b782,task,18167c66-b9fa-40d4-92d8-76906358cc53,Recoger y poner lavavajillas diariamente,1,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+4dafeeca-d7cf-4fb5-bdaf-29d002743eaf,task,18167c66-b9fa-40d4-92d8-76906358cc53,Ordenar taller,2,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+8cece707-8f62-473a-b2e6-146c781bae6a,task,18167c66-b9fa-40d4-92d8-76906358cc53,Organizar mi ropa,3,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+a24f9cf8-5ef0-438f-8e66-33cb1fef0519,task,18167c66-b9fa-40d4-92d8-76906358cc53,Ordenar cables y cosas PC. Puesto múltiple de carga USB,4,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+7cb0b219-3a77-483f-95ff-e5110b320c82,task,18167c66-b9fa-40d4-92d8-76906358cc53,Organizar especias,5,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+dfff8b74-f0c4-468f-b961-d0f9ddfabdc1,task,18167c66-b9fa-40d4-92d8-76906358cc53,Organizar mueble despensa,6,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+c91fe0d6-0c9e-470d-816a-0866cd00166a,task,18167c66-b9fa-40d4-92d8-76906358cc53,Hacer estanterias despensa,7,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+29ce4257-cdcd-47f0-bd71-dd649e18e022,task,18167c66-b9fa-40d4-92d8-76906358cc53,Limpiar fogones,8,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+8a024e11-7d4c-42fe-a41f-4bd947df594c,task,18167c66-b9fa-40d4-92d8-76906358cc53,Poner cubos para separar basura reciclaje,9,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+9a8ad418-c030-467f-804a-49df4e4b6f75,task,fb0c361a-1ec0-4dac-ab35-a0144937e691,Construir pergola madera solar con diseños 3D realizado,0,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+f2b105c9-6833-4430-9419-de794350ee5c,task,fb0c361a-1ec0-4dac-ab35-a0144937e691,Fabricar maceteros autorriego con Sabrina,1,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+d35dac9e-98c1-45f2-abf0-8291792fc3a7,task,fb0c361a-1ec0-4dac-ab35-a0144937e691,Hacer adorno de cabeza de cabra,2,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+fb250318-1d1a-4bb6-b717-5cfd17800570,task,a59b1984-82ac-455c-bedb-18777a7940db,Camperizar furgoneta de Carmen,0,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+a8db2ea8-2ab8-42ea-bd23-3dfafe633e69,task,a59b1984-82ac-455c-bedb-18777a7940db,Limpiar mi coche y reparaciones varias,1,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+d4d2d6aa-b369-47d2-b807-f95b88e0d880,task,a59b1984-82ac-455c-bedb-18777a7940db,Comprar Aceite motosierra,2,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+f1916a22-5a1d-4004-8c91-555c9d50964b,task,a59b1984-82ac-455c-bedb-18777a7940db,Componer cajas emergencia para los coches,3,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+f5e8b3a0-83ac-4c69-8ffd-71b5bb514f8a,task,a59b1984-82ac-455c-bedb-18777a7940db,Limpiar coche Sabrina,4,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+1193bc38-bbd7-43c6-ae49-69f14951f36a,task,579b120a-48c3-49b4-a677-bcbc63d79148,Indagar subvenciones negocio y casa,0,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+a3692ab5-4a75-4684-b5e6-357977fa2c18,task,579b120a-48c3-49b4-a677-bcbc63d79148,Revisar multas,1,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+26c0aa9c-68c5-4174-a630-620d696fb3e0,task,579b120a-48c3-49b4-a677-bcbc63d79148,Revisar IMV,2,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+f0110c94-6c7d-4bf8-8dfd-b0733cebd30f,task,579b120a-48c3-49b4-a677-bcbc63d79148,Revisar negocio autónomo IT,3,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+8ebb41d3-435f-4f93-9794-53eba2cd7369,task,579b120a-48c3-49b4-a677-bcbc63d79148,Pagar electricista Requena,4,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+edc68e35-b487-493c-81bb-da8a350a0c20,task,74168259-72e1-44d1-a7bd-369f2d01dba2,Preparar cosas Maria. Muy importante,0,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+dcc30b1c-ef41-487b-a304-9416ecfa7ce6,task,74168259-72e1-44d1-a7bd-369f2d01dba2,Construir valla zona segura para Maria,1,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+272046a5-d7ce-4434-8118-56986f3f828f,task,74168259-72e1-44d1-a7bd-369f2d01dba2,Motar cuna Maria,2,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+8c0b3833-f4b4-4c79-a276-40c11582a36f,task,74168259-72e1-44d1-a7bd-369f2d01dba2,Organizar ropa Maria,3,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+2255ed7a-6f51-415f-8fed-0914e375fd8f,task,74168259-72e1-44d1-a7bd-369f2d01dba2,"Preguntas para matrona, pañales tela y perilla mocos",4,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+e58a40d2-436d-44db-bb4c-969264471927,task,d3b825a9-2a83-4f06-a333-fd116ace3af6,Mejorar condiciones tortuga,0,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+2b6fb314-5b85-4943-9567-21f07fd28bec,task,d3b825a9-2a83-4f06-a333-fd116ace3af6,Limpiar estanque tortuga,1,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+9ba07957-e56f-4acf-8ab2-57608cbbde0d,task,d3b825a9-2a83-4f06-a333-fd116ace3af6,Sistema de reciclado de agua con bomba estanque tortuga,2,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+636252f7-6310-44f4-97bc-52903369ecd2,task,d3b825a9-2a83-4f06-a333-fd116ace3af6,Mejorar alimentación tortuga,3,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+b6d18fb8-52bc-431a-9b96-0598bd946789,task,b8c736b6-1258-4318-8b56-6b394295dbd9,Ayudar con tareas de casa de mis padres,0,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+00128344-2be2-4de1-a968-fc361edcda6f,task,b8c736b6-1258-4318-8b56-6b394295dbd9,Ordenar cosas almacenadas en casa de mis padres,1,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+28d8959a-a156-468a-bd45-7bd7b215a9c1,task,b8c736b6-1258-4318-8b56-6b394295dbd9,Tratar humedades de casa de mis padres,2,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+94e23aa3-8063-49f1-916f-6fdcb4d4ce87,task,b8c736b6-1258-4318-8b56-6b394295dbd9,Reparar invernadero de mi padre,3,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+96f2e2ed-7a89-49e1-926f-4f620e5b5c12,task,b8c736b6-1258-4318-8b56-6b394295dbd9,Viernes llevar mamá al médico,4,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+98a6f229-e67e-4d85-acf5-b762f6d40005,task,976fdfc2-4307-4212-b688-65d5ccb46d58,Mejorar mi personaje del Rol,0,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+ec564d77-e090-44d6-9629-7a29768b326b,task,976fdfc2-4307-4212-b688-65d5ccb46d58,Asistir a algún evento de Rol,1,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+d74eb7c5-33e7-41e8-b7c2-b3195a26dc6d,task,976fdfc2-4307-4212-b688-65d5ccb46d58,Planear reunión desarrollo web Rol,2,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+d590b515-2af4-402d-8a77-861bc089fae9,task,976fdfc2-4307-4212-b688-65d5ccb46d58,Organizar cosas del rol en aspe,3,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+92302f55-e497-4bff-8b77-af34ae394075,task,976fdfc2-4307-4212-b688-65d5ccb46d58,Construir almacén para cosas el rol en aspe,4,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+d2dcf249-08b8-4844-9fc9-87452f9b2b5f,task,976fdfc2-4307-4212-b688-65d5ccb46d58,Organizar cosas del rol en casa,5,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+b7e318bd-cab1-4a0d-b9ad-c5d8d1de413a,task,976fdfc2-4307-4212-b688-65d5ccb46d58,Terminar reglas personaje rol Sangre negra,6,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+508349fb-bf38-4e4c-9c9c-701afad0b43f,task,976fdfc2-4307-4212-b688-65d5ccb46d58,Colaborar con proyecto de rol,7,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+87bc8df0-ddbb-4288-9b6e-d71650c7fcf4,task,8c99c642-7c0f-4fd3-8e55-3066c7b7f19a,Gestionar compra nevera,0,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+7e66fb8f-91cd-44fe-b4f7-0a4d32d6a458,task,8c99c642-7c0f-4fd3-8e55-3066c7b7f19a,Comprar una placa solar para pérgola solar,1,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+7fc6fe8b-cab1-4419-9ad4-a855005f2520,task,8c99c642-7c0f-4fd3-8e55-3066c7b7f19a,Comprar Portatil,2,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+51ef5849-dc5d-4d57-adc0-8db4f6d952ca,task,8c99c642-7c0f-4fd3-8e55-3066c7b7f19a,Comprar aire acondicionado,3,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+93185cd4-e942-4d54-95f7-45e8b35967eb,task,8c99c642-7c0f-4fd3-8e55-3066c7b7f19a,Comprar calzado para trabajar,4,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+e1860c4d-2097-4b51-89c8-d39bb1e39df3,task,8c99c642-7c0f-4fd3-8e55-3066c7b7f19a,Comprarme ropa nueva,5,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+67165020-c29d-49eb-bc16-d632aaf4965b,task,8c99c642-7c0f-4fd3-8e55-3066c7b7f19a,Comprar alcachofa grifo cocina,6,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+3fcf7f8f-a9f9-402f-8761-e43a454f15ad,task,7714f003-f6d2-4677-9ffc-02043b658253,"Proveer leña, ir a por viñas y otros",0,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+3bbf57c9-32a8-422a-9dd5-c495b28c347c,task,7714f003-f6d2-4677-9ffc-02043b658253,Poner 2 sombras patio cocina,1,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+f5a3955e-8b36-4992-9184-ae66bce8af97,task,7714f003-f6d2-4677-9ffc-02043b658253,Poner tierra para adelfas y construir ribazo de piedra,2,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+f41cfce1-a997-48fd-a565-1f9fe12435f0,task,7714f003-f6d2-4677-9ffc-02043b658253,"Huerta secano, adecuar sitio",3,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+466af8a9-8b59-4e00-a6ce-187587143278,task,7714f003-f6d2-4677-9ffc-02043b658253,Canalización agua ducha externa para huerta,4,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+d4189026-ed37-4ff6-ab28-9c34c836d4ff,task,7714f003-f6d2-4677-9ffc-02043b658253,Instalar una toma de agua en la parte de delante de la casa,5,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+4be0c26e-708f-4711-a541-71dc72e22bf2,task,7714f003-f6d2-4677-9ffc-02043b658253,Instalar una toma de luz para la motosierra en el lateral de la casa,6,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+d445d56c-f963-46df-800c-577465b2fdcc,task,7714f003-f6d2-4677-9ffc-02043b658253,Acondicionar zona para orquídeas parte trasera taller,7,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+9049538e-e3bd-4429-9f90-2ee8f4359fca,task,7714f003-f6d2-4677-9ffc-02043b658253,Arreglar tumbonas,8,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+3d300746-c438-42b2-a006-c12c860fa200,task,7714f003-f6d2-4677-9ffc-02043b658253,Quitar raíz camino,9,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+5d1f55b1-3042-411b-95d0-54f6ece54dca,task,7714f003-f6d2-4677-9ffc-02043b658253,"Acondicionar hueco nevera, agrandar y separar espacio",10,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+7ff80bc8-6f18-4caf-8796-d3d68e3fd719,task,7714f003-f6d2-4677-9ffc-02043b658253,Instalar placas en Pergola,11,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+f34ef965-6d32-457e-ad41-63440e9e0d3b,task,7714f003-f6d2-4677-9ffc-02043b658253,Poner maceteros ventanas frontal casa,12,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+85b6f135-9618-4bc6-9c6f-fd205eb67d00,task,7714f003-f6d2-4677-9ffc-02043b658253,Pintar fachada de casa,13,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+1e9f5ff1-4e76-426f-ba21-53790d446aac,task,7714f003-f6d2-4677-9ffc-02043b658253,Nivelar zona pinar,14,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+d7aef323-0ef6-46f7-aef0-7be6c3fab6b5,task,7714f003-f6d2-4677-9ffc-02043b658253,"Acondicionar zona entrada camino nivelando, tapando ceniza y otros",15,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+58d2a43d-50af-41bd-99a0-83859b524754,task,7714f003-f6d2-4677-9ffc-02043b658253,Instalar toma de luz zona pinares,16,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+a5873cdb-c476-49cf-be8c-788577204b61,task,7714f003-f6d2-4677-9ffc-02043b658253,Fabricar soporte manguera,17,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+3084ed16-1ea9-43e9-80ec-3db81ae559d9,task,7714f003-f6d2-4677-9ffc-02043b658253,Recoger poda,18,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+10979558-d2b2-4040-be51-2670d3ca2854,task,7714f003-f6d2-4677-9ffc-02043b658253,Arreglar poda,19,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+9b0e5f50-9091-4577-8173-b04d0b9e8983,task,7714f003-f6d2-4677-9ffc-02043b658253,Arreglar jardineras enfrente de casa,20,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+23d0aa93-e935-42e0-bcc0-8a99b4f90a13,task,7714f003-f6d2-4677-9ffc-02043b658253,Poner canal recogida aguas pluviales,21,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+adf91946-2c68-4f73-ac07-ed4126c72fa1,task,7714f003-f6d2-4677-9ffc-02043b658253,Acondicionar zonas para recogida aguas pluviales,22,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+18a1f406-e5cf-4d2a-ab9c-1f555e254678,task,7714f003-f6d2-4677-9ffc-02043b658253,Triturar acolchado,23,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+c62ee459-0621-4eeb-a33f-6e178d0a527e,task,7714f003-f6d2-4677-9ffc-02043b658253,Probar trituradora de ramas para poliestireno,24,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+a25ae6ef-9e95-4ecd-b25a-b570a495265f,task,7714f003-f6d2-4677-9ffc-02043b658253,Mantenimiento de mesa redonda de madera blanca,25,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+840c0c16-c22d-4b6e-8384-0a7e7ff0598f,task,7714f003-f6d2-4677-9ffc-02043b658253,Restaurar mesa pinares,26,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+b50479dc-e6b1-47ff-a5ea-999084a5e7f3,task,7714f003-f6d2-4677-9ffc-02043b658253,Arreglar sombrilla naranja,27,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+d56f7e23-5501-44f4-a923-726c372302b5,task,b6cd1e74-a4b9-44f8-b6ae-e4f35fbc093b,Crear huerta en fuente cercana,0,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+ee306ecd-7e09-4413-ae95-59dbee5227f2,task,b6cd1e74-a4b9-44f8-b6ae-e4f35fbc093b,Hacer conservas de aceitunas,1,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+4418d45c-eeef-4ea5-aced-f03bf40be101,task,b6cd1e74-a4b9-44f8-b6ae-e4f35fbc093b,Ir a por naranjas a Murcia,2,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+af90c773-2084-4831-bced-063fa0030eb7,task,b6cd1e74-a4b9-44f8-b6ae-e4f35fbc093b,Hacer conserva de naranjas,3,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+df05fdc8-4d4c-460d-b487-7e6c4e7e3c59,task,b6cd1e74-a4b9-44f8-b6ae-e4f35fbc093b,Procesar almendras,4,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+a0eaf011-57ad-4c12-828b-302b9143593e,task,b6cd1e74-a4b9-44f8-b6ae-e4f35fbc093b,Cocinar cosas ricas para mi amor,5,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+60318247-f4a2-44c7-a705-9a4d8b1c51cb,task,b6cd1e74-a4b9-44f8-b6ae-e4f35fbc093b,Ocuparme del compost,6,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+015f9d59-da00-4e95-8c9e-81df54a09629,task,e85a2261-663f-4c6a-ab57-f2a69bd928a9,Viajar con Sabrina,0,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+9869753e-8f63-41a5-9647-f6486782b222,task,e85a2261-663f-4c6a-ab57-f2a69bd928a9,Planear fecha para la boda,1,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+d8ab6536-676e-435c-8448-185ec94ffe0d,task,e85a2261-663f-4c6a-ab57-f2a69bd928a9,Planear la celebración de boda,2,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+3bca3a47-4604-4ccd-a992-54962041cc9b,task,e85a2261-663f-4c6a-ab57-f2a69bd928a9,Firmar los papeles de boda,3,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+75372215-73aa-4374-851e-87e29fb0e809,task,e85a2261-663f-4c6a-ab57-f2a69bd928a9,Celebrar mi cumpleaños,4,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+75f22bc5-00cd-4125-a999-01be974347f2,task,d29c8237-f6bf-43c4-84de-c6b664c46c44,Organizar y ejecutar planificación para implantación del ERP Odoo 17 de Carmen,0,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+0f4b9ad1-9c0d-4952-ace0-8353476ccc38,task,d29c8237-f6bf-43c4-84de-c6b664c46c44,Pensar en proyecto empresa Infomoto e infovalle,1,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+d743fb5c-15d1-44be-aa80-99d4c4888ea1,task,85eb53b9-ba59-4b67-b7ce-10b0a6e2f782,Aprender Ingles,0,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+95594ba0-f884-4c68-94d9-eae8623c2c35,task,85eb53b9-ba59-4b67-b7ce-10b0a6e2f782,Fabricar placas pladur de cartón y polietileno,1,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+c0bfc6dd-bdac-4a56-afeb-5674987d32a3,task,85eb53b9-ba59-4b67-b7ce-10b0a6e2f782,Salir de fiesta y Jugar a juegos de mesa con mi hermana Carmen,2,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+df4c3c7e-1602-4b53-8691-1e6aaa1c7736,task,85eb53b9-ba59-4b67-b7ce-10b0a6e2f782,Colgar las casetas murciélagos,3,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+ea9a4597-c245-46b9-bd54-947c47ef4adc,task,85eb53b9-ba59-4b67-b7ce-10b0a6e2f782,Evaluar entretecho,4,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+47fa7846-6512-4aa6-9fe2-393a6d84c850,task,85eb53b9-ba59-4b67-b7ce-10b0a6e2f782,Utilizar agua para la cisterna reciclada,5,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+d44c6f89-6eb6-420a-a9fe-a8ce05e9ac93,task,85eb53b9-ba59-4b67-b7ce-10b0a6e2f782,Conducir aguas grises para la purificadora,6,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+e0f75633-e6d2-4c99-aeca-07ca6c0c1f9c,task,85eb53b9-ba59-4b67-b7ce-10b0a6e2f782,Quitarme las faltas de ortografía,7,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+631a2ba1-1ea6-40aa-9795-75d33a390122,task,85eb53b9-ba59-4b67-b7ce-10b0a6e2f782,Aprender algo de Ucraniano,8,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+468a5cb2-55e9-4d68-9d55-72741cf71c07,task,85eb53b9-ba59-4b67-b7ce-10b0a6e2f782,Retomar relación con ana y edu de Alcoy,9,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+b4f02ebc-d55a-49a1-b4fe-97053b4c7187,task,85eb53b9-ba59-4b67-b7ce-10b0a6e2f782,Retomar relación con amigos de albacete,10,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
+47e64a5e-0834-411b-baa1-7807a2ce107a,task,85eb53b9-ba59-4b67-b7ce-10b0a6e2f782,Fabricar trampas para las avispas,11,False,0,0,,False,500,2026-03-28,2026-03-28,0,False
