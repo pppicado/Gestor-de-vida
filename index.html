@@ -133,26 +133,26 @@
 <body class="bg-gray-100 text-gray-800 font-sans min-h-screen flex flex-col">
 
     <!-- Top Action Bar -->
-    <div class="bg-gray-800 text-white py-2 px-6 flex justify-between items-center text-sm z-20 shadow">
-        <div class="flex items-center space-x-4">
-            <span class="font-bold tracking-wider text-gray-300">OPCIONES</span>
-            <button id="btn-import-csv" class="text-gray-300 hover:text-white transition flex items-center">
-                <i class="fas fa-file-import mr-1"></i> Importar
+    <div class="bg-gray-800 text-white py-2 px-4 flex justify-between items-center text-sm z-20 shadow overflow-x-hidden">
+        <div class="flex items-center space-x-2 sm:space-x-4">
+            <span class="font-bold tracking-wider text-gray-300 hidden sm:inline">OPCIONES</span>
+            <button id="btn-import-csv" class="text-gray-300 hover:text-white transition flex items-center" title="Importar">
+                <i class="fas fa-file-import sm:mr-1"></i> <span class="hidden md:inline">Importar</span>
             </button>
-            <button id="btn-export-csv" class="text-gray-300 hover:text-white transition flex items-center">
-                <i class="fas fa-file-export mr-1"></i> Exportar
+            <button id="btn-export-csv" class="text-gray-300 hover:text-white transition flex items-center" title="Exportar">
+                <i class="fas fa-file-export sm:mr-1"></i> <span class="hidden md:inline">Exportar</span>
             </button>
-            <button id="btn-view-deleted" class="text-gray-300 hover:text-white transition flex items-center">
-                <i class="fas fa-trash-restore mr-1"></i> Ver Borrados
+            <button id="btn-view-deleted" class="text-gray-300 hover:text-white transition flex items-center" title="Ver Borrados">
+                <i class="fas fa-trash-restore sm:mr-1"></i> <span class="hidden md:inline">Ver Borrados</span>
             </button>
-            <button id="btn-toggle-delete-mode" class="text-red-400 hover:text-red-300 transition flex items-center border border-red-500 rounded px-2 py-0.5">
-                <i class="fas fa-trash-alt mr-1"></i> Borrar
+            <button id="btn-toggle-delete-mode" class="text-red-400 hover:text-red-300 transition flex items-center border border-red-500 rounded px-2 py-0.5" title="Borrar">
+                <i class="fas fa-trash-alt sm:mr-1"></i> <span class="hidden md:inline">Borrar</span>
             </button>
         </div>
         <div class="flex items-center space-x-2">
             <!-- Add global expand/collapse here -->
-            <button id="btn-toggle-all-categories" class="text-indigo-300 hover:text-indigo-100 transition flex items-center mr-4">
-                <i class="fas fa-compress-arrows-alt mr-1"></i> Expandir/Contraer Todo
+            <button id="btn-toggle-all-categories" class="text-indigo-300 hover:text-indigo-100 transition flex items-center sm:mr-4" title="Expandir/Contraer Todo">
+                <i class="fas fa-compress-arrows-alt sm:mr-1"></i> <span class="hidden md:inline">Expandir/Contraer Todo</span>
             </button>
         </div>
     </div>
@@ -162,7 +162,7 @@
 
         <!-- Left Side: Title and Search -->
         <div class="flex items-center space-x-4 flex-grow max-w-xl">
-            <h1 class="text-xl font-bold text-indigo-700 flex-shrink-0"><i class="fas fa-tasks mr-1"></i> Mis Tareas</h1>
+            <h1 class="text-xl font-bold text-indigo-700 flex-shrink-0" title="Mis Tareas"><i class="fas fa-tasks fa-lg"></i></h1>
 
             <div class="relative flex-grow">
                 <span class="absolute inset-y-0 left-0 flex items-center pl-3">
@@ -248,9 +248,9 @@
     </div>
 
     <!-- Main Board -->
-    <main class="flex-grow p-6 overflow-x-auto flex flex-col">
-        <!-- Horizontal Scrollable Container for Kanban style columns -->
-        <div id="board" class="flex gap-6 pb-4 items-start h-full">
+    <main class="flex-grow p-4 md:p-6 flex flex-col">
+        <!-- Grid Container for columns (responsive, no horizontal scroll) -->
+        <div id="board" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 md:gap-6 items-start h-full">
             <!-- Categories will be rendered here by JS -->
         </div>
     </main>
@@ -292,18 +292,18 @@
 
     <!-- Template for Category -->
     <template id="tpl-category">
-        <div class="category-column bg-gray-200 rounded-lg shadow-sm flex flex-col w-80 min-w-[320px] max-h-full" data-id="">
-            <!-- Category Drag Handle -->
-            <div class="category-drag-handle flex justify-center items-center py-1 text-gray-400 hover:text-gray-600 cursor-move rounded-t-lg bg-gray-200 border-b border-gray-300">
-                <i class="fas fa-grip-horizontal"></i>
-            </div>
+        <div class="category-column bg-gray-200 rounded-lg shadow-sm flex flex-col w-full max-h-full" data-id="">
             <!-- Category Header -->
-            <div class="category-header p-2 flex justify-between items-center border-b border-gray-300 bg-gray-200">
+            <div class="category-header p-2 flex justify-between items-center border-b border-gray-300 bg-gray-200 rounded-t-lg">
                 <button class="btn-toggle-category text-gray-500 hover:text-gray-800 transition px-2">
                     <i class="fas fa-chevron-down"></i>
                 </button>
                 <div class="flex-grow mr-2">
                     <input type="text" class="category-name font-bold text-gray-700 bg-transparent border-none outline-none w-full focus:ring-2 focus:ring-indigo-300 rounded px-1" value="">
+                </div>
+                <!-- Category Drag Handle (Right of Name) -->
+                <div class="category-drag-handle text-gray-400 hover:text-gray-600 cursor-move px-2">
+                    <i class="fas fa-grip-vertical"></i>
                 </div>
                 <button class="btn-delete-category text-gray-400 hover:text-red-500 transition px-1 hidden delete-btn-large">
                     <i class="fas fa-trash fa-lg"></i>
@@ -325,11 +325,11 @@
     <!-- Template for Task -->
     <template id="tpl-task">
         <div class="task-item bg-white rounded shadow-sm border border-gray-200 flex flex-col" data-id="">
-            <!-- Task Drag Handle -->
-            <div class="task-drag-handle flex justify-center items-center py-1 bg-gray-50 text-gray-400 hover:text-gray-600 cursor-move border-b border-gray-100 rounded-t">
-                <i class="fas fa-grip-horizontal"></i>
-            </div>
             <div class="p-2 flex items-start">
+                <!-- Task Drag Handle (Left of Name) -->
+                <div class="task-drag-handle text-gray-400 hover:text-gray-600 cursor-move pr-2 pt-0.5">
+                    <i class="fas fa-grip-vertical"></i>
+                </div>
                 <div class="flex-grow min-w-0 flex flex-col">
                     <div class="flex justify-between items-center mb-1">
                         <input type="text" class="task-name text-sm text-gray-800 w-full border-none p-0 focus:ring-0 bg-transparent" value="" placeholder="Nombre de la tarea">
