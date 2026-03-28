@@ -3,11 +3,35 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Selectors
     const board = document.getElementById('board');
-    const btnAddCategory = document.getElementById('btn-add-category');
     const btnImportCsv = document.getElementById('btn-import-csv');
     const btnExportCsv = document.getElementById('btn-export-csv');
     const btnViewDeleted = document.getElementById('btn-view-deleted');
+    const btnToggleDeleteMode = document.getElementById('btn-toggle-delete-mode');
+    const btnAddCategory = document.getElementById('btn-add-category');
+    const btnToggleAllCategories = document.getElementById('btn-toggle-all-categories');
+    const btnToggleListView = document.getElementById('btn-toggle-list-view');
+    const btnToggleIndicators = document.getElementById('btn-toggle-indicators');
+    const indicatorsContainer = document.getElementById('indicators-container');
     const fileUpload = document.getElementById('file-upload');
+
+    // Filters and Indicators
+    const filterSearch = document.getElementById('filter-search');
+    const filterPriority = document.getElementById('filter-priority');
+    const indicatorBtns = document.querySelectorAll('.indicator-btn');
+
+    // Indicators SVG Elements
+    const indTotalCircle = document.getElementById('ind-total-circle');
+    const indTotalVal = document.getElementById('ind-total-val');
+    const indDoneCircle = document.getElementById('ind-done-circle');
+    const indDoneVal = document.getElementById('ind-done-val');
+    const indPendingCircle = document.getElementById('ind-pending-circle');
+    const indPendingVal = document.getElementById('ind-pending-val');
+    const indProgCircle = document.getElementById('ind-prog-circle');
+    const indProgVal = document.getElementById('ind-prog-val');
+    const indSchedCircle = document.getElementById('ind-sched-circle');
+    const indSchedVal = document.getElementById('ind-sched-val');
+    const indForecastCircle = document.getElementById('ind-forecast-circle');
+    const indForecastVal = document.getElementById('ind-forecast-val');
 
     const modalImport = document.getElementById('modal-import');
     const btnImportMerge = document.getElementById('btn-import-merge');
@@ -27,10 +51,61 @@ document.addEventListener('DOMContentLoaded', () => {
     let sortableCategories = null;
     let sortableTasksInstances = [];
     let importFileData = null;
+    let currentFilterMode = 'all'; // all, completed, pending, progressive, scheduled, forecast
+    let isListView = false;
+
+    // Helper Functions for Dates
+    function getTodayString() {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        return `${yyyy}-${mm}-${dd}`;
+    }
 
     // Initialize
     loadData();
+    checkTaskResets();
     renderBoard();
+    updateIndicators();
+
+    function checkTaskResets() {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // reset time to start of day
+        let dataChanged = false;
+
+        data.forEach(item => {
+            if (item.Type === 'task' && !item.Deleted && item.ResetDays > 0 && item.IterationDate) {
+                // Parse IterationDate
+                const iterParts = item.IterationDate.split('-');
+                if (iterParts.length === 3) {
+                    const iterDate = new Date(iterParts[0], iterParts[1] - 1, iterParts[2]);
+                    iterDate.setHours(0, 0, 0, 0);
+
+                    // Add ResetDays
+                    iterDate.setDate(iterDate.getDate() + item.ResetDays);
+
+                    // Check if today >= IterationDate + ResetDays
+                    if (today.getTime() >= iterDate.getTime()) {
+                        if (item.Completed) {
+                            item.Counter = (item.Counter || 0) + 1;
+                            item.Completed = false;
+                            item.IterationDate = getTodayString();
+                            dataChanged = true;
+                        } else {
+                            // Optionally update IterationDate even if not completed, but requirements
+                            // say: "si la tarea está marcada como hecha incrementará el contador, actualiza IterationDate y desmarca"
+                            // So we only act if Completed is true, based on exact requirement text.
+                        }
+                    }
+                }
+            }
+        });
+
+        if (dataChanged) {
+            saveData();
+        }
+    }
 
     // UUID Generator
     function generateUUID() {
@@ -65,7 +140,142 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function getTasks(parentId) {
-        return data.filter(i => i.Type === 'task' && i.ParentId === parentId && !i.Deleted).sort((a, b) => a.Order - b.Order);
+        let tasks = data.filter(i => i.Type === 'task' && i.ParentId === parentId && !i.Deleted);
+
+        // Apply Filters
+        const searchStr = filterSearch.value.trim().toLowerCase();
+        if (searchStr) {
+            tasks = tasks.filter(t => t.Name.toLowerCase().includes(searchStr));
+        }
+
+        const prio = parseInt(filterPriority.value);
+        if (!isNaN(prio)) {
+            tasks = tasks.filter(t => t.Priority >= prio);
+        }
+
+        if (currentFilterMode === 'completed') {
+            tasks = tasks.filter(t => t.Completed);
+        } else if (currentFilterMode === 'pending') {
+            tasks = tasks.filter(t => !t.Completed);
+        } else if (currentFilterMode === 'progressive') {
+            tasks = tasks.filter(t => t.Percentage > 0);
+        } else if (currentFilterMode === 'scheduled') {
+            tasks = tasks.filter(t => t.ResetDays > 0);
+        } else if (currentFilterMode === 'forecast') {
+            tasks = tasks.filter(t => t.Forecast !== 0.5);
+        }
+
+        return tasks.sort((a, b) => a.Order - b.Order);
+    }
+
+    // A helper to get ALL tasks across all categories for List View
+    function getAllFilteredTasks() {
+        let tasks = data.filter(i => i.Type === 'task' && !i.Deleted);
+
+        // Apply Filters
+        const searchStr = filterSearch.value.trim().toLowerCase();
+        if (searchStr) {
+            tasks = tasks.filter(t => t.Name.toLowerCase().includes(searchStr));
+        }
+
+        const prio = parseInt(filterPriority.value);
+        if (!isNaN(prio)) {
+            tasks = tasks.filter(t => t.Priority >= prio);
+        }
+
+        if (currentFilterMode === 'completed') {
+            tasks = tasks.filter(t => t.Completed);
+        } else if (currentFilterMode === 'pending') {
+            tasks = tasks.filter(t => !t.Completed);
+        } else if (currentFilterMode === 'progressive') {
+            tasks = tasks.filter(t => t.Percentage > 0);
+        } else if (currentFilterMode === 'scheduled') {
+            tasks = tasks.filter(t => t.ResetDays > 0);
+        } else if (currentFilterMode === 'forecast') {
+            tasks = tasks.filter(t => t.Forecast !== 0.5);
+        }
+
+        // Sort by Priority (descending) then Order (ascending)
+        return tasks.sort((a, b) => {
+            if (b.Priority !== a.Priority) {
+                return b.Priority - a.Priority;
+            }
+            return a.Order - b.Order;
+        });
+    }
+
+    // Indicators Calculation
+    function updateIndicators() {
+        const allTasks = data.filter(i => i.Type === 'task' && !i.Deleted);
+
+        let sumTotal = 0;
+        let sumDone = 0;
+        let sumPending = 0; // Number of pending tasks
+        let sumProg = 0; // Number of progressive tasks
+        let sumSched = 0; // Number of scheduled tasks
+
+        let sumForecastTotal = 0; // Total forecast hours of all tasks
+        let sumForecastDone = 0; // Total forecast hours of completed tasks
+        let sumForecastPending = 0; // Total forecast hours of pending tasks
+
+        allTasks.forEach(t => {
+            const val = 1 + t.Counter;
+            const forecastVal = t.Forecast || 0.5;
+
+            sumForecastTotal += forecastVal;
+            sumTotal += val;
+
+            if (t.Completed) {
+                sumDone += val;
+                sumForecastDone += forecastVal;
+            } else {
+                sumPending++; // Requirement: Number of pending tasks (not including counters as per clarification)
+                sumForecastPending += forecastVal;
+            }
+
+            if (t.Percentage > 0) {
+                sumProg++;
+            }
+
+            if (t.ResetDays > 0) {
+                sumSched++;
+            }
+        });
+
+        // Update Values
+        indTotalVal.textContent = sumTotal;
+        indDoneVal.textContent = sumDone;
+        indPendingVal.textContent = sumPending;
+        indProgVal.textContent = sumProg;
+        indSchedVal.textContent = sumSched;
+        indForecastVal.textContent = sumForecastPending;
+
+        // Update Circles (Radius = 20, Circumference = 125.6)
+        const C = 125.6;
+
+        const setCircle = (circle, val) => {
+            if (sumTotal === 0) {
+                circle.style.strokeDashoffset = C;
+                return;
+            }
+            const percent = val / sumTotal;
+            const offset = C - (percent * C);
+            circle.style.strokeDashoffset = offset;
+        };
+
+        setCircle(indTotalCircle, sumTotal);
+        setCircle(indDoneCircle, sumDone);
+        setCircle(indPendingCircle, sumPending);
+        setCircle(indProgCircle, sumProg);
+        setCircle(indSchedCircle, sumSched);
+
+        // Custom logic for Forecast Circle: % of done forecast vs total forecast
+        if (sumForecastTotal === 0) {
+            indForecastCircle.style.strokeDashoffset = C;
+        } else {
+            const percentF = sumForecastDone / sumForecastTotal;
+            indForecastCircle.style.strokeDashoffset = C - (percentF * C);
+        }
     }
 
     function getDeletedItems() {
@@ -85,7 +295,14 @@ document.addEventListener('DOMContentLoaded', () => {
             Counter: 0,
             Percentage: 0,
             Note: '',
-            Deleted: false
+            Deleted: false,
+            // Categories don't technically need these but it's good for consistency
+            Priority: 500,
+            CreationDate: getTodayString(),
+            IterationDate: getTodayString(),
+            ResetDays: 0,
+            Collapsed: false, // Added for collapsing tasks
+            Forecast: 0.5
         };
         data.push(newCat);
         saveData();
@@ -105,7 +322,13 @@ document.addEventListener('DOMContentLoaded', () => {
             Counter: 0,
             Percentage: 0,
             Note: '',
-            Deleted: false
+            Deleted: false,
+            // New fields
+            Priority: 500,
+            CreationDate: getTodayString(),
+            IterationDate: getTodayString(),
+            ResetDays: 0,
+            Forecast: 0.5
         };
         data.push(newTask);
         saveData();
@@ -165,15 +388,58 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // UI Rendering
     function renderBoard() {
+        updateIndicators();
+
         // Destroy old sortables
         if (sortableCategories) sortableCategories.destroy();
         sortableTasksInstances.forEach(s => s.destroy());
         sortableTasksInstances = [];
 
         board.innerHTML = '';
-        const categories = getCategories();
 
-        categories.forEach(cat => {
+        // Determine if there is any active filter that should hide empty categories
+        const searchStr = filterSearch.value.trim().toLowerCase();
+        const prio = parseInt(filterPriority.value);
+        const hasActiveFilter = (searchStr !== '') ||
+                                (!isNaN(prio) && prio > 1) ||
+                                (currentFilterMode !== 'all');
+
+        if (isListView) {
+            // Render a single column containing ALL tasks sorted by priority
+            board.classList.remove('grid-cols-1', 'sm:grid-cols-2', 'lg:grid-cols-3', 'xl:grid-cols-4', '2xl:grid-cols-5');
+            board.classList.add('grid-cols-1');
+
+            const listContainer = document.createElement('div');
+            listContainer.className = 'bg-gray-200 rounded-lg shadow-sm flex flex-col w-full max-h-full';
+
+            const listHeader = document.createElement('div');
+            listHeader.className = 'p-3 border-b border-gray-300 bg-gray-200 rounded-t-lg font-bold text-gray-700';
+            listHeader.textContent = 'Todas las tareas (Vista Lista)';
+            listContainer.appendChild(listHeader);
+
+            const taskList = document.createElement('div');
+            taskList.className = 'task-list flex-grow p-2 overflow-y-auto min-h-[50px] space-y-2';
+
+            // For list view, we just put everything into one list but we shouldn't allow moving between categories if they don't exist
+            // Actually, we'll make it sortable but changing the order here might be complex without a parent.
+            // Better to disable drag&drop in list view or handle it specially. We'll disable it for simplicity or let it sort within list.
+
+            const tasks = getAllFilteredTasks();
+            tasks.forEach(task => {
+                const taskNode = createDOMTask(task);
+                taskList.appendChild(taskNode);
+            });
+
+            listContainer.appendChild(taskList);
+            board.appendChild(listContainer);
+
+        } else {
+            // Normal Kanban View
+            board.classList.add('grid-cols-1', 'sm:grid-cols-2', 'lg:grid-cols-3', 'xl:grid-cols-4', '2xl:grid-cols-5');
+
+            const categories = getCategories();
+
+            categories.forEach(cat => {
             const catNode = document.importNode(tplCategory, true);
             const catEl = catNode.querySelector('.category-column');
             catEl.dataset.id = cat.Id;
@@ -184,6 +450,23 @@ document.addEventListener('DOMContentLoaded', () => {
             // Name update
             nameInput.addEventListener('change', (e) => {
                 updateItem(cat.Id, { Name: e.target.value });
+            });
+
+            // Collapse/Expand Category Tasks
+            const btnToggleCat = catEl.querySelector('.btn-toggle-category');
+            const toggleIcon = btnToggleCat.querySelector('i');
+            const catTaskList = catEl.querySelector('.task-list');
+
+            if (cat.Collapsed) {
+                catTaskList.classList.add('hidden');
+                toggleIcon.classList.remove('fa-chevron-down');
+                toggleIcon.classList.add('fa-chevron-up');
+            }
+
+            btnToggleCat.addEventListener('click', () => {
+                const isCollapsed = catTaskList.classList.contains('hidden');
+                updateItem(cat.Id, { Collapsed: !isCollapsed });
+                renderBoard(); // Re-render to apply the class cleanly, or just toggle DOM (we re-render to keep it simple)
             });
 
             // Delete category
@@ -197,64 +480,71 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             // Render tasks
-            const taskList = catEl.querySelector('.task-list');
-            taskList.dataset.categoryId = cat.Id;
+            catTaskList.dataset.categoryId = cat.Id;
             const tasks = getTasks(cat.Id);
 
             tasks.forEach(task => {
                 const taskNode = createDOMTask(task);
-                taskList.appendChild(taskNode);
+                catTaskList.appendChild(taskNode);
             });
 
-            board.appendChild(catNode);
-        });
-
-        // Init Sortable Categories
-        sortableCategories = new Sortable(board, {
-            animation: 150,
-            ghostClass: 'sortable-ghost',
-            handle: '.category-header',
-            onEnd: (evt) => {
-                const itemEls = board.querySelectorAll('.category-column');
-                itemEls.forEach((el, index) => {
-                    const id = el.dataset.id;
-                    updateItem(id, { Order: index });
-                });
+            // Hide empty categories if a filter is active
+            if (hasActiveFilter && tasks.length === 0) {
+                // Do not append to board
+            } else {
+                board.appendChild(catNode);
             }
         });
 
-        // Init Sortable Tasks
-        const taskLists = board.querySelectorAll('.task-list');
-        taskLists.forEach(list => {
-            sortableTasksInstances.push(new Sortable(list, {
-                group: 'shared',
+        // Init Sortable Categories only if not in list view
+        if (!isListView) {
+            sortableCategories = new Sortable(board, {
                 animation: 150,
                 ghostClass: 'sortable-ghost',
-                handle: '.task-item',
+                handle: '.category-drag-handle',
                 onEnd: (evt) => {
-                    const toList = evt.to;
-                    const fromList = evt.from;
-                    const newParentId = toList.dataset.categoryId;
-
-                    // Update order and parentId for all items in the target list
-                    const taskEls = toList.querySelectorAll('.task-item');
-                    taskEls.forEach((el, index) => {
+                    const itemEls = board.querySelectorAll('.category-column');
+                    itemEls.forEach((el, index) => {
                         const id = el.dataset.id;
-                        updateItem(id, { Order: index, ParentId: newParentId });
+                        updateItem(id, { Order: index });
                     });
-
-                    // If moved to a different list, also update order of the original list just in case
-                    if (toList !== fromList) {
-                        const fromTaskEls = fromList.querySelectorAll('.task-item');
-                        fromTaskEls.forEach((el, index) => {
-                            const id = el.dataset.id;
-                            updateItem(id, { Order: index });
-                        });
-                    }
                 }
-            }));
-        });
+            });
+
+            // Init Sortable Tasks
+            const taskLists = board.querySelectorAll('.task-list');
+            taskLists.forEach(list => {
+                sortableTasksInstances.push(new Sortable(list, {
+                    group: 'shared',
+                    animation: 150,
+                    ghostClass: 'sortable-ghost',
+                    handle: '.task-drag-handle',
+                    onEnd: (evt) => {
+                        const toList = evt.to;
+                        const fromList = evt.from;
+                        const newParentId = toList.dataset.categoryId;
+
+                        // Update order and parentId for all items in the target list
+                        const taskEls = toList.querySelectorAll('.task-item');
+                        taskEls.forEach((el, index) => {
+                            const id = el.dataset.id;
+                            updateItem(id, { Order: index, ParentId: newParentId });
+                        });
+
+                        // If moved to a different list, also update order of the original list just in case
+                        if (toList !== fromList) {
+                            const fromTaskEls = fromList.querySelectorAll('.task-item');
+                            fromTaskEls.forEach((el, index) => {
+                                const id = el.dataset.id;
+                                updateItem(id, { Order: index });
+                            });
+                        }
+                    }
+                }));
+            });
+        }
     }
+}
 
     function createDOMTask(task) {
         const taskNode = document.importNode(tplTask, true);
@@ -266,8 +556,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const nameInput = taskEl.querySelector('.task-name');
         const counterVal = taskEl.querySelector('.counter-val');
         const percentVal = taskEl.querySelector('.percentage-val');
+
+        // Badges
+        const priorityValBadge = taskEl.querySelector('.priority-val');
+        const forecastValBadge = taskEl.querySelector('.forecast-val');
+
         const noteBadge = taskEl.querySelector('.badge-note');
-        const btnExpand = taskEl.querySelector('.btn-expand-task');
+        const badgesContainer = taskEl.querySelector('.task-badges-container');
+        const expandIcon = taskEl.querySelector('.expand-icon-indicator');
         const btnDelete = taskEl.querySelector('.btn-delete-task');
         const expandedArea = taskEl.querySelector('.task-expanded');
 
@@ -275,9 +571,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const btnCountDec = taskEl.querySelector('.btn-counter-dec');
         const btnCountInc = taskEl.querySelector('.btn-counter-inc');
         const inputCount = taskEl.querySelector('.input-counter');
+
+        const btnForecastDec = taskEl.querySelector('.btn-forecast-dec');
+        const btnForecastInc = taskEl.querySelector('.btn-forecast-inc');
+        const inputForecast = taskEl.querySelector('.input-forecast');
+
         const inputPercent = taskEl.querySelector('.input-percentage');
         const labelPercent = taskEl.querySelector('.label-percentage');
         const inputNote = taskEl.querySelector('.input-note');
+
+        // "Más..." inputs
+        const inputPriority = taskEl.querySelector('.input-priority');
+        const inputCreationDate = taskEl.querySelector('.input-creation-date');
+        const inputIterationDate = taskEl.querySelector('.input-iteration-date');
+        const inputResetDays = taskEl.querySelector('.input-reset-days');
 
         // Set initial values
         cb.checked = task.Completed;
@@ -298,15 +605,29 @@ document.addEventListener('DOMContentLoaded', () => {
             noteBadge.classList.remove('hidden');
         }
 
+        inputPriority.value = task.Priority;
+        priorityValBadge.textContent = task.Priority;
+
+        inputForecast.value = task.Forecast;
+        forecastValBadge.textContent = task.Forecast;
+
+        inputCreationDate.value = task.CreationDate;
+        inputIterationDate.value = task.IterationDate;
+        inputResetDays.value = task.ResetDays;
+
         // Events
         cb.addEventListener('change', (e) => {
             const completed = e.target.checked;
-            updateItem(task.Id, { Completed: completed });
+            const updates = { Completed: completed };
             if (completed) {
+                updates.IterationDate = getTodayString();
+                inputIterationDate.value = updates.IterationDate;
                 nameInput.classList.add('line-through', 'text-gray-400');
             } else {
                 nameInput.classList.remove('line-through', 'text-gray-400');
             }
+            updateItem(task.Id, updates);
+            updateIndicators();
         });
 
         nameInput.addEventListener('change', (e) => {
@@ -318,28 +639,47 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Expand/Collapse
-        btnExpand.addEventListener('click', () => {
+        badgesContainer.addEventListener('click', () => {
             expandedArea.classList.toggle('hidden');
-            const icon = btnExpand.querySelector('i');
             if (expandedArea.classList.contains('hidden')) {
-                icon.classList.remove('fa-chevron-up');
-                icon.classList.add('fa-chevron-down');
+                expandIcon.classList.remove('fa-chevron-up');
+                expandIcon.classList.add('fa-chevron-down');
             } else {
-                icon.classList.remove('fa-chevron-down');
-                icon.classList.add('fa-chevron-up');
+                expandIcon.classList.remove('fa-chevron-down');
+                expandIcon.classList.add('fa-chevron-up');
             }
         });
 
         // Counter
         const updateCounter = (val) => {
             const newVal = Math.max(0, val);
+            const isInc = newVal > parseInt(inputCount.value);
             inputCount.value = newVal;
             counterVal.textContent = newVal;
-            updateItem(task.Id, { Counter: newVal });
+
+            const updates = { Counter: newVal };
+            if (isInc) {
+                updates.IterationDate = getTodayString();
+                inputIterationDate.value = updates.IterationDate;
+            }
+            updateItem(task.Id, updates);
+            updateIndicators();
         };
         btnCountDec.addEventListener('click', () => updateCounter(parseInt(inputCount.value) - 1));
         btnCountInc.addEventListener('click', () => updateCounter(parseInt(inputCount.value) + 1));
         inputCount.addEventListener('change', (e) => updateCounter(parseInt(e.target.value) || 0));
+
+        // Forecast
+        const updateForecast = (val) => {
+            const newVal = Math.max(0, parseFloat(val).toFixed(1)); // Keeping one decimal place
+            inputForecast.value = newVal;
+            forecastValBadge.textContent = newVal;
+            updateItem(task.Id, { Forecast: parseFloat(newVal) });
+            updateIndicators();
+        };
+        btnForecastDec.addEventListener('click', () => updateForecast(parseFloat(inputForecast.value) - 0.5));
+        btnForecastInc.addEventListener('click', () => updateForecast(parseFloat(inputForecast.value) + 0.5));
+        inputForecast.addEventListener('change', (e) => updateForecast(parseFloat(e.target.value) || 0.5));
 
         // Percentage
         inputPercent.addEventListener('input', (e) => {
@@ -347,6 +687,7 @@ document.addEventListener('DOMContentLoaded', () => {
             labelPercent.textContent = val;
             percentVal.textContent = val;
             updateItem(task.Id, { Percentage: parseInt(val) });
+            updateIndicators();
         });
 
         // Note
@@ -358,6 +699,34 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 noteBadge.classList.add('hidden');
             }
+        });
+
+        // More... Inputs
+        inputPriority.addEventListener('change', (e) => {
+            let val = parseInt(e.target.value);
+            if (isNaN(val) || val < 1) val = 1;
+            if (val > 1000) val = 1000;
+            e.target.value = val;
+            priorityValBadge.textContent = val;
+            updateItem(task.Id, { Priority: val });
+
+            // Re-render if in list view as priority change affects sort
+            if(isListView) renderBoard();
+        });
+
+        inputCreationDate.addEventListener('change', (e) => {
+            updateItem(task.Id, { CreationDate: e.target.value });
+        });
+
+        inputIterationDate.addEventListener('change', (e) => {
+            updateItem(task.Id, { IterationDate: e.target.value });
+        });
+
+        inputResetDays.addEventListener('change', (e) => {
+            let val = parseInt(e.target.value);
+            if (isNaN(val) || val < 0) val = 0;
+            e.target.value = val;
+            updateItem(task.Id, { ResetDays: val });
         });
 
         return taskEl;
@@ -428,7 +797,13 @@ document.addEventListener('DOMContentLoaded', () => {
             Counter: i.Counter,
             Percentage: i.Percentage,
             Note: i.Note,
-            Deleted: i.Deleted
+            Deleted: i.Deleted,
+            Priority: i.Priority !== undefined ? i.Priority : 500,
+            CreationDate: i.CreationDate || '',
+            IterationDate: i.IterationDate || '',
+            ResetDays: i.ResetDays !== undefined ? i.ResetDays : 0,
+            Collapsed: i.Collapsed !== undefined ? i.Collapsed : false,
+            Forecast: i.Forecast !== undefined ? i.Forecast : 0.5
         }));
 
         const csvString = Papa.unparse(csvData);
@@ -480,7 +855,13 @@ document.addEventListener('DOMContentLoaded', () => {
             Counter: parseInt(row.Counter) || 0,
             Percentage: parseInt(row.Percentage) || 0,
             Note: row.Note || '',
-            Deleted: String(row.Deleted).toLowerCase() === 'true'
+            Deleted: String(row.Deleted).toLowerCase() === 'true',
+            Priority: parseInt(row.Priority) !== null && !isNaN(parseInt(row.Priority)) ? parseInt(row.Priority) : 500,
+            CreationDate: row.CreationDate || getTodayString(),
+            IterationDate: row.IterationDate || getTodayString(),
+            ResetDays: parseInt(row.ResetDays) || 0,
+            Collapsed: String(row.Collapsed).toLowerCase() === 'true',
+            Forecast: parseFloat(row.Forecast) !== null && !isNaN(parseFloat(row.Forecast)) ? parseFloat(row.Forecast) : 0.5
         }));
 
         if (mode === 'overwrite') {
@@ -528,4 +909,95 @@ document.addEventListener('DOMContentLoaded', () => {
     btnCloseDeleted.addEventListener('click', () => {
         modalDeleted.classList.add('hidden');
     });
+
+    // Header Actions
+    btnToggleIndicators.addEventListener('click', () => {
+        indicatorsContainer.classList.toggle('hidden');
+    });
+
+    btnToggleListView.addEventListener('click', () => {
+        isListView = !isListView;
+        const icon = btnToggleListView.querySelector('i');
+        if(isListView) {
+            icon.classList.remove('fa-list');
+            icon.classList.add('fa-columns');
+            btnToggleListView.classList.remove('text-indigo-300');
+            btnToggleListView.classList.add('text-indigo-100');
+        } else {
+            icon.classList.remove('fa-columns');
+            icon.classList.add('fa-list');
+            btnToggleListView.classList.remove('text-indigo-100');
+            btnToggleListView.classList.add('text-indigo-300');
+        }
+        renderBoard();
+    });
+
+    btnToggleDeleteMode.addEventListener('click', () => {
+        document.body.classList.toggle('delete-mode-active');
+        btnToggleDeleteMode.classList.toggle('bg-red-500');
+        btnToggleDeleteMode.classList.toggle('text-white');
+    });
+
+    btnToggleAllCategories.addEventListener('click', () => {
+        const categories = getCategories();
+        // Check if any is open. If at least one is open, close all. Otherwise open all.
+        const anyOpen = categories.some(c => !c.Collapsed);
+        const newState = anyOpen; // if any open, set Collapsed to true
+
+        categories.forEach(c => {
+            updateItem(c.Id, { Collapsed: newState });
+        });
+        renderBoard();
+    });
+
+    // Filtering
+    let searchTimeout;
+    filterSearch.addEventListener('input', () => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(renderBoard, 300);
+    });
+
+    filterPriority.addEventListener('change', () => {
+        let val = parseInt(filterPriority.value);
+        if (isNaN(val) || val < 1) {
+            val = 1;
+            filterPriority.value = 1;
+        }
+        renderBoard();
+    });
+
+    indicatorBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const filter = btn.dataset.filter;
+
+            // Toggle off if already selected
+            if (currentFilterMode === filter && filter !== 'all') {
+                currentFilterMode = 'all';
+            } else {
+                currentFilterMode = filter;
+            }
+
+            // Update UI for buttons
+            indicatorBtns.forEach(b => {
+                b.classList.remove('opacity-100');
+                b.classList.add('opacity-50');
+            });
+
+            if (currentFilterMode === 'all') {
+                const totalBtn = document.querySelector('[data-filter="all"]');
+                totalBtn.classList.remove('opacity-50');
+                totalBtn.classList.add('opacity-100');
+            } else {
+                const activeBtn = document.querySelector(`[data-filter="${currentFilterMode}"]`);
+                activeBtn.classList.remove('opacity-50');
+                activeBtn.classList.add('opacity-100');
+            }
+
+            renderBoard();
+        });
+    });
+
+    // Initial indicator UI setup
+    document.querySelector('[data-filter="all"]').classList.remove('opacity-50');
+    document.querySelector('[data-filter="all"]').classList.add('opacity-100');
 });
