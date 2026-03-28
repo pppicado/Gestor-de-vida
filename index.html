@@ -52,24 +52,200 @@
 </head>
 <body class="bg-gray-100 text-gray-800 font-sans min-h-screen flex flex-col">
 
-    <!-- Header -->
-    <header class="bg-indigo-600 text-white shadow-md py-4 px-6 flex justify-between items-center sticky top-0 z-10">
-        <h1 class="text-2xl font-bold"><i class="fas fa-tasks mr-2"></i> Mis Tareas</h1>
-        <div class="flex space-x-3">
-            <button id="btn-add-category" class="bg-indigo-500 hover:bg-indigo-400 px-4 py-2 rounded shadow transition text-sm flex items-center">
-                <i class="fas fa-plus mr-2"></i> Añadir Categoría
+    <style>
+        .sortable-ghost {
+            opacity: 0.4;
+            background-color: #f3f4f6;
+        }
+        .task-expand-enter {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .task-expand-enter-active {
+            max-height: 500px;
+        }
+        .task-expand-leave {
+            max-height: 500px;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in;
+        }
+        .task-expand-leave-active {
+            max-height: 0;
+        }
+        /* Custom scrollbar for better look */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Indicators Circular Progress */
+        .circular-progress {
+            position: relative;
+            width: 48px;
+            height: 48px;
+        }
+        .circular-progress svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+        .circular-progress circle {
+            fill: none;
+            stroke-width: 4;
+            stroke-linecap: round;
+        }
+        .circular-progress .bg-circle {
+            stroke: #e2e8f0; /* tailwind slate-200 */
+        }
+        .circular-progress .progress-circle {
+            stroke: #4f46e5; /* tailwind indigo-600 */
+            stroke-dasharray: 125.6; /* 2 * pi * r (r=20) */
+            stroke-dashoffset: 125.6; /* Will be updated via JS */
+            transition: stroke-dashoffset 0.5s ease;
+        }
+        .circular-progress .value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        /* Delete Mode active */
+        body.delete-mode-active .delete-btn-large {
+            display: inline-block !important;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans min-h-screen flex flex-col">
+
+    <!-- Top Action Bar -->
+    <div class="bg-gray-800 text-white py-2 px-6 flex justify-between items-center text-sm z-20 shadow">
+        <div class="flex items-center space-x-4">
+            <span class="font-bold tracking-wider text-gray-300">OPCIONES</span>
+            <button id="btn-import-csv" class="text-gray-300 hover:text-white transition flex items-center">
+                <i class="fas fa-file-import mr-1"></i> Importar
             </button>
-            <button id="btn-import-csv" class="bg-emerald-600 hover:bg-emerald-500 px-4 py-2 rounded shadow transition text-sm flex items-center">
-                <i class="fas fa-file-import mr-2"></i> Importar CSV
+            <button id="btn-export-csv" class="text-gray-300 hover:text-white transition flex items-center">
+                <i class="fas fa-file-export mr-1"></i> Exportar
             </button>
-            <button id="btn-export-csv" class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded shadow transition text-sm flex items-center">
-                <i class="fas fa-file-export mr-2"></i> Exportar CSV
+            <button id="btn-view-deleted" class="text-gray-300 hover:text-white transition flex items-center">
+                <i class="fas fa-trash-restore mr-1"></i> Ver Borrados
             </button>
-            <button id="btn-view-deleted" class="bg-gray-600 hover:bg-gray-500 px-4 py-2 rounded shadow transition text-sm flex items-center">
-                <i class="fas fa-trash-restore mr-2"></i> Ver Borrados
+            <button id="btn-toggle-delete-mode" class="text-red-400 hover:text-red-300 transition flex items-center border border-red-500 rounded px-2 py-0.5">
+                <i class="fas fa-trash-alt mr-1"></i> Borrar
+            </button>
+        </div>
+        <div class="flex items-center space-x-2">
+            <!-- Add global expand/collapse here -->
+            <button id="btn-toggle-all-categories" class="text-indigo-300 hover:text-indigo-100 transition flex items-center mr-4">
+                <i class="fas fa-compress-arrows-alt mr-1"></i> Expandir/Contraer Todo
+            </button>
+        </div>
+    </div>
+
+    <!-- Header / Filters -->
+    <header class="bg-white shadow-md py-4 px-6 flex flex-col md:flex-row justify-between items-start md:items-center sticky top-0 z-10 gap-4">
+
+        <!-- Left Side: Title and Search -->
+        <div class="flex items-center space-x-4 flex-grow max-w-xl">
+            <h1 class="text-xl font-bold text-indigo-700 flex-shrink-0"><i class="fas fa-tasks mr-1"></i> Mis Tareas</h1>
+
+            <div class="relative flex-grow">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                    <i class="fas fa-search text-gray-400"></i>
+                </span>
+                <input type="text" id="filter-search" placeholder="Buscar por nombre..." class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded focus:ring-indigo-500 focus:border-indigo-500 text-sm">
+            </div>
+
+            <div class="flex items-center flex-shrink-0 space-x-2">
+                <label class="text-xs text-gray-600 font-semibold" title="Prioridad mínima">Prioridad >=</label>
+                <input type="number" id="filter-priority" value="1" min="1" max="1000" class="w-16 border border-gray-300 rounded px-2 py-1 text-sm focus:ring-indigo-500">
+            </div>
+        </div>
+
+        <!-- Right Side: Indicators -->
+        <div class="flex items-center space-x-3 overflow-x-auto pb-1 md:pb-0">
+            <!-- Indicator: Totals -->
+            <button class="indicator-btn flex flex-col items-center group focus:outline-none" data-filter="all" title="Total (Tareas + Contadores)">
+                <div class="circular-progress">
+                    <svg viewBox="0 0 48 48">
+                        <circle cx="24" cy="24" r="20" class="bg-circle"></circle>
+                        <circle cx="24" cy="24" r="20" class="progress-circle" id="ind-total-circle"></circle>
+                    </svg>
+                    <div class="value" id="ind-total-val">0</div>
+                </div>
+                <span class="text-[10px] font-semibold text-gray-500 group-hover:text-indigo-600 mt-1">Totales</span>
+            </button>
+
+            <!-- Indicator: Hechas -->
+            <button class="indicator-btn flex flex-col items-center group focus:outline-none opacity-50 hover:opacity-100 transition-opacity" data-filter="completed" title="Hechas (Tareas + Contadores)">
+                <div class="circular-progress">
+                    <svg viewBox="0 0 48 48">
+                        <circle cx="24" cy="24" r="20" class="bg-circle"></circle>
+                        <circle cx="24" cy="24" r="20" class="progress-circle stroke-emerald-500" id="ind-done-circle"></circle>
+                    </svg>
+                    <div class="value" id="ind-done-val">0</div>
+                </div>
+                <span class="text-[10px] font-semibold text-gray-500 group-hover:text-emerald-600 mt-1">Hechas</span>
+            </button>
+
+            <!-- Indicator: Pendientes -->
+            <button class="indicator-btn flex flex-col items-center group focus:outline-none opacity-50 hover:opacity-100 transition-opacity" data-filter="pending" title="Pendientes">
+                <div class="circular-progress">
+                    <svg viewBox="0 0 48 48">
+                        <circle cx="24" cy="24" r="20" class="bg-circle"></circle>
+                        <circle cx="24" cy="24" r="20" class="progress-circle stroke-amber-500" id="ind-pending-circle"></circle>
+                    </svg>
+                    <div class="value" id="ind-pending-val">0</div>
+                </div>
+                <span class="text-[10px] font-semibold text-gray-500 group-hover:text-amber-600 mt-1">Pendientes</span>
+            </button>
+
+            <!-- Indicator: Progresivas -->
+            <button class="indicator-btn flex flex-col items-center group focus:outline-none opacity-50 hover:opacity-100 transition-opacity" data-filter="progressive" title="Progresivas (Progreso != 0)">
+                <div class="circular-progress">
+                    <svg viewBox="0 0 48 48">
+                        <circle cx="24" cy="24" r="20" class="bg-circle"></circle>
+                        <circle cx="24" cy="24" r="20" class="progress-circle stroke-blue-500" id="ind-prog-circle"></circle>
+                    </svg>
+                    <div class="value" id="ind-prog-val">0</div>
+                </div>
+                <span class="text-[10px] font-semibold text-gray-500 group-hover:text-blue-600 mt-1">Progresivas</span>
+            </button>
+
+            <!-- Indicator: Programadas -->
+            <button class="indicator-btn flex flex-col items-center group focus:outline-none opacity-50 hover:opacity-100 transition-opacity" data-filter="scheduled" title="Programadas (Reinicio != 0)">
+                <div class="circular-progress">
+                    <svg viewBox="0 0 48 48">
+                        <circle cx="24" cy="24" r="20" class="bg-circle"></circle>
+                        <circle cx="24" cy="24" r="20" class="progress-circle stroke-purple-500" id="ind-sched-circle"></circle>
+                    </svg>
+                    <div class="value" id="ind-sched-val">0</div>
+                </div>
+                <span class="text-[10px] font-semibold text-gray-500 group-hover:text-purple-600 mt-1">Programadas</span>
             </button>
         </div>
     </header>
+
+    <div class="px-6 py-2">
+        <button id="btn-add-category" class="bg-indigo-500 hover:bg-indigo-400 text-white px-4 py-2 rounded shadow transition text-sm flex items-center">
+            <i class="fas fa-plus mr-2"></i> Añadir Categoría
+        </button>
+    </div>
 
     <!-- Main Board -->
     <main class="flex-grow p-6 overflow-x-auto flex flex-col">
@@ -117,13 +293,20 @@
     <!-- Template for Category -->
     <template id="tpl-category">
         <div class="category-column bg-gray-200 rounded-lg shadow-sm flex flex-col w-80 min-w-[320px] max-h-full" data-id="">
+            <!-- Category Drag Handle -->
+            <div class="category-drag-handle flex justify-center items-center py-1 text-gray-400 hover:text-gray-600 cursor-move rounded-t-lg bg-gray-200 border-b border-gray-300">
+                <i class="fas fa-grip-horizontal"></i>
+            </div>
             <!-- Category Header -->
-            <div class="category-header p-3 flex justify-between items-center cursor-move border-b border-gray-300 bg-gray-200 rounded-t-lg">
+            <div class="category-header p-2 flex justify-between items-center border-b border-gray-300 bg-gray-200">
+                <button class="btn-toggle-category text-gray-500 hover:text-gray-800 transition px-2">
+                    <i class="fas fa-chevron-down"></i>
+                </button>
                 <div class="flex-grow mr-2">
                     <input type="text" class="category-name font-bold text-gray-700 bg-transparent border-none outline-none w-full focus:ring-2 focus:ring-indigo-300 rounded px-1" value="">
                 </div>
-                <button class="btn-delete-category text-gray-400 hover:text-red-500 transition px-1">
-                    <i class="fas fa-trash"></i>
+                <button class="btn-delete-category text-gray-400 hover:text-red-500 transition px-1 hidden delete-btn-large">
+                    <i class="fas fa-trash fa-lg"></i>
                 </button>
             </div>
             <!-- Task List Container -->
@@ -141,32 +324,36 @@
 
     <!-- Template for Task -->
     <template id="tpl-task">
-        <div class="task-item bg-white p-3 rounded shadow-sm border border-gray-200 cursor-move" data-id="">
-            <div class="flex items-start">
-                <div class="pt-1">
-                    <input type="checkbox" class="task-checkbox w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500 cursor-pointer">
-                </div>
-                <div class="ml-3 flex-grow min-w-0">
-                    <input type="text" class="task-name text-sm text-gray-800 w-full border-none p-0 focus:ring-0 bg-transparent mb-1" value="" placeholder="Nombre de la tarea">
-                    <!-- Badges for extra info -->
-                    <div class="flex space-x-2 text-xs text-gray-500 mt-1 task-badges cursor-pointer">
-                        <span class="badge-counter" title="Veces realizada"><i class="fas fa-redo-alt mr-1"></i> <span class="counter-val">0</span></span>
-                        <span class="badge-percentage" title="Progreso"><i class="fas fa-percent mr-1"></i> <span class="percentage-val">0</span>%</span>
-                        <span class="badge-note text-indigo-400 hidden" title="Tiene nota"><i class="fas fa-sticky-note"></i></span>
+        <div class="task-item bg-white rounded shadow-sm border border-gray-200 flex flex-col" data-id="">
+            <!-- Task Drag Handle -->
+            <div class="task-drag-handle flex justify-center items-center py-1 bg-gray-50 text-gray-400 hover:text-gray-600 cursor-move border-b border-gray-100 rounded-t">
+                <i class="fas fa-grip-horizontal"></i>
+            </div>
+            <div class="p-2 flex items-start">
+                <div class="flex-grow min-w-0 flex flex-col">
+                    <div class="flex justify-between items-center mb-1">
+                        <input type="text" class="task-name text-sm text-gray-800 w-full border-none p-0 focus:ring-0 bg-transparent" value="" placeholder="Nombre de la tarea">
+                    </div>
+                    <!-- Badges for extra info (Clickable to expand) -->
+                    <div class="task-badges-container cursor-pointer p-1 -ml-1 rounded hover:bg-gray-50 flex items-center justify-between">
+                        <div class="flex space-x-2 text-xs text-gray-500">
+                            <span class="badge-counter" title="Veces realizada"><i class="fas fa-redo-alt mr-1"></i> <span class="counter-val">0</span></span>
+                            <span class="badge-percentage" title="Progreso"><i class="fas fa-percent mr-1"></i> <span class="percentage-val">0</span>%</span>
+                            <span class="badge-note text-indigo-400 hidden" title="Tiene nota"><i class="fas fa-sticky-note"></i></span>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-300 text-xs expand-icon-indicator"></i>
                     </div>
                 </div>
-                <div class="flex flex-col space-y-2 ml-2">
-                    <button class="btn-expand-task text-gray-400 hover:text-indigo-600 transition" title="Expandir opciones">
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <button class="btn-delete-task text-gray-400 hover:text-red-500 transition" title="Borrar tarea">
-                        <i class="fas fa-times"></i>
+                <div class="flex items-center space-x-2 ml-2 pt-1">
+                    <input type="checkbox" class="task-checkbox w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500 cursor-pointer">
+                    <button class="btn-delete-task text-gray-400 hover:text-red-500 transition hidden delete-btn-large" title="Borrar tarea">
+                        <i class="fas fa-times fa-lg"></i>
                     </button>
                 </div>
             </div>
 
             <!-- Expanded Area -->
-            <div class="task-expanded hidden mt-3 pt-3 border-t border-gray-100 space-y-3 cursor-default">
+            <div class="task-expanded hidden px-3 pb-3 pt-1 border-t border-gray-100 space-y-3 cursor-default bg-gray-50 rounded-b">
                 <div class="flex items-center justify-between">
                     <label class="text-xs font-semibold text-gray-600">Contador</label>
                     <div class="flex items-center space-x-2">
@@ -186,6 +373,33 @@
                     <label class="text-xs font-semibold text-gray-600 mb-1 block">Nota</label>
                     <textarea class="input-note w-full border border-gray-300 rounded p-2 text-sm focus:ring-indigo-500 focus:border-indigo-500" rows="2" placeholder="Añadir nota adicional..."></textarea>
                 </div>
+
+                <!-- More Details -->
+                <details class="group mt-2 text-sm">
+                    <summary class="cursor-pointer font-semibold text-indigo-600 hover:text-indigo-800 text-xs flex items-center select-none">
+                        <i class="fas fa-plus-square mr-1 group-open:hidden"></i>
+                        <i class="fas fa-minus-square mr-1 hidden group-open:inline-block"></i>
+                        Más...
+                    </summary>
+                    <div class="mt-2 space-y-2 border-l-2 border-indigo-200 pl-2">
+                        <div class="flex justify-between items-center">
+                            <label class="text-xs text-gray-600">Prioridad</label>
+                            <input type="number" class="input-priority w-20 text-center text-xs border-gray-300 rounded px-1 py-0.5" value="500" min="1" max="1000">
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <label class="text-xs text-gray-600">Fecha creación</label>
+                            <input type="date" class="input-creation-date w-28 text-xs border-gray-300 rounded px-1 py-0.5">
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <label class="text-xs text-gray-600">Fecha iteración</label>
+                            <input type="date" class="input-iteration-date w-28 text-xs border-gray-300 rounded px-1 py-0.5">
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <label class="text-xs text-gray-600">Reinicio (días)</label>
+                            <input type="number" class="input-reset-days w-20 text-center text-xs border-gray-300 rounded px-1 py-0.5" value="0" min="0">
+                        </div>
+                    </div>
+                </details>
             </div>
         </div>
     </template>
