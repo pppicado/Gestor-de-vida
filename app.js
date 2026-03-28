@@ -284,13 +284,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function addCategory(name = "Nueva Categoría") {
         const categories = getCategories();
-        const maxOrder = categories.length > 0 ? Math.max(...categories.map(c => c.Order)) : -1;
+        // Update order of existing categories to make room at the beginning
+        // Update in-place to avoid multiple saveData calls
+        categories.forEach(c => {
+            const idx = data.findIndex(item => item.Id === c.Id);
+            if (idx !== -1) {
+                data[idx].Order += 1;
+            }
+        });
+
         const newCat = {
             Id: generateUUID(),
             Type: 'category',
             ParentId: '',
             Name: name,
-            Order: maxOrder + 1,
+            Order: 0,
             Completed: false,
             Counter: 0,
             Percentage: 0,
@@ -391,7 +399,10 @@ document.addEventListener('DOMContentLoaded', () => {
         updateIndicators();
 
         // Destroy old sortables
-        if (sortableCategories) sortableCategories.destroy();
+        if (sortableCategories) {
+            sortableCategories.destroy();
+            sortableCategories = null;
+        }
         sortableTasksInstances.forEach(s => s.destroy());
         sortableTasksInstances = [];
 
@@ -934,8 +945,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnToggleDeleteMode.addEventListener('click', () => {
         document.body.classList.toggle('delete-mode-active');
-        btnToggleDeleteMode.classList.toggle('bg-red-500');
-        btnToggleDeleteMode.classList.toggle('text-white');
+        if (document.body.classList.contains('delete-mode-active')) {
+            btnToggleDeleteMode.classList.remove('text-indigo-300', 'hover:text-indigo-100');
+            btnToggleDeleteMode.classList.add('text-red-400', 'hover:text-red-300');
+        } else {
+            btnToggleDeleteMode.classList.remove('text-red-400', 'hover:text-red-300');
+            btnToggleDeleteMode.classList.add('text-indigo-300', 'hover:text-indigo-100');
+        }
     });
 
     btnToggleAllCategories.addEventListener('click', () => {
