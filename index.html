@@ -299,6 +299,10 @@
                 <div class="category-drag-handle text-gray-400 hover:text-gray-600 cursor-move px-2">
                     <i class="fas fa-grip-vertical"></i>
                 </div>
+                <!-- Add Task Button Header (Right of Name, visible when expanded) -->
+                <button class="btn-add-task-header text-indigo-500 hover:text-indigo-700 transition px-2 hidden" title="Añadir Tarea">
+                    <i class="fas fa-plus-circle fa-lg"></i>
+                </button>
                 <button class="btn-delete-category text-gray-400 hover:text-red-500 transition px-1 hidden delete-btn-large">
                     <i class="fas fa-trash fa-lg"></i>
                 </button>
@@ -306,12 +310,6 @@
             <!-- Task List Container -->
             <div class="task-list flex-grow p-2 overflow-y-auto min-h-[50px] space-y-2">
                 <!-- Tasks will be injected here -->
-            </div>
-            <!-- Add Task Button -->
-            <div class="p-2 border-t border-gray-300">
-                <button class="btn-add-task w-full text-left text-gray-600 hover:text-gray-800 hover:bg-gray-300 py-1 px-2 rounded transition">
-                    <i class="fas fa-plus mr-1"></i> Añadir tarea...
-                </button>
             </div>
         </div>
     </template>
