@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let importFileData = null;
     let currentFilterMode = 'all'; // all, completed, pending, progressive, scheduled, forecast
     let isListView = false;
+    let lastAddedTaskId = null;
 
     // Helper Functions for Dates
     function getTodayString() {
@@ -170,26 +171,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Apply Filters
         const searchStr = filterSearch.value.trim().toLowerCase();
-        if (searchStr) {
-            tasks = tasks.filter(t => t.Name.toLowerCase().includes(searchStr));
-        }
-
         const prio = parseInt(filterPriority.value);
-        if (!isNaN(prio)) {
-            tasks = tasks.filter(t => t.Priority >= prio);
-        }
 
-        if (currentFilterMode === 'completed') {
-            tasks = tasks.filter(t => t.Completed);
-        } else if (currentFilterMode === 'pending') {
-            tasks = tasks.filter(t => !t.Completed);
-        } else if (currentFilterMode === 'progressive') {
-            tasks = tasks.filter(t => t.Percentage > 0);
-        } else if (currentFilterMode === 'scheduled') {
-            tasks = tasks.filter(t => t.ResetDays > 0);
-        } else if (currentFilterMode === 'forecast') {
-            tasks = tasks.filter(t => t.Forecast !== 0.5);
-        }
+        tasks = tasks.filter(t => {
+            // Always show the last added task even if it doesn't match filters
+            if (lastAddedTaskId && t.Id === lastAddedTaskId) return true;
+
+            if (searchStr && !t.Name.toLowerCase().includes(searchStr)) return false;
+            if (!isNaN(prio) && t.Priority < prio) return false;
+
+            if (currentFilterMode === 'completed' && !t.Completed) return false;
+            if (currentFilterMode === 'pending' && t.Completed) return false;
+            if (currentFilterMode === 'progressive' && t.Percentage <= 0) return false;
+            if (currentFilterMode === 'scheduled' && t.ResetDays <= 0) return false;
+            if (currentFilterMode === 'forecast' && t.Forecast === 0.5) return false;
+
+            return true;
+        });
 
         return tasks.sort((a, b) => a.Order - b.Order);
     }
@@ -344,14 +342,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function addTask(parentId, name = "Nueva Tarea") {
-        const tasks = getTasks(parentId);
-        const maxOrder = tasks.length > 0 ? Math.max(...tasks.map(t => t.Order)) : -1;
+        // Increment order of existing tasks in this category
+        data.forEach(item => {
+            if (item.Type === 'task' && item.ParentId === parentId && !item.Deleted) {
+                item.Order += 1;
+            }
+        });
+
+        const newId = generateUUID();
         const newTask = {
-            Id: generateUUID(),
+            Id: newId,
             Type: 'task',
             ParentId: parentId,
             Name: name,
-            Order: maxOrder + 1,
+            Order: 0,
             Completed: false,
             Counter: 0,
             Percentage: 0,
@@ -365,6 +369,7 @@ document.addEventListener('DOMContentLoaded', () => {
             Forecast: 0.5
         };
         data.push(newTask);
+        lastAddedTaskId = newId;
         saveData();
         renderBoard();
     }
@@ -1011,11 +1016,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Filtering
     let searchTimeout;
     filterSearch.addEventListener('input', () => {
+        lastAddedTaskId = null;
         clearTimeout(searchTimeout);
         searchTimeout = setTimeout(renderBoard, 300);
     });
 
     filterPriority.addEventListener('change', () => {
+        lastAddedTaskId = null;
         let val = parseInt(filterPriority.value);
         if (isNaN(val) || val < 1) {
             val = 1;
@@ -1026,6 +1033,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     indicatorBtns.forEach(btn => {
         btn.addEventListener('click', () => {
+            lastAddedTaskId = null;
             const filter = btn.dataset.filter;
 
             // Toggle off if already selected
