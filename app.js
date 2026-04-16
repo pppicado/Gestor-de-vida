@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Filters and Indicators
     const filterSearch = document.getElementById('filter-search');
-    const filterPriority = document.getElementById('filter-priority');
+    let filterPriorityValue = 0; // Current priority filter value
     const indicatorBtns = document.querySelectorAll('.indicator-btn');
 
     // Indicators SVG Elements
@@ -112,6 +112,92 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Star Priority Component Helper
+    function createStarPriorityComponent(initialValue, onChange, sizeClass = 'size-md', interactive = true) {
+        const container = document.createElement('div');
+        container.className = `stars-priority ${sizeClass}`;
+        let currentValue = initialValue;
+        let pressTimer = null;
+
+        const render = () => {
+            let yellowStars = 0;
+            if (currentValue >= 800) yellowStars = 5;
+            else if (currentValue >= 600) yellowStars = 4;
+            else if (currentValue >= 400) yellowStars = 3;
+            else if (currentValue >= 200) yellowStars = 2;
+            else if (currentValue >= 1) yellowStars = 1;
+
+            container.innerHTML = `
+                <div class="star-container flex items-center">
+                    ${[1, 2, 3, 4, 5].map(i => `
+                        <i class="fas fa-star star ${i <= yellowStars ? 'star-yellow' : 'star-gray'}"></i>
+                    `).join('')}
+                </div>
+                <input type="number" class="priority-numeric-input" min="0" max="999" value="${currentValue}">
+            `;
+
+            if (interactive) {
+                const starContainer = container.querySelector('.star-container');
+                const numericInput = container.querySelector('.priority-numeric-input');
+
+                // Click to cycle
+                starContainer.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (container.classList.contains('edit-mode')) return;
+
+                    // Cycle: 0 -> 100 -> 300 -> 500 -> 700 -> 900 -> 0
+                    if (currentValue === 0) currentValue = 100;
+                    else if (currentValue < 200) currentValue = 300;
+                    else if (currentValue < 400) currentValue = 500;
+                    else if (currentValue < 600) currentValue = 700;
+                    else if (currentValue < 800) currentValue = 900;
+                    else currentValue = 0;
+
+                    render();
+                    onChange(currentValue);
+                });
+
+                // Long press for numeric input
+                const startPress = () => {
+                    pressTimer = setTimeout(() => {
+                        container.classList.add('edit-mode');
+                        numericInput.focus();
+                        numericInput.select();
+                    }, 1000);
+                };
+
+                const clearPress = () => {
+                    clearTimeout(pressTimer);
+                };
+
+                starContainer.addEventListener('mousedown', startPress);
+                starContainer.addEventListener('touchstart', startPress);
+                starContainer.addEventListener('mouseup', clearPress);
+                starContainer.addEventListener('mouseleave', clearPress);
+                starContainer.addEventListener('touchend', clearPress);
+
+                numericInput.addEventListener('blur', () => {
+                    let val = parseInt(numericInput.value);
+                    if (isNaN(val)) val = 0;
+                    val = Math.max(0, Math.min(999, val));
+                    currentValue = val;
+                    container.classList.remove('edit-mode');
+                    render();
+                    onChange(currentValue);
+                });
+
+                numericInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        numericInput.blur();
+                    }
+                });
+            }
+        };
+
+        render();
+        return container;
+    }
+
     // UUID Generator
     function generateUUID() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -171,7 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Apply Filters
         const searchStr = filterSearch.value.trim().toLowerCase();
-        const prio = parseInt(filterPriority.value);
+        const prio = filterPriorityValue;
 
         tasks = tasks.filter(t => {
             // Always show the last added task even if it doesn't match filters
@@ -202,7 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tasks = tasks.filter(t => t.Name.toLowerCase().includes(searchStr));
         }
 
-        const prio = parseInt(filterPriority.value);
+        const prio = filterPriorityValue;
         if (!isNaN(prio)) {
             tasks = tasks.filter(t => t.Priority >= prio);
         }
@@ -439,11 +525,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
         board.innerHTML = '';
 
+        // Initialize filter priority stars if they don't exist in the header yet (handled once)
+        const filterPrioStarsContainer = document.getElementById('filter-priority-stars');
+        if (filterPrioStarsContainer && filterPrioStarsContainer.children.length === 0) {
+            const filterStars = createStarPriorityComponent(filterPriorityValue, (newVal) => {
+                filterPriorityValue = newVal;
+                lastAddedTaskId = null;
+                renderBoard();
+            });
+            filterPrioStarsContainer.appendChild(filterStars);
+        }
+
         // Determine if there is any active filter that should hide empty categories
         const searchStr = filterSearch.value.trim().toLowerCase();
-        const prio = parseInt(filterPriority.value);
+        const prio = filterPriorityValue;
         const hasActiveFilter = (searchStr !== '') ||
-                                (!isNaN(prio) && prio > 1) ||
+                                (prio > 0) ||
                                 (currentFilterMode !== 'all');
 
         if (isListView) {
@@ -667,7 +764,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const percentVal = taskEl.querySelector('.percentage-val');
 
         // Badges
-        const priorityValBadge = taskEl.querySelector('.priority-val');
+        const badgePriorityContainer = taskEl.querySelector('.badge-priority .priority-stars-container');
+        const detailPriorityContainer = taskEl.querySelector('#detail-priority-stars');
         const forecastValBadge = taskEl.querySelector('.forecast-val');
 
         const noteBadge = taskEl.querySelector('.badge-note');
@@ -690,7 +788,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const inputNote = taskEl.querySelector('.input-note');
 
         // "Más..." inputs
-        const inputPriority = taskEl.querySelector('.input-priority');
         const inputCreationDate = taskEl.querySelector('.input-creation-date');
         const inputIterationDate = taskEl.querySelector('.input-iteration-date');
         const inputResetDays = taskEl.querySelector('.input-reset-days');
@@ -714,8 +811,19 @@ document.addEventListener('DOMContentLoaded', () => {
             noteBadge.classList.remove('hidden');
         }
 
-        inputPriority.value = task.Priority;
-        priorityValBadge.textContent = task.Priority;
+        // Render priority stars
+        const renderTaskStars = (val) => {
+            badgePriorityContainer.innerHTML = '';
+            badgePriorityContainer.appendChild(createStarPriorityComponent(val, null, 'size-sm', false));
+
+            detailPriorityContainer.innerHTML = '';
+            detailPriorityContainer.appendChild(createStarPriorityComponent(val, (newVal) => {
+                updateItem(task.Id, { Priority: newVal });
+                renderTaskStars(newVal);
+                if (isListView) renderBoard();
+            }, 'size-md', true));
+        };
+        renderTaskStars(task.Priority);
 
         inputForecast.value = task.Forecast;
         forecastValBadge.textContent = task.Forecast;
@@ -811,18 +919,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // More... Inputs
-        inputPriority.addEventListener('change', (e) => {
-            let val = parseInt(e.target.value);
-            if (isNaN(val) || val < 1) val = 1;
-            if (val > 1000) val = 1000;
-            e.target.value = val;
-            priorityValBadge.textContent = val;
-            updateItem(task.Id, { Priority: val });
-
-            // Re-render if in list view as priority change affects sort
-            if(isListView) renderBoard();
-        });
-
         inputCreationDate.addEventListener('change', (e) => {
             updateItem(task.Id, { CreationDate: e.target.value });
         });
@@ -1078,15 +1174,6 @@ document.addEventListener('DOMContentLoaded', () => {
         searchTimeout = setTimeout(renderBoard, 300);
     });
 
-    filterPriority.addEventListener('change', () => {
-        lastAddedTaskId = null;
-        let val = parseInt(filterPriority.value);
-        if (isNaN(val) || val < 1) {
-            val = 1;
-            filterPriority.value = 1;
-        }
-        renderBoard();
-    });
 
     indicatorBtns.forEach(btn => {
         btn.addEventListener('click', () => {

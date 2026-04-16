@@ -106,6 +106,57 @@
             overflow: hidden;
             pointer-events: none;
         }
+
+        /* Overlapping Stars Priority Component */
+        .stars-priority {
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            vertical-align: middle;
+        }
+        .stars-priority .star {
+            position: relative;
+            margin-right: -0.6em; /* Overlap amount */
+            transition: transform 0.1s;
+            pointer-events: none; /* Let parent handle clicks/longpress */
+        }
+        .stars-priority .star:last-child {
+            margin-right: 0;
+        }
+        /* Stacking order: left stars on top of right stars */
+        .stars-priority .star:nth-child(1) { z-index: 5; }
+        .stars-priority .star:nth-child(2) { z-index: 4; }
+        .stars-priority .star:nth-child(3) { z-index: 3; }
+        .stars-priority .star:nth-child(4) { z-index: 2; }
+        .stars-priority .star:nth-child(5) { z-index: 1; }
+
+        .stars-priority.size-sm .star {
+            font-size: 0.85rem;
+            margin-right: -0.5em;
+        }
+        .stars-priority.size-md .star {
+            font-size: 1.25rem;
+        }
+
+        .star-yellow { color: #fbbf24; } /* tailwind yellow-400 */
+        .star-gray { color: #d1d5db; } /* tailwind gray-300 */
+
+        /* Hide numeric input by default in the stars component */
+        .stars-priority .priority-numeric-input {
+            display: none;
+            width: 50px;
+            padding: 2px;
+            font-size: 0.875rem;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+        }
+        .stars-priority.edit-mode .star-container {
+            display: none !important;
+        }
+        .stars-priority.edit-mode .priority-numeric-input {
+            display: inline-block;
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 font-sans min-h-screen flex flex-col">
@@ -160,8 +211,8 @@
             </div>
 
             <div class="flex items-center flex-shrink-0 space-x-2">
-                <label class="text-gray-600 font-semibold" title="Prioridad mínima"><i class="fas fa-star text-yellow-400 fa-lg"></i></label>
-                <input type="number" id="filter-priority" value="1" min="1" max="1000" class="w-16 border border-gray-300 rounded px-2 py-1 text-sm focus:ring-indigo-500">
+                <label class="text-gray-600 font-semibold" title="Prioridad mínima"></label>
+                <div class="priority-stars-container size-md" id="filter-priority-stars"></div>
             </div>
         </div>
 
@@ -332,7 +383,9 @@
                         <div class="flex space-x-2 text-xs text-gray-500">
                             <span class="badge-counter" title="Veces realizada"><i class="fas fa-redo-alt mr-1"></i> <span class="counter-val">0</span></span>
                             <span class="badge-percentage" title="Progreso"><i class="fas fa-percent mr-1"></i> <span class="percentage-val">0</span>%</span>
-                            <span class="badge-priority" title="Prioridad"><i class="fas fa-star mr-1 text-yellow-500"></i> <span class="priority-val">500</span></span>
+                            <span class="badge-priority flex items-center" title="Prioridad">
+                                <div class="priority-stars-container size-sm pointer-events-none"></div>
+                            </span>
                             <span class="badge-forecast" title="Previsión (horas)"><i class="fas fa-clock mr-1 text-pink-500"></i> <span class="forecast-val">0.5</span>h</span>
                             <span class="badge-note text-indigo-400 hidden" title="Tiene nota"><i class="fas fa-sticky-note"></i></span>
                         </div>
@@ -388,7 +441,7 @@
                         <div class="mt-2 space-y-2 border-l-2 border-indigo-200 pl-2">
                             <div class="flex justify-between items-center">
                                 <label class="text-xs text-gray-600">Prioridad</label>
-                                <input type="number" class="input-priority w-20 text-center text-xs border-gray-300 rounded px-1 py-0.5" value="500" min="1" max="1000">
+                                <div class="priority-stars-container size-md" id="detail-priority-stars"></div>
                             </div>
                             <div class="flex justify-between items-center">
                                 <label class="text-xs text-gray-600">Fecha creación</label>
