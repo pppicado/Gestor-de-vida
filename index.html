@@ -88,6 +88,24 @@
         body.delete-mode-active .delete-btn-large {
             display: inline-block !important;
         }
+
+        /* Filter Bar Animation */
+        #filter-bar {
+            transition: all 0.3s ease-in-out;
+            max-height: 500px;
+            opacity: 1;
+            overflow: visible;
+        }
+        #filter-bar.filters-hidden {
+            max-height: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            margin-top: 0;
+            margin-bottom: 0;
+            opacity: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 font-sans min-h-screen flex flex-col">
@@ -119,11 +137,14 @@
             <button id="btn-toggle-list-view" class="text-indigo-300 hover:text-indigo-100 transition flex items-center sm:mr-4" title="Alternar Vista">
                 <i class="fas fa-list sm:mr-1"></i> <span class="hidden md:inline">Alternar Vista</span>
             </button>
+            <button id="btn-toggle-filters" class="text-indigo-300 hover:text-indigo-100 transition flex items-center" title="Mostrar/Ocultar Filtros">
+                <i class="fas fa-filter sm:mr-1"></i> <span class="hidden md:inline">Filtros</span>
+            </button>
         </div>
     </div>
 
     <!-- Header / Filters -->
-    <header class="bg-white shadow-md py-4 px-6 flex flex-col md:flex-row justify-between items-start md:items-center z-10 gap-4">
+    <header id="filter-bar" class="bg-white shadow-md py-4 px-6 flex flex-col md:flex-row justify-between items-start md:items-center z-10 gap-4">
 
         <!-- Left Side: Title and Search -->
         <div class="flex items-center space-x-4 flex-grow max-w-xl">
