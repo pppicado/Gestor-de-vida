@@ -501,6 +501,25 @@ document.addEventListener('DOMContentLoaded', () => {
             const dragHandle = catEl.querySelector('.category-drag-handle');
             const btnAddTaskHeader = catEl.querySelector('.btn-add-task-header');
 
+            const toggleCategory = () => {
+                const isCollapsed = catTaskList.classList.contains('hidden');
+                const newState = !isCollapsed;
+                updateItem(cat.Id, { Collapsed: newState });
+                if (newState) {
+                    catTaskList.classList.add('hidden');
+                    toggleIcon.classList.remove('fa-chevron-down');
+                    toggleIcon.classList.add('fa-chevron-up');
+                    dragHandle.classList.remove('hidden');
+                    btnAddTaskHeader.classList.add('hidden');
+                } else {
+                    catTaskList.classList.remove('hidden');
+                    toggleIcon.classList.remove('fa-chevron-up');
+                    toggleIcon.classList.add('fa-chevron-down');
+                    dragHandle.classList.add('hidden');
+                    btnAddTaskHeader.classList.remove('hidden');
+                }
+            };
+
             if (cat.Collapsed) {
                 catTaskList.classList.add('hidden');
                 toggleIcon.classList.remove('fa-chevron-down');
@@ -515,11 +534,43 @@ document.addEventListener('DOMContentLoaded', () => {
                 btnAddTaskHeader.classList.remove('hidden');
             }
 
-            btnToggleCat.addEventListener('click', () => {
-                const isCollapsed = catTaskList.classList.contains('hidden');
-                updateItem(cat.Id, { Collapsed: !isCollapsed });
-                renderBoard(); // Re-render to apply the class cleanly, or just toggle DOM (we re-render to keep it simple)
-            });
+            btnToggleCat.addEventListener('click', toggleCategory);
+
+            // Interaction logic: 1 click to edit if empty, 2 clicks if not.
+            // If it has tasks, 1 click toggles expansion.
+            const hasActiveTasks = data.some(i => i.Type === 'task' && i.ParentId === cat.Id && !i.Deleted);
+
+            if (hasActiveTasks) {
+                nameInput.readOnly = true;
+                nameInput.style.cursor = 'pointer';
+
+                nameInput.addEventListener('click', () => {
+                    if (nameInput.readOnly) {
+                        toggleCategory();
+                    }
+                });
+
+                nameInput.addEventListener('dblclick', () => {
+                    nameInput.readOnly = false;
+                    nameInput.style.cursor = 'text';
+                    nameInput.focus();
+                    nameInput.select();
+                });
+
+                nameInput.addEventListener('blur', () => {
+                    nameInput.readOnly = true;
+                    nameInput.style.cursor = 'pointer';
+                });
+
+                nameInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        nameInput.blur();
+                    }
+                });
+            } else {
+                nameInput.readOnly = false;
+                nameInput.style.cursor = 'text';
+            }
 
             // Delete category
             catEl.querySelector('.btn-delete-category').addEventListener('click', () => {
