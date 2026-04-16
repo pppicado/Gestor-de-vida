@@ -586,6 +586,12 @@ document.addEventListener('DOMContentLoaded', () => {
             catTaskList.dataset.categoryId = cat.Id;
             const tasks = getTasks(cat.Id);
 
+            // Update task count indicator
+            const taskCountEl = catEl.querySelector('.category-task-count');
+            if (taskCountEl) {
+                taskCountEl.textContent = tasks.length;
+            }
+
             tasks.forEach(task => {
                 const taskNode = createDOMTask(task);
                 catTaskList.appendChild(taskNode);
