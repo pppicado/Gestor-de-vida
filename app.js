@@ -377,12 +377,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function virtualDeleteItem(id) {
+    function virtualDeleteItem(id, skipConfirm = false) {
         const idx = data.findIndex(i => i.Id === id);
         if (idx !== -1) {
             const item = data[idx];
             if (item.Type === 'category') {
-                if (confirm(`¿Estás seguro de que quieres borrar la categoría "${item.Name}"? (Podrás restaurarla desde la vista de borrados)`)) {
+                if (skipConfirm || confirm(`¿Estás seguro de que quieres borrar la categoría "${item.Name}"? (Podrás restaurarla desde la vista de borrados)`)) {
                     data[idx].Deleted = true;
                     // Also delete all tasks inside it
                     data.forEach(t => {
@@ -672,7 +672,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         btnDelete.addEventListener('click', () => {
-            virtualDeleteItem(task.Id);
+            virtualDeleteItem(task.Id, true); // true skips confirm as per requirements for this specific button
         });
 
         // Expand/Collapse
