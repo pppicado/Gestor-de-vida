@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnAddCategory = document.getElementById('btn-add-category');
     const btnToggleAllCategories = document.getElementById('btn-toggle-all-categories');
     const btnToggleListView = document.getElementById('btn-toggle-list-view');
+    const btnToggleFilters = document.getElementById('btn-toggle-filters');
+    const filterBar = document.getElementById('filter-bar');
     const btnToggleIndicators = document.getElementById('btn-toggle-indicators');
     const indicatorsContainer = document.getElementById('indicators-container');
     const fileUpload = document.getElementById('file-upload');
@@ -48,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // State Management
     let data = [];
+    let filtersVisible = true;
     let sortableCategories = null;
     let sortableTasksInstances = [];
     let importFileData = null;
@@ -65,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize
     loadData();
+    loadFilterVisibility();
     checkTaskResets();
     renderBoard();
     updateIndicators();
@@ -131,6 +135,28 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } else {
             data = [];
+        }
+    }
+
+    function loadFilterVisibility() {
+        const stored = localStorage.getItem('filtersVisible');
+        if (stored !== null) {
+            filtersVisible = stored === 'true';
+        } else {
+            filtersVisible = true;
+        }
+        applyFilterVisibility();
+    }
+
+    function applyFilterVisibility() {
+        if (filtersVisible) {
+            filterBar.classList.remove('filters-hidden');
+            btnToggleFilters.classList.remove('text-indigo-300');
+            btnToggleFilters.classList.add('text-indigo-100');
+        } else {
+            filterBar.classList.add('filters-hidden');
+            btnToggleFilters.classList.remove('text-indigo-100');
+            btnToggleFilters.classList.add('text-indigo-300');
         }
     }
 
@@ -952,6 +978,12 @@ document.addEventListener('DOMContentLoaded', () => {
             btnToggleDeleteMode.classList.remove('text-red-400', 'hover:text-red-300');
             btnToggleDeleteMode.classList.add('text-indigo-300', 'hover:text-indigo-100');
         }
+    });
+
+    btnToggleFilters.addEventListener('click', () => {
+        filtersVisible = !filtersVisible;
+        localStorage.setItem('filtersVisible', filtersVisible);
+        applyFilterVisibility();
     });
 
     btnToggleAllCategories.addEventListener('click', () => {
