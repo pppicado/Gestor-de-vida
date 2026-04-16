@@ -342,9 +342,6 @@
                 </div>
                 <div class="flex items-center space-x-2 ml-2 pt-1">
                     <input type="checkbox" class="task-checkbox w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500 cursor-pointer">
-                    <button class="btn-delete-task text-gray-400 hover:text-red-500 transition hidden delete-btn-large" title="Borrar tarea">
-                        <i class="fas fa-times fa-lg"></i>
-                    </button>
                 </div>
             </div>
 
@@ -378,33 +375,37 @@
                     <textarea class="input-note w-full border border-gray-300 rounded p-2 text-sm focus:ring-indigo-500 focus:border-indigo-500" rows="2" placeholder="Añadir nota adicional..."></textarea>
                 </div>
 
-                <!-- More Details -->
-                <details class="group mt-2 text-sm">
-                    <summary class="cursor-pointer font-semibold text-indigo-600 hover:text-indigo-800 text-xs flex items-center select-none">
-                        <i class="fas fa-plus-square mr-1 group-open:hidden"></i>
-                        <i class="fas fa-minus-square mr-1 hidden group-open:inline-block"></i>
-                        Más...
-                    </summary>
-                    <div class="mt-2 space-y-2 border-l-2 border-indigo-200 pl-2">
-                        <div class="flex justify-between items-center">
-                            <label class="text-xs text-gray-600">Prioridad</label>
-                            <input type="number" class="input-priority w-20 text-center text-xs border-gray-300 rounded px-1 py-0.5" value="500" min="1" max="1000">
+                <!-- More Details & Delete -->
+                <div class="flex justify-between items-start mt-2 border-t pt-2 border-gray-200">
+                    <button class="btn-delete-task text-gray-400 hover:text-red-500 transition" title="Borrar tarea">
+                        <i class="fas fa-trash-alt fa-lg"></i>
+                    </button>
+                    <details class="group text-sm">
+                        <summary class="cursor-pointer font-semibold text-indigo-600 hover:text-indigo-800 text-xs flex items-center justify-end select-none">
+                            Planificación
+                            <i class="fas fa-plus-square ml-1 group-open:hidden"></i>
+                            <i class="fas fa-minus-square ml-1 hidden group-open:inline-block"></i>
+                        </summary>
+                        <div class="mt-2 space-y-2 border-l-2 border-indigo-200 pl-2">
+                            <div class="flex justify-between items-center">
+                                <label class="text-xs text-gray-600">Prioridad</label>
+                                <input type="number" class="input-priority w-20 text-center text-xs border-gray-300 rounded px-1 py-0.5" value="500" min="1" max="1000">
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <label class="text-xs text-gray-600">Fecha creación</label>
+                                <input type="date" class="input-creation-date w-28 text-xs border-gray-300 rounded px-1 py-0.5">
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <label class="text-xs text-gray-600">Fecha iteración</label>
+                                <input type="date" class="input-iteration-date w-28 text-xs border-gray-300 rounded px-1 py-0.5">
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <label class="text-xs text-gray-600">Reinicio (días)</label>
+                                <input type="number" class="input-reset-days w-20 text-center text-xs border-gray-300 rounded px-1 py-0.5" value="0" min="0">
+                            </div>
                         </div>
-                        <div class="flex justify-between items-center">
-                            <label class="text-xs text-gray-600">Fecha creación</label>
-                            <input type="date" class="input-creation-date w-28 text-xs border-gray-300 rounded px-1 py-0.5">
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <label class="text-xs text-gray-600">Fecha iteración</label>
-                            <input type="date" class="input-iteration-date w-28 text-xs border-gray-300 rounded px-1 py-0.5">
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <label class="text-xs text-gray-600">Reinicio (días)</label>
-                            <input type="number" class="input-reset-days w-20 text-center text-xs border-gray-300 rounded px-1 py-0.5" value="0" min="0">
-                        </div>
-                    </div>
-                </details>
-            </div>
+                    </details>
+                </div>
         </div>
     </template>
 
