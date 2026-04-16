@@ -493,11 +493,21 @@ document.addEventListener('DOMContentLoaded', () => {
             const btnToggleCat = catEl.querySelector('.btn-toggle-category');
             const toggleIcon = btnToggleCat.querySelector('i');
             const catTaskList = catEl.querySelector('.task-list');
+            const dragHandle = catEl.querySelector('.category-drag-handle');
+            const btnAddTaskHeader = catEl.querySelector('.btn-add-task-header');
 
             if (cat.Collapsed) {
                 catTaskList.classList.add('hidden');
                 toggleIcon.classList.remove('fa-chevron-down');
                 toggleIcon.classList.add('fa-chevron-up');
+                dragHandle.classList.remove('hidden');
+                btnAddTaskHeader.classList.add('hidden');
+            } else {
+                catTaskList.classList.remove('hidden');
+                toggleIcon.classList.remove('fa-chevron-up');
+                toggleIcon.classList.add('fa-chevron-down');
+                dragHandle.classList.add('hidden');
+                btnAddTaskHeader.classList.remove('hidden');
             }
 
             btnToggleCat.addEventListener('click', () => {
@@ -512,7 +522,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             // Add task
-            catEl.querySelector('.btn-add-task').addEventListener('click', () => {
+            btnAddTaskHeader.addEventListener('click', () => {
                 addTask(cat.Id);
             });
 
