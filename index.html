@@ -72,13 +72,28 @@
             stroke: #4f46e5; /* tailwind indigo-600 */
             stroke-dasharray: 125.6; /* 2 * pi * r (r=20) */
             stroke-dashoffset: 125.6; /* Will be updated via JS */
-            transition: stroke-dashoffset 0.5s ease;
+            transition: stroke-dashoffset 0.5s ease, opacity 0.3s ease;
         }
         .circular-progress .value {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: #1f2937;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.1;
+        }
+        .circular-progress .value .val-small {
+            font-size: 0.5rem;
+            color: #94a3b8;
+            font-weight: normal;
+        }
+        .circular-progress .value .val-active {
             font-size: 0.75rem;
             font-weight: bold;
             color: #1f2937;
@@ -223,40 +238,22 @@
 
         <!-- Right Side: Indicators -->
         <div id="indicators-container" class="flex items-center space-x-3 overflow-x-auto pb-1 md:pb-0 transition-all duration-300">
-            <!-- Indicator: Totals -->
-            <button class="indicator-btn flex flex-col items-center group focus:outline-none" data-filter="all" title="Total (Tareas + Contadores)">
+            <!-- Indicator: Combined (Totals, Pendientes, Completadas) -->
+            <button id="btn-combined-indicator" class="flex flex-col items-center group focus:outline-none transition-all" title="Totales / Pendientes / Completadas">
                 <div class="circular-progress">
                     <svg viewBox="0 0 48 48">
                         <circle cx="24" cy="24" r="20" class="bg-circle"></circle>
                         <circle cx="24" cy="24" r="20" class="progress-circle" id="ind-total-circle"></circle>
+                        <circle cx="24" cy="24" r="16" class="progress-circle stroke-amber-500" id="ind-pending-circle" style="stroke-dasharray: 100.5; stroke-dashoffset: 100.5;"></circle>
+                        <circle cx="24" cy="24" r="12" class="progress-circle stroke-emerald-500" id="ind-done-circle" style="stroke-dasharray: 75.4; stroke-dashoffset: 75.4;"></circle>
                     </svg>
-                    <div class="value" id="ind-total-val">0</div>
+                    <div class="value" id="combined-val-container">
+                        <span id="ind-total-val" class="val-small">0</span>
+                        <span id="ind-pending-val" class="val-active">0</span>
+                        <span id="ind-done-val" class="val-small">0</span>
+                    </div>
                 </div>
-                <span class="text-[10px] font-semibold text-gray-500 group-hover:text-indigo-600 mt-1">Totales</span>
-            </button>
-
-            <!-- Indicator: Hechas -->
-            <button class="indicator-btn flex flex-col items-center group focus:outline-none opacity-50 hover:opacity-100 transition-opacity" data-filter="completed" title="Hechas (Tareas + Contadores)">
-                <div class="circular-progress">
-                    <svg viewBox="0 0 48 48">
-                        <circle cx="24" cy="24" r="20" class="bg-circle"></circle>
-                        <circle cx="24" cy="24" r="20" class="progress-circle stroke-emerald-500" id="ind-done-circle"></circle>
-                    </svg>
-                    <div class="value" id="ind-done-val">0</div>
-                </div>
-                <span class="text-[10px] font-semibold text-gray-500 group-hover:text-emerald-600 mt-1">Hechas</span>
-            </button>
-
-            <!-- Indicator: Pendientes -->
-            <button class="indicator-btn flex flex-col items-center group focus:outline-none opacity-50 hover:opacity-100 transition-opacity" data-filter="pending" title="Pendientes">
-                <div class="circular-progress">
-                    <svg viewBox="0 0 48 48">
-                        <circle cx="24" cy="24" r="20" class="bg-circle"></circle>
-                        <circle cx="24" cy="24" r="20" class="progress-circle stroke-amber-500" id="ind-pending-circle"></circle>
-                    </svg>
-                    <div class="value" id="ind-pending-val">0</div>
-                </div>
-                <span class="text-[10px] font-semibold text-gray-500 group-hover:text-amber-600 mt-1">Pendientes</span>
+                <span id="combined-label" class="text-[10px] font-semibold text-gray-500 group-hover:text-indigo-600 mt-1">Pendientes</span>
             </button>
 
             <!-- Indicator: Progresivas -->
