@@ -321,110 +321,95 @@ document.addEventListener('DOMContentLoaded', () => {
         return data.filter(i => i.Type === 'category' && !i.Deleted).sort((a, b) => a.Order - b.Order);
     }
 
+    /**
+     * Common filter logic for both Kanban and List views.
+     */
+    function filterTask(t) {
+        // Always show the last added task even if it doesn't match filters
+        if (lastAddedTaskId && t.Id === lastAddedTaskId) return true;
+
+        const searchStr = filterSearch.value ? filterSearch.value.trim().toLowerCase() : '';
+        const prio = filterPriorityValue || 0;
+
+        if (searchStr && !t.Name.toLowerCase().includes(searchStr)) return false;
+        if (prio > 0 && t.Priority < prio) return false;
+
+        // Apply Combined (Main) Filter
+        if (mainFilterMode === 'completed' && !t.Completed) return false;
+        if (mainFilterMode === 'pending' && t.Completed) return false;
+
+        // Apply Secondary Filter
+        if (secondaryFilterMode === 'progressive' && t.Percentage <= 0) return false;
+        if (secondaryFilterMode === 'scheduled' && t.ResetDays <= 0) return false;
+        if (secondaryFilterMode === 'forecast' && t.Forecast === 0.5) return false;
+
+        return true;
+    }
+
     function getTasks(parentId) {
-        let tasks = data.filter(i => i.Type === 'task' && i.ParentId === parentId && !i.Deleted);
-
-        // Apply Filters
-        const searchStr = filterSearch.value.trim().toLowerCase();
-        const prio = filterPriorityValue;
-
-        tasks = tasks.filter(t => {
-            // Always show the last added task even if it doesn't match filters
-            if (lastAddedTaskId && t.Id === lastAddedTaskId) return true;
-
-            if (searchStr && !t.Name.toLowerCase().includes(searchStr)) return false;
-            if (!isNaN(prio) && t.Priority < prio) return false;
-
-            // Apply Combined (Main) Filter
-            if (mainFilterMode === 'completed' && !t.Completed) return false;
-            if (mainFilterMode === 'pending' && t.Completed) return false;
-
-            // Apply Secondary Filter
-            if (secondaryFilterMode === 'progressive' && t.Percentage <= 0) return false;
-            if (secondaryFilterMode === 'scheduled' && t.ResetDays <= 0) return false;
-            if (secondaryFilterMode === 'forecast' && t.Forecast === 0.5) return false;
-
-            return true;
-        });
-
-        return tasks.sort((a, b) => a.Order - b.Order);
+        return data
+            .filter(i => i.Type === 'task' && i.ParentId === parentId && !i.Deleted && filterTask(i))
+            .sort((a, b) => a.Order - b.Order);
     }
 
     // A helper to get ALL tasks across all categories for List View
     function getAllFilteredTasks() {
-        let tasks = data.filter(i => i.Type === 'task' && !i.Deleted);
-
-        // Apply Filters
-        const searchStr = filterSearch.value.trim().toLowerCase();
-        if (searchStr) {
-            tasks = tasks.filter(t => t.Name.toLowerCase().includes(searchStr));
-        }
-
-        const prio = filterPriorityValue;
-        if (!isNaN(prio)) {
-            tasks = tasks.filter(t => t.Priority >= prio);
-        }
-
-        // Apply Combined (Main) Filter
-        if (mainFilterMode === 'completed') {
-            tasks = tasks.filter(t => t.Completed);
-        } else if (mainFilterMode === 'pending') {
-            tasks = tasks.filter(t => !t.Completed);
-        }
-
-        // Apply Secondary Filter
-        if (secondaryFilterMode === 'progressive') {
-            tasks = tasks.filter(t => t.Percentage > 0);
-        } else if (secondaryFilterMode === 'scheduled') {
-            tasks = tasks.filter(t => t.ResetDays > 0);
-        } else if (secondaryFilterMode === 'forecast') {
-            tasks = tasks.filter(t => t.Forecast !== 0.5);
-        }
-
-        // Sort by Priority (descending) then Order (ascending)
-        return tasks.sort((a, b) => {
-            if (b.Priority !== a.Priority) {
-                return b.Priority - a.Priority;
-            }
-            return a.Order - b.Order;
-        });
+        return data
+            .filter(i => i.Type === 'task' && !i.Deleted && filterTask(i))
+            .sort((a, b) => {
+                if (b.Priority !== a.Priority) {
+                    return b.Priority - a.Priority;
+                }
+                return a.Order - b.Order;
+            });
     }
 
     // Indicators Calculation
     function updateIndicators() {
-        const allTasks = data.filter(i => i.Type === 'task' && !i.Deleted);
+        const searchStr = filterSearch.value ? filterSearch.value.trim().toLowerCase() : '';
+        const prio = filterPriorityValue || 0;
+
+        // Base tasks filtered by search and priority (for circles)
+        const tasksBySearch = data.filter(t => {
+            if (t.Type !== 'task' || t.Deleted) return false;
+            if (searchStr && !t.Name.toLowerCase().includes(searchStr)) return false;
+            if (prio > 0 && t.Priority < prio) return false;
+            return true;
+        });
+
+        // Tasks further filtered by main filter (for select options)
+        const tasksByFilter = tasksBySearch.filter(t => {
+            if (mainFilterMode === 'completed' && !t.Completed) return false;
+            if (mainFilterMode === 'pending' && t.Completed) return false;
+            return true;
+        });
 
         let sumTotal = 0;
         let sumDone = 0;
-        let sumPending = 0; // Number of pending tasks
-        let sumProg = 0; // Number of progressive tasks
-        let sumSched = 0; // Number of scheduled tasks
+        let sumPending = 0;
 
-        let sumForecastTotal = 0; // Total forecast hours of all tasks
-        let sumForecastDone = 0; // Total forecast hours of completed tasks
-        let sumForecastPending = 0; // Total forecast hours of pending tasks
-
-        allTasks.forEach(t => {
-            const val = 1 + t.Counter;
-            const forecastVal = t.Forecast || 0.5;
-
-            sumForecastTotal += forecastVal;
+        tasksBySearch.forEach(t => {
+            const val = 1 + (t.Counter || 0);
             sumTotal += val;
-
             if (t.Completed) {
                 sumDone += val;
-                sumForecastDone += forecastVal;
             } else {
-                sumPending++; // Requirement: Number of pending tasks (not including counters as per clarification)
-                sumForecastPending += forecastVal;
+                sumPending++;
             }
+        });
 
-            if (t.Percentage > 0) {
-                sumProg++;
-            }
+        // Calculations for secondary filter select
+        let sumProg = 0;
+        let sumSched = 0;
+        let sumForecast = 0;
 
-            if (t.ResetDays > 0) {
-                sumSched++;
+        tasksByFilter.forEach(t => {
+            if (t.Percentage > 0) sumProg++;
+            if (t.ResetDays > 0) sumSched++;
+            // sumForecast sum as requested: "Previsión suma horas"
+            // Only sum tasks that are NOT the default 0.5 to be consistent with the filter "Previsión"
+            if (t.Forecast !== 0.5) {
+                sumForecast += (t.Forecast !== undefined ? t.Forecast : 0.5);
             }
         });
 
@@ -435,10 +420,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Update Select Options dynamically
         if (secondaryFilterSelect) {
-            secondaryFilterSelect.options[0].textContent = `- ${allTasks.length}`;
+            secondaryFilterSelect.options[0].textContent = `- ${tasksByFilter.length}`;
             secondaryFilterSelect.options[1].textContent = `Progresivas ${sumProg}`;
             secondaryFilterSelect.options[2].textContent = `Programadas ${sumSched}`;
-            secondaryFilterSelect.options[3].textContent = `Previsión ${sumForecastPending}`;
+            // Format to 1 decimal place if not integer
+            const forecastDisplay = Number.isInteger(sumForecast) ? sumForecast : sumForecast.toFixed(1);
+            secondaryFilterSelect.options[3].textContent = `Previsión ${forecastDisplay}`;
         }
 
         // Update Circles
@@ -635,7 +622,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const prio = filterPriorityValue;
         const hasActiveFilter = (searchStr !== '') ||
                                 (prio > 0) ||
-                                (mainFilterMode !== 'all') ||
                                 (secondaryFilterMode !== 'all');
 
         if (isListView) {
@@ -854,15 +840,10 @@ document.addEventListener('DOMContentLoaded', () => {
             dragHandle.classList.toggle('hidden', isListView);
         }
 
-        // Elements
-        const cb = taskEl.querySelector('.task-checkbox');
-        const nameInput = taskEl.querySelector('.task-name');
-        const counterVal = taskEl.querySelector('.counter-val');
-        const percentVal = taskEl.querySelector('.percentage-val');
 
         // Badges
         const badgePriorityContainer = taskEl.querySelector('.badge-priority .priority-stars-container');
-        const detailPriorityContainer = taskEl.querySelector('#detail-priority-stars');
+        const detailPriorityContainer = taskEl.querySelector('.detail-priority-stars');
         const forecastValBadge = taskEl.querySelector('.forecast-val');
 
         const noteBadge = taskEl.querySelector('.badge-note');
@@ -870,6 +851,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const expandIcon = taskEl.querySelector('.expand-icon-indicator');
         const btnDelete = taskEl.querySelector('.btn-delete-task');
         const expandedArea = taskEl.querySelector('.task-expanded');
+
+        // Main elements
+        const cb = taskEl.querySelector('.task-checkbox');
+        const nameInput = taskEl.querySelector('.task-name');
+        const counterVal = taskEl.querySelector('.counter-val');
+        const percentVal = taskEl.querySelector('.percentage-val');
 
         // Expanded elements
         const btnCountDec = taskEl.querySelector('.btn-counter-dec');
