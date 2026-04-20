@@ -443,9 +443,9 @@ document.addEventListener('DOMContentLoaded', () => {
         indForecastVal.textContent = sumForecastPending;
 
         // Update Circles
-        const C_OUTER = 125.6; // r=20
-        const C_MID = 100.5;   // r=16
-        const C_INNER = 75.4;  // r=12
+        const C_OUTER = 131.95; // r=21
+        const C_MID = 119.38;   // r=19
+        const C_INNER = 106.81; // r=17
 
         const setCircle = (circle, val, total, circumference) => {
             if (total === 0) {

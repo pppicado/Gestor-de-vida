@@ -65,6 +65,9 @@
             stroke-width: 4;
             stroke-linecap: round;
         }
+        #btn-combined-indicator .circular-progress circle {
+            stroke-width: 2;
+        }
         .circular-progress .bg-circle {
             stroke: #e2e8f0; /* tailwind slate-200 */
         }
@@ -242,10 +245,10 @@
             <button id="btn-combined-indicator" class="flex flex-col items-center group focus:outline-none transition-all" title="Totales / Pendientes / Completadas">
                 <div class="circular-progress">
                     <svg viewBox="0 0 48 48">
-                        <circle cx="24" cy="24" r="20" class="bg-circle"></circle>
-                        <circle cx="24" cy="24" r="20" class="progress-circle" id="ind-total-circle"></circle>
-                        <circle cx="24" cy="24" r="16" class="progress-circle stroke-amber-500" id="ind-pending-circle" style="stroke-dasharray: 100.5; stroke-dashoffset: 100.5;"></circle>
-                        <circle cx="24" cy="24" r="12" class="progress-circle stroke-emerald-500" id="ind-done-circle" style="stroke-dasharray: 75.4; stroke-dashoffset: 75.4;"></circle>
+                        <circle cx="24" cy="24" r="21" class="bg-circle"></circle>
+                        <circle cx="24" cy="24" r="21" class="progress-circle" id="ind-total-circle" style="stroke-dasharray: 131.95; stroke-dashoffset: 131.95;"></circle>
+                        <circle cx="24" cy="24" r="19" class="progress-circle stroke-amber-500" id="ind-pending-circle" style="stroke-dasharray: 119.38; stroke-dashoffset: 119.38;"></circle>
+                        <circle cx="24" cy="24" r="17" class="progress-circle stroke-emerald-500" id="ind-done-circle" style="stroke-dasharray: 106.81; stroke-dashoffset: 106.81;"></circle>
                     </svg>
                     <div class="value" id="combined-val-container">
                         <span id="ind-total-val" class="val-small">0</span>
