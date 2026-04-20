@@ -180,6 +180,48 @@
         .stars-priority.edit-mode .priority-numeric-input {
             display: inline-block;
         }
+
+        /* Attachment Styles */
+        .attachment-container {
+            width: 135px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-color: #f8fafc;
+            border-radius: 4px;
+            border: 1px solid #e2e8f0;
+        }
+        .attachment-placeholder {
+            width: 100%;
+            height: 100%;
+            border: 2px dashed #94a3b8;
+            background-color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #475569;
+            cursor: pointer;
+            text-align: center;
+            line-height: 1.2;
+            padding: 2px;
+            transition: all 0.2s;
+        }
+        .attachment-placeholder:hover {
+            background-color: #e2e8f0;
+            border-color: #64748b;
+        }
+        .attachment-image {
+            max-width: 135px;
+            max-height: 45px;
+            width: auto;
+            height: auto;
+            cursor: pointer;
+            object-fit: contain;
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 font-sans min-h-screen flex flex-col">
@@ -277,8 +319,9 @@
         </div>
     </main>
 
-    <!-- Hidden Input for File Upload -->
+    <!-- Hidden Inputs for File Uploads -->
     <input type="file" id="file-upload" accept=".csv" class="hidden">
+    <input type="file" id="attachment-upload" accept="image/*" class="hidden">
 
     <!-- Modal for CSV Import Options -->
     <div id="modal-import" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
@@ -296,6 +339,34 @@
                     Cancelar
                 </button>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal for History -->
+    <div id="modal-history" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 w-3/4 max-w-2xl max-h-[80vh] flex flex-col shadow-xl">
+            <div class="flex justify-between items-center mb-4 border-b pb-2">
+                <h2 class="text-xl font-bold text-gray-800"><i class="fas fa-history mr-2 text-indigo-500"></i> Historial</h2>
+                <button id="btn-close-history" class="text-gray-500 hover:text-gray-800"><i class="fas fa-times fa-lg"></i></button>
+            </div>
+            <div class="flex-grow flex flex-col space-y-4">
+                <textarea id="history-textarea" class="w-full flex-grow border border-gray-300 rounded p-3 text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Escribe el historial aquí..."></textarea>
+                <div class="flex justify-end">
+                    <button id="btn-save-history" class="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2 rounded shadow transition font-medium">
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Attachment Full View -->
+    <div id="modal-attachment-view" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-[60] hidden">
+        <div class="relative max-w-full max-h-full p-4 flex items-center justify-center">
+            <button id="btn-close-attachment-view" class="absolute top-4 right-4 text-white hover:text-gray-300 z-10 bg-black bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center">
+                <i class="fas fa-times fa-lg"></i>
+            </button>
+            <img id="attachment-full-image" src="" alt="Vista completa" class="max-w-full max-h-[90vh] object-contain">
         </div>
     </div>
 
@@ -364,6 +435,7 @@
                                 <div class="priority-stars-container size-sm pointer-events-none"></div>
                             </span>
                             <span class="badge-forecast" title="Previsión (horas)"><i class="fas fa-clock mr-1 text-pink-500"></i> <span class="forecast-val">0.5</span>h</span>
+                            <span class="badge-spent" title="Invertido (horas)"><i class="fas fa-hourglass-half mr-1 text-blue-500"></i> <span class="spent-val">0</span>h</span>
                             <span class="badge-note text-indigo-400 hidden" title="Tiene nota"><i class="fas fa-sticky-note"></i></span>
                         </div>
                         <i class="fas fa-chevron-down text-gray-300 text-xs expand-icon-indicator"></i>
@@ -392,6 +464,18 @@
                         <button class="btn-forecast-inc w-6 h-6 rounded bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-gray-600">+</button>
                     </div>
                 </div>
+                <div class="flex items-center justify-between">
+                    <label class="text-xs font-semibold text-gray-600">Invertido (h)</label>
+                    <div class="flex items-center space-x-2">
+                        <button class="btn-spent-dec w-6 h-6 rounded bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-gray-600">-</button>
+                        <input type="number" class="input-spent w-12 text-center text-sm border-gray-300 rounded px-1 py-0.5" value="0" min="0" step="0.5">
+                        <button class="btn-spent-inc w-6 h-6 rounded bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-gray-600">+</button>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between pt-1 border-t border-gray-100">
+                    <label class="text-xs font-semibold text-gray-600">Prioridad</label>
+                    <div class="priority-stars-container size-md detail-priority-stars"></div>
+                </div>
                 <div>
                     <div class="flex justify-between items-center mb-1">
                         <label class="text-xs font-semibold text-gray-600">Progreso</label>
@@ -404,11 +488,24 @@
                     <textarea class="input-note w-full border border-gray-300 rounded p-2 text-sm focus:ring-indigo-500 focus:border-indigo-500" rows="2" placeholder="Añadir nota adicional..."></textarea>
                 </div>
 
+                <div class="flex flex-col space-y-1">
+                    <label class="text-xs font-semibold text-gray-600">Anexo</label>
+                    <div class="attachment-container">
+                        <!-- Content will be injected by JS: placeholder or image -->
+                    </div>
+                </div>
+
                 <!-- More Details & Delete -->
                 <div class="flex justify-between items-start mt-2 border-t pt-2 border-gray-200">
-                    <button class="btn-delete-task text-gray-400 hover:text-red-500 transition" title="Borrar tarea">
-                        <i class="fas fa-trash-alt fa-lg"></i>
-                    </button>
+                    <div class="flex flex-col space-y-2">
+                        <button class="btn-delete-task text-gray-400 hover:text-red-500 transition" title="Borrar tarea">
+                            <i class="fas fa-trash-alt fa-lg"></i>
+                        </button>
+                        <button class="btn-show-history flex items-center space-x-1 text-indigo-500 hover:text-indigo-700 transition hidden" title="Ver Historial">
+                            <i class="fas fa-history"></i>
+                            <span class="text-[10px] font-bold uppercase tracking-tight">Historial</span>
+                        </button>
+                    </div>
                     <details class="group text-sm">
                         <summary class="cursor-pointer font-semibold text-indigo-600 hover:text-indigo-800 text-xs flex items-center justify-end select-none">
                             Planificación
@@ -417,12 +514,16 @@
                         </summary>
                         <div class="mt-2 space-y-2 border-l-2 border-indigo-200 pl-2">
                             <div class="flex justify-between items-center">
-                                <label class="text-xs text-gray-600">Prioridad</label>
-                                <div class="priority-stars-container size-md detail-priority-stars"></div>
-                            </div>
-                            <div class="flex justify-between items-center">
                                 <label class="text-xs text-gray-600">Fecha creación</label>
                                 <input type="date" class="input-creation-date w-28 text-xs border-gray-300 rounded px-1 py-0.5">
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <label class="text-xs text-gray-600">Fecha fin</label>
+                                <input type="date" class="input-end-date w-28 text-xs border-gray-300 rounded px-1 py-0.5">
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <label class="text-xs text-gray-600">Fecha previsto</label>
+                                <input type="date" class="input-planned-date w-28 text-xs border-gray-300 rounded px-1 py-0.5">
                             </div>
                             <div class="flex justify-between items-center">
                                 <label class="text-xs text-gray-600">Fecha iteración</label>

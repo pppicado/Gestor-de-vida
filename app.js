@@ -43,6 +43,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnCloseDeleted = document.getElementById('btn-close-deleted');
     const deletedItemsContainer = document.getElementById('deleted-items-container');
 
+    const modalHistory = document.getElementById('modal-history');
+    const btnCloseHistory = document.getElementById('btn-close-history');
+    const btnSaveHistory = document.getElementById('btn-save-history');
+    const historyTextarea = document.getElementById('history-textarea');
+    let currentHistoryTaskId = null;
+
+    const modalAttachmentView = document.getElementById('modal-attachment-view');
+    const btnCloseAttachmentView = document.getElementById('btn-close-attachment-view');
+    const attachmentFullImage = document.getElementById('attachment-full-image');
+
+    const attachmentUpload = document.getElementById('attachment-upload');
+    let currentAttachmentTaskId = null;
+
     // Templates
     const tplCategory = document.getElementById('tpl-category').content;
     const tplTask = document.getElementById('tpl-task').content;
@@ -62,8 +75,13 @@ document.addEventListener('DOMContentLoaded', () => {
         Priority: 500,
         CreationDate: '',
         IterationDate: '',
+        EndDate: '',
+        PlannedDate: '',
         ResetDays: 0,
-        Forecast: 0.5
+        Forecast: 0.5,
+        Spent: 0,
+        History: '',
+        Attachment: ''
     };
 
     const DEFAULT_CATEGORY_SCHEMA = {
@@ -80,9 +98,14 @@ document.addEventListener('DOMContentLoaded', () => {
         Priority: 500,
         CreationDate: '',
         IterationDate: '',
+        EndDate: '',
+        PlannedDate: '',
         ResetDays: 0,
         Collapsed: false,
-        Forecast: 0.5
+        Forecast: 0.5,
+        Spent: 0,
+        History: '',
+        Attachment: ''
     };
 
     // State Management
@@ -845,6 +868,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const badgePriorityContainer = taskEl.querySelector('.badge-priority .priority-stars-container');
         const detailPriorityContainer = taskEl.querySelector('.detail-priority-stars');
         const forecastValBadge = taskEl.querySelector('.forecast-val');
+        const spentValBadge = taskEl.querySelector('.spent-val');
 
         const noteBadge = taskEl.querySelector('.badge-note');
         const badgesContainer = taskEl.querySelector('.task-badges-container');
@@ -867,12 +891,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const btnForecastInc = taskEl.querySelector('.btn-forecast-inc');
         const inputForecast = taskEl.querySelector('.input-forecast');
 
+        const btnSpentDec = taskEl.querySelector('.btn-spent-dec');
+        const btnSpentInc = taskEl.querySelector('.btn-spent-inc');
+        const inputSpent = taskEl.querySelector('.input-spent');
+
         const inputPercent = taskEl.querySelector('.input-percentage');
         const labelPercent = taskEl.querySelector('.label-percentage');
         const inputNote = taskEl.querySelector('.input-note');
 
+        const attachmentContainer = taskEl.querySelector('.attachment-container');
+        const btnShowHistory = taskEl.querySelector('.btn-show-history');
+        const planningDetails = taskEl.querySelector('details');
+
         // "Más..." inputs
         const inputCreationDate = taskEl.querySelector('.input-creation-date');
+        const inputEndDate = taskEl.querySelector('.input-end-date');
+        const inputPlannedDate = taskEl.querySelector('.input-planned-date');
         const inputIterationDate = taskEl.querySelector('.input-iteration-date');
         const inputResetDays = taskEl.querySelector('.input-reset-days');
 
@@ -912,9 +946,71 @@ document.addEventListener('DOMContentLoaded', () => {
         inputForecast.value = task.Forecast;
         forecastValBadge.textContent = task.Forecast;
 
+        inputSpent.value = task.Spent;
+        spentValBadge.textContent = task.Spent;
+
         inputCreationDate.value = task.CreationDate;
+        inputEndDate.value = task.EndDate;
+        inputPlannedDate.value = task.PlannedDate;
         inputIterationDate.value = task.IterationDate;
         inputResetDays.value = task.ResetDays;
+
+        // Render Attachment
+        const renderAttachment = () => {
+            attachmentContainer.innerHTML = '';
+            if (task.Attachment) {
+                const img = document.createElement('img');
+                img.src = task.Attachment;
+                img.className = 'attachment-image';
+
+                let pressTimer;
+                let isLongPress = false;
+
+                const startPress = (e) => {
+                    isLongPress = false;
+                    pressTimer = setTimeout(() => {
+                        isLongPress = true;
+                    }, 1000);
+                };
+
+                const endPress = (e) => {
+                    clearTimeout(pressTimer);
+                    if (isLongPress) {
+                        currentAttachmentTaskId = task.Id;
+                        attachmentUpload.click();
+                    }
+                };
+
+                img.addEventListener('mousedown', startPress);
+                img.addEventListener('mouseup', endPress);
+                img.addEventListener('mouseleave', () => clearTimeout(pressTimer));
+
+                img.addEventListener('touchstart', startPress);
+                img.addEventListener('touchend', (e) => {
+                    if (isLongPress) e.preventDefault();
+                    endPress();
+                });
+
+                img.addEventListener('click', (e) => {
+                    if (!isLongPress) {
+                        attachmentFullImage.src = task.Attachment;
+                        modalAttachmentView.classList.remove('hidden');
+                    }
+                });
+
+                attachmentContainer.appendChild(img);
+            } else {
+                const placeholder = document.createElement('div');
+                placeholder.className = 'attachment-placeholder';
+                placeholder.textContent = 'Cargar imagen';
+                placeholder.addEventListener('click', () => {
+                    currentAttachmentTaskId = task.Id;
+                    attachmentUpload.click();
+                });
+                attachmentContainer.appendChild(placeholder);
+            }
+        };
+        renderAttachment();
 
         // Events
         cb.addEventListener('change', (e) => {
@@ -1002,9 +1098,57 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        // Spent
+        const updateSpent = (val) => {
+            const newVal = Math.max(0, parseFloat(val).toFixed(1));
+            inputSpent.value = newVal;
+            spentValBadge.textContent = newVal;
+            updateItem(task.Id, { Spent: parseFloat(newVal) });
+        };
+        btnSpentDec.addEventListener('click', (e) => {
+            e.stopPropagation();
+            updateSpent(parseFloat(inputSpent.value) - 0.5);
+        });
+        btnSpentInc.addEventListener('click', (e) => {
+            e.stopPropagation();
+            updateSpent(parseFloat(inputSpent.value) + 0.5);
+        });
+        inputSpent.addEventListener('change', (e) => {
+            e.stopPropagation();
+            updateSpent(parseFloat(e.target.value) || 0);
+        });
+
+        // History
+        btnShowHistory.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentHistoryTaskId = task.Id;
+            historyTextarea.value = task.History || '';
+            modalHistory.classList.remove('hidden');
+            historyTextarea.focus();
+        });
+
+        if (planningDetails.open) {
+            btnShowHistory.classList.remove('hidden');
+        }
+        planningDetails.addEventListener('toggle', () => {
+            if (planningDetails.open) {
+                btnShowHistory.classList.remove('hidden');
+            } else {
+                btnShowHistory.classList.add('hidden');
+            }
+        });
+
         // More... Inputs
         inputCreationDate.addEventListener('change', (e) => {
             updateItem(task.Id, { CreationDate: e.target.value });
+        });
+
+        inputEndDate.addEventListener('change', (e) => {
+            updateItem(task.Id, { EndDate: e.target.value });
+        });
+
+        inputPlannedDate.addEventListener('change', (e) => {
+            updateItem(task.Id, { PlannedDate: e.target.value });
         });
 
         inputIterationDate.addEventListener('change', (e) => {
@@ -1130,6 +1274,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (normalized.ResetDays !== undefined) normalized.ResetDays = parseInt(normalized.ResetDays) || 0;
             if (normalized.Collapsed !== undefined) normalized.Collapsed = String(normalized.Collapsed).toLowerCase() === 'true';
             if (normalized.Forecast !== undefined) normalized.Forecast = parseFloat(normalized.Forecast) || 0.5;
+            if (normalized.Spent !== undefined) normalized.Spent = parseFloat(normalized.Spent) || 0;
 
             return sanitizeItem(normalized);
         });
@@ -1229,6 +1374,48 @@ document.addEventListener('DOMContentLoaded', () => {
             updateItem(c.Id, { Collapsed: newState });
         });
         renderBoard();
+    });
+
+    // History Modal Events
+    btnCloseHistory.addEventListener('click', () => {
+        modalHistory.classList.add('hidden');
+        currentHistoryTaskId = null;
+    });
+
+    btnSaveHistory.addEventListener('click', () => {
+        if (currentHistoryTaskId) {
+            updateItem(currentHistoryTaskId, { History: historyTextarea.value });
+            modalHistory.classList.add('hidden');
+            currentHistoryTaskId = null;
+        }
+    });
+
+    // Attachment Full View Events
+    btnCloseAttachmentView.addEventListener('click', () => {
+        modalAttachmentView.classList.add('hidden');
+    });
+
+    // Attachment Upload Event
+    attachmentUpload.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        if (!file.type.startsWith('image/')) {
+            alert('Formato de imagen incorrecto');
+            attachmentUpload.value = '';
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            if (currentAttachmentTaskId) {
+                updateItem(currentAttachmentTaskId, { Attachment: event.target.result });
+                renderBoard();
+            }
+            attachmentUpload.value = '';
+            currentAttachmentTaskId = null;
+        };
+        reader.readAsDataURL(file);
     });
 
     // Combined Indicator Cycle
