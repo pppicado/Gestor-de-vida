@@ -21,6 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let filterPriorityValue = 0; // Current priority filter value
     const indicatorBtns = document.querySelectorAll('.indicator-btn');
 
+    // Combined Indicator Selectors
+    const btnCombinedIndicator = document.getElementById('btn-combined-indicator');
+    const combinedLabel = document.getElementById('combined-label');
+    const combinedValContainer = document.getElementById('combined-val-container');
+
     // Indicators SVG Elements
     const indTotalCircle = document.getElementById('ind-total-circle');
     const indTotalVal = document.getElementById('ind-total-val');
@@ -118,7 +123,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let sortableCategories = null;
     let sortableTasksInstances = [];
     let importFileData = null;
-    let currentFilterMode = 'all'; // all, completed, pending, progressive, scheduled, forecast
+    let mainFilterMode = 'pending'; // all, completed, pending
+    let secondaryFilterMode = 'all'; // all, progressive, scheduled, forecast
     let isListView = false;
     let lastAddedTaskId = null;
 
@@ -163,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             dataChanged = true;
                         } else {
                             // Optionally update IterationDate even if not completed, but requirements
-                            // say: "si la tarea está marcada como hecha incrementará el contador, actualiza IterationDate y desmarca"
+                            // say: "si la tarea está marcada como completada incrementará el contador, actualiza IterationDate y desmarca"
                             // So we only act if Completed is true, based on exact requirement text.
                         }
                     }
@@ -335,11 +341,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (searchStr && !t.Name.toLowerCase().includes(searchStr)) return false;
             if (!isNaN(prio) && t.Priority < prio) return false;
 
-            if (currentFilterMode === 'completed' && !t.Completed) return false;
-            if (currentFilterMode === 'pending' && t.Completed) return false;
-            if (currentFilterMode === 'progressive' && t.Percentage <= 0) return false;
-            if (currentFilterMode === 'scheduled' && t.ResetDays <= 0) return false;
-            if (currentFilterMode === 'forecast' && t.Forecast === 0.5) return false;
+            // Apply Combined (Main) Filter
+            if (mainFilterMode === 'completed' && !t.Completed) return false;
+            if (mainFilterMode === 'pending' && t.Completed) return false;
+
+            // Apply Secondary Filter
+            if (secondaryFilterMode === 'progressive' && t.Percentage <= 0) return false;
+            if (secondaryFilterMode === 'scheduled' && t.ResetDays <= 0) return false;
+            if (secondaryFilterMode === 'forecast' && t.Forecast === 0.5) return false;
 
             return true;
         });
@@ -362,15 +371,19 @@ document.addEventListener('DOMContentLoaded', () => {
             tasks = tasks.filter(t => t.Priority >= prio);
         }
 
-        if (currentFilterMode === 'completed') {
+        // Apply Combined (Main) Filter
+        if (mainFilterMode === 'completed') {
             tasks = tasks.filter(t => t.Completed);
-        } else if (currentFilterMode === 'pending') {
+        } else if (mainFilterMode === 'pending') {
             tasks = tasks.filter(t => !t.Completed);
-        } else if (currentFilterMode === 'progressive') {
+        }
+
+        // Apply Secondary Filter
+        if (secondaryFilterMode === 'progressive') {
             tasks = tasks.filter(t => t.Percentage > 0);
-        } else if (currentFilterMode === 'scheduled') {
+        } else if (secondaryFilterMode === 'scheduled') {
             tasks = tasks.filter(t => t.ResetDays > 0);
-        } else if (currentFilterMode === 'forecast') {
+        } else if (secondaryFilterMode === 'forecast') {
             tasks = tasks.filter(t => t.Forecast !== 0.5);
         }
 
@@ -429,31 +442,50 @@ document.addEventListener('DOMContentLoaded', () => {
         indSchedVal.textContent = sumSched;
         indForecastVal.textContent = sumForecastPending;
 
-        // Update Circles (Radius = 20, Circumference = 125.6)
-        const C = 125.6;
+        // Update Circles
+        const C_OUTER = 125.6; // r=20
+        const C_MID = 100.5;   // r=16
+        const C_INNER = 75.4;  // r=12
 
-        const setCircle = (circle, val) => {
-            if (sumTotal === 0) {
-                circle.style.strokeDashoffset = C;
+        const setCircle = (circle, val, total, circumference) => {
+            if (total === 0) {
+                circle.style.strokeDashoffset = circumference;
                 return;
             }
-            const percent = val / sumTotal;
-            const offset = C - (percent * C);
+            const percent = val / total;
+            const offset = circumference - (percent * circumference);
             circle.style.strokeDashoffset = offset;
         };
 
-        setCircle(indTotalCircle, sumTotal);
-        setCircle(indDoneCircle, sumDone);
-        setCircle(indPendingCircle, sumPending);
-        setCircle(indProgCircle, sumProg);
-        setCircle(indSchedCircle, sumSched);
+        // Combined indicator circles
+        setCircle(indTotalCircle, sumTotal, sumTotal, C_OUTER);
+        setCircle(indPendingCircle, sumPending, sumTotal, C_MID); // Show pending relative to total tasks?
+        // Or actually, as they are concentric and independent, maybe they should just reflect their own value?
+        // The original logic used val/sumTotal.
+        setCircle(indDoneCircle, sumDone, sumTotal, C_INNER);
+
+        // Attenuate inactive circles
+        indTotalCircle.style.opacity = (mainFilterMode === 'all') ? '1' : '0.3';
+        indPendingCircle.style.opacity = (mainFilterMode === 'pending') ? '1' : '0.3';
+        indDoneCircle.style.opacity = (mainFilterMode === 'completed') ? '1' : '0.3';
+
+        // Update labels and value styling
+        combinedLabel.textContent = mainFilterMode === 'all' ? 'Totales' : (mainFilterMode === 'pending' ? 'Pendientes' : 'Completadas');
+
+        indTotalVal.className = mainFilterMode === 'all' ? 'val-active' : 'val-small';
+        indPendingVal.className = mainFilterMode === 'pending' ? 'val-active' : 'val-small';
+        indDoneVal.className = mainFilterMode === 'completed' ? 'val-active' : 'val-small';
+
+        // Other indicators
+        setCircle(indProgCircle, sumProg, sumTotal, C_OUTER);
+        setCircle(indSchedCircle, sumSched, sumTotal, C_OUTER);
 
         // Custom logic for Forecast Circle: % of done forecast vs total forecast
         if (sumForecastTotal === 0) {
-            indForecastCircle.style.strokeDashoffset = C;
+            indForecastCircle.style.strokeDashoffset = C_OUTER;
         } else {
             const percentF = sumForecastDone / sumForecastTotal;
-            indForecastCircle.style.strokeDashoffset = C - (percentF * C);
+            indForecastCircle.style.strokeDashoffset = C_OUTER - (percentF * C_OUTER);
         }
     }
 
@@ -588,7 +620,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const prio = filterPriorityValue;
         const hasActiveFilter = (searchStr !== '') ||
                                 (prio > 0) ||
-                                (currentFilterMode !== 'all');
+                                (mainFilterMode !== 'all') ||
+                                (secondaryFilterMode !== 'all');
 
         if (isListView) {
             // Render a single column containing ALL tasks sorted by priority
@@ -605,10 +638,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const taskList = document.createElement('div');
             taskList.className = 'task-list flex-grow p-2 overflow-y-auto min-h-[50px] space-y-2';
-
-            // For list view, we just put everything into one list but we shouldn't allow moving between categories if they don't exist
-            // Actually, we'll make it sortable but changing the order here might be complex without a parent.
-            // Better to disable drag&drop in list view or handle it specially. We'll disable it for simplicity or let it sort within list.
 
             const tasks = getAllFilteredTasks();
             tasks.forEach(task => {
@@ -1194,6 +1223,16 @@ document.addEventListener('DOMContentLoaded', () => {
         renderBoard();
     });
 
+    // Combined Indicator Cycle
+    btnCombinedIndicator.addEventListener('click', () => {
+        lastAddedTaskId = null;
+        if (mainFilterMode === 'pending') mainFilterMode = 'completed';
+        else if (mainFilterMode === 'completed') mainFilterMode = 'all';
+        else mainFilterMode = 'pending';
+
+        renderBoard();
+    });
+
     // Filtering
     let searchTimeout;
     filterSearch.addEventListener('input', () => {
@@ -1209,24 +1248,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const filter = btn.dataset.filter;
 
             // Toggle off if already selected
-            if (currentFilterMode === filter && filter !== 'all') {
-                currentFilterMode = 'all';
+            if (secondaryFilterMode === filter) {
+                secondaryFilterMode = 'all';
             } else {
-                currentFilterMode = filter;
+                secondaryFilterMode = filter;
             }
 
-            // Update UI for buttons
+            // Update UI for secondary buttons
             indicatorBtns.forEach(b => {
                 b.classList.remove('opacity-100');
                 b.classList.add('opacity-50');
             });
 
-            if (currentFilterMode === 'all') {
-                const totalBtn = document.querySelector('[data-filter="all"]');
-                totalBtn.classList.remove('opacity-50');
-                totalBtn.classList.add('opacity-100');
-            } else {
-                const activeBtn = document.querySelector(`[data-filter="${currentFilterMode}"]`);
+            if (secondaryFilterMode !== 'all') {
+                const activeBtn = document.querySelector(`[data-filter="${secondaryFilterMode}"]`);
                 activeBtn.classList.remove('opacity-50');
                 activeBtn.classList.add('opacity-100');
             }
@@ -1235,7 +1270,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Initial indicator UI setup
-    document.querySelector('[data-filter="all"]').classList.remove('opacity-50');
-    document.querySelector('[data-filter="all"]').classList.add('opacity-100');
+    // Initial setup
+    updateIndicators();
 });
