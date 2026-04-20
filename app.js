@@ -607,7 +607,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (btnToggleAllCategories) {
-            if (categories.length === 0) {
+            if (categories.length === 0 || isListView) {
                 btnToggleAllCategories.classList.add('hidden');
             } else {
                 btnToggleAllCategories.classList.remove('hidden');
@@ -859,6 +859,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const taskNode = document.importNode(tplTask, true);
         const taskEl = taskNode.querySelector('.task-item');
         taskEl.dataset.id = task.Id;
+
+        // Hide drag handle in list view
+        const dragHandle = taskEl.querySelector('.task-drag-handle');
+        if (dragHandle) {
+            dragHandle.classList.toggle('hidden', isListView);
+        }
 
         // Elements
         const cb = taskEl.querySelector('.task-checkbox');
