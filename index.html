@@ -240,7 +240,7 @@
         </div>
 
         <!-- Right Side: Indicators -->
-        <div id="indicators-container" class="flex items-center space-x-3 overflow-x-auto pb-1 md:pb-0 transition-all duration-300">
+        <div id="indicators-container" class="flex items-center space-x-3 overflow-x-auto pb-1 md:pb-0 transition-all duration-300 md:flex-grow md:justify-end">
             <!-- Indicator: Combined (Totals, Pendientes, Completadas) -->
             <button id="btn-combined-indicator" class="flex flex-col items-center group focus:outline-none transition-all" title="Totales / Pendientes / Completadas">
                 <div class="circular-progress">
@@ -259,41 +259,13 @@
                 <span id="combined-label" class="text-[10px] font-semibold text-gray-500 group-hover:text-indigo-600 mt-1">Pendientes</span>
             </button>
 
-            <!-- Indicator: Progresivas -->
-            <button class="indicator-btn flex flex-col items-center group focus:outline-none opacity-50 hover:opacity-100 transition-opacity" data-filter="progressive" title="Progresivas (Progreso != 0)">
-                <div class="circular-progress">
-                    <svg viewBox="0 0 48 48">
-                        <circle cx="24" cy="24" r="20" class="bg-circle"></circle>
-                        <circle cx="24" cy="24" r="20" class="progress-circle stroke-blue-500" id="ind-prog-circle"></circle>
-                    </svg>
-                    <div class="value" id="ind-prog-val">0</div>
-                </div>
-                <span class="text-[10px] font-semibold text-gray-500 group-hover:text-blue-600 mt-1">Progresivas</span>
-            </button>
-
-            <!-- Indicator: Programadas -->
-            <button class="indicator-btn flex flex-col items-center group focus:outline-none opacity-50 hover:opacity-100 transition-opacity" data-filter="scheduled" title="Programadas (Reinicio != 0)">
-                <div class="circular-progress">
-                    <svg viewBox="0 0 48 48">
-                        <circle cx="24" cy="24" r="20" class="bg-circle"></circle>
-                        <circle cx="24" cy="24" r="20" class="progress-circle stroke-purple-500" id="ind-sched-circle"></circle>
-                    </svg>
-                    <div class="value" id="ind-sched-val">0</div>
-                </div>
-                <span class="text-[10px] font-semibold text-gray-500 group-hover:text-purple-600 mt-1">Programadas</span>
-            </button>
-
-            <!-- Indicator: Previsión -->
-            <button class="indicator-btn flex flex-col items-center group focus:outline-none opacity-50 hover:opacity-100 transition-opacity" data-filter="forecast" title="Previsión de tareas pendientes (Progreso de horas terminadas)">
-                <div class="circular-progress">
-                    <svg viewBox="0 0 48 48">
-                        <circle cx="24" cy="24" r="20" class="bg-circle"></circle>
-                        <circle cx="24" cy="24" r="20" class="progress-circle stroke-pink-500" id="ind-forecast-circle"></circle>
-                    </svg>
-                    <div class="value" id="ind-forecast-val">0</div>
-                </div>
-                <span class="text-[10px] font-semibold text-gray-500 group-hover:text-pink-600 mt-1">Previsión</span>
-            </button>
+            <!-- Secondary Filter Select -->
+            <select id="secondary-filter-select" class="w-12 h-12 bg-blue-600 text-white text-[9px] rounded shadow-sm focus:outline-none appearance-none text-center cursor-pointer border-none" title="Filtro secundario">
+                <option value="all">- 0</option>
+                <option value="progressive">Progresivas 0</option>
+                <option value="scheduled">Programadas 0</option>
+                <option value="forecast">Previsión 0</option>
+            </select>
         </div>
     </header>
 

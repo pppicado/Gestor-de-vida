@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Filters and Indicators
     const filterSearch = document.getElementById('filter-search');
     let filterPriorityValue = 0; // Current priority filter value
-    const indicatorBtns = document.querySelectorAll('.indicator-btn');
+    const secondaryFilterSelect = document.getElementById('secondary-filter-select');
 
     // Combined Indicator Selectors
     const btnCombinedIndicator = document.getElementById('btn-combined-indicator');
@@ -33,12 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const indDoneVal = document.getElementById('ind-done-val');
     const indPendingCircle = document.getElementById('ind-pending-circle');
     const indPendingVal = document.getElementById('ind-pending-val');
-    const indProgCircle = document.getElementById('ind-prog-circle');
-    const indProgVal = document.getElementById('ind-prog-val');
-    const indSchedCircle = document.getElementById('ind-sched-circle');
-    const indSchedVal = document.getElementById('ind-sched-val');
-    const indForecastCircle = document.getElementById('ind-forecast-circle');
-    const indForecastVal = document.getElementById('ind-forecast-val');
 
     const modalImport = document.getElementById('modal-import');
     const btnImportMerge = document.getElementById('btn-import-merge');
@@ -438,9 +432,14 @@ document.addEventListener('DOMContentLoaded', () => {
         indTotalVal.textContent = sumTotal;
         indDoneVal.textContent = sumDone;
         indPendingVal.textContent = sumPending;
-        indProgVal.textContent = sumProg;
-        indSchedVal.textContent = sumSched;
-        indForecastVal.textContent = sumForecastPending;
+
+        // Update Select Options dynamically
+        if (secondaryFilterSelect) {
+            secondaryFilterSelect.options[0].textContent = `- ${allTasks.length}`;
+            secondaryFilterSelect.options[1].textContent = `Progresivas ${sumProg}`;
+            secondaryFilterSelect.options[2].textContent = `Programadas ${sumSched}`;
+            secondaryFilterSelect.options[3].textContent = `Previsión ${sumForecastPending}`;
+        }
 
         // Update Circles
         const C_OUTER = 131.95; // r=21
@@ -476,17 +475,6 @@ document.addEventListener('DOMContentLoaded', () => {
         indPendingVal.className = mainFilterMode === 'pending' ? 'val-active' : 'val-small';
         indDoneVal.className = mainFilterMode === 'completed' ? 'val-active' : 'val-small';
 
-        // Other indicators
-        setCircle(indProgCircle, sumProg, sumTotal, C_OUTER);
-        setCircle(indSchedCircle, sumSched, sumTotal, C_OUTER);
-
-        // Custom logic for Forecast Circle: % of done forecast vs total forecast
-        if (sumForecastTotal === 0) {
-            indForecastCircle.style.strokeDashoffset = C_OUTER;
-        } else {
-            const percentF = sumForecastDone / sumForecastTotal;
-            indForecastCircle.style.strokeDashoffset = C_OUTER - (percentF * C_OUTER);
-        }
     }
 
     function getDeletedItems() {
@@ -1274,34 +1262,13 @@ document.addEventListener('DOMContentLoaded', () => {
         searchTimeout = setTimeout(renderBoard, 300);
     });
 
-
-    indicatorBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
+    if (secondaryFilterSelect) {
+        secondaryFilterSelect.addEventListener('change', (e) => {
             lastAddedTaskId = null;
-            const filter = btn.dataset.filter;
-
-            // Toggle off if already selected
-            if (secondaryFilterMode === filter) {
-                secondaryFilterMode = 'all';
-            } else {
-                secondaryFilterMode = filter;
-            }
-
-            // Update UI for secondary buttons
-            indicatorBtns.forEach(b => {
-                b.classList.remove('opacity-100');
-                b.classList.add('opacity-50');
-            });
-
-            if (secondaryFilterMode !== 'all') {
-                const activeBtn = document.querySelector(`[data-filter="${secondaryFilterMode}"]`);
-                activeBtn.classList.remove('opacity-50');
-                activeBtn.classList.add('opacity-100');
-            }
-
+            secondaryFilterMode = e.target.value;
             renderBoard();
         });
-    });
+    }
 
     // Initial setup
     updateIndicators();
