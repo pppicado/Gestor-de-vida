@@ -594,6 +594,33 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderBoard() {
         updateIndicators();
 
+        // Update Expand/Collapse all categories button text and visibility
+        const categories = getCategories();
+        const btnToggleAllCategories = document.getElementById('btn-toggle-all-categories');
+        const btnToggleListView = document.getElementById('btn-toggle-list-view');
+
+        if (btnToggleListView) {
+            const span = btnToggleListView.querySelector('span');
+            const label = isListView ? 'Categorias' : 'Listado';
+            if (span) span.textContent = label;
+            btnToggleListView.title = label;
+        }
+
+        if (btnToggleAllCategories) {
+            if (categories.length === 0) {
+                btnToggleAllCategories.classList.add('hidden');
+            } else {
+                btnToggleAllCategories.classList.remove('hidden');
+                const anyOpen = categories.some(c => !c.Collapsed);
+                const label = anyOpen ? 'Contraer' : 'Expandir';
+                btnToggleAllCategories.title = label;
+                const span = btnToggleAllCategories.querySelector('span');
+                if (span) {
+                    span.textContent = label;
+                }
+            }
+        }
+
         // Destroy old sortables
         if (sortableCategories) {
             sortableCategories.destroy();
