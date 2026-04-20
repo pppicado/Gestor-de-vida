@@ -48,8 +48,72 @@ document.addEventListener('DOMContentLoaded', () => {
     const tplCategory = document.getElementById('tpl-category').content;
     const tplTask = document.getElementById('tpl-task').content;
 
+    // Schema Definitions for Data Robustness
+    const DEFAULT_TASK_SCHEMA = {
+        Id: '',
+        Type: 'task',
+        ParentId: '',
+        Name: 'Nueva Tarea',
+        Order: 0,
+        Completed: false,
+        Counter: 0,
+        Percentage: 0,
+        Note: '',
+        Deleted: false,
+        Priority: 500,
+        CreationDate: '',
+        IterationDate: '',
+        ResetDays: 0,
+        Forecast: 0.5
+    };
+
+    const DEFAULT_CATEGORY_SCHEMA = {
+        Id: '',
+        Type: 'category',
+        ParentId: '',
+        Name: 'Nueva Categoría',
+        Order: 0,
+        Completed: false,
+        Counter: 0,
+        Percentage: 0,
+        Note: '',
+        Deleted: false,
+        Priority: 500,
+        CreationDate: '',
+        IterationDate: '',
+        ResetDays: 0,
+        Collapsed: false,
+        Forecast: 0.5
+    };
+
     // State Management
     let data = [];
+
+    /**
+     * Ensures an item has all required fields according to its type.
+     * Fills missing fields with defaults and removes unknown fields.
+     */
+    function sanitizeItem(item) {
+        const schema = item.Type === 'category' ? DEFAULT_CATEGORY_SCHEMA : DEFAULT_TASK_SCHEMA;
+        const sanitized = {};
+
+        // Apply schema defaults and existing values
+        Object.keys(schema).forEach(key => {
+            if (Object.prototype.hasOwnProperty.call(item, key) && item[key] !== null && item[key] !== undefined) {
+                // Keep existing value if it's not null/undefined
+                sanitized[key] = item[key];
+            } else {
+                // Use default from schema
+                sanitized[key] = schema[key];
+            }
+        });
+
+        // Specific defaults for dates if empty
+        if (!sanitized.CreationDate) sanitized.CreationDate = getTodayString();
+        if (!sanitized.IterationDate) sanitized.IterationDate = getTodayString();
+
+        return sanitized;
+    }
     let filtersVisible = true;
     let sortableCategories = null;
     let sortableTasksInstances = [];
@@ -215,7 +279,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const stored = localStorage.getItem('taskManagerData');
         if (stored) {
             try {
-                data = JSON.parse(stored);
+                const parsed = JSON.parse(stored);
+                if (Array.isArray(parsed)) {
+                    data = parsed.map(item => sanitizeItem(item));
+                } else {
+                    data = [];
+                }
             } catch (e) {
                 console.error("Error parsing localStorage data", e);
                 data = [];
@@ -403,25 +472,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        const newCat = {
+        const newCat = sanitizeItem({
             Id: generateUUID(),
             Type: 'category',
-            ParentId: '',
             Name: name,
-            Order: 0,
-            Completed: false,
-            Counter: 0,
-            Percentage: 0,
-            Note: '',
-            Deleted: false,
-            // Categories don't technically need these but it's good for consistency
-            Priority: 500,
-            CreationDate: getTodayString(),
-            IterationDate: getTodayString(),
-            ResetDays: 0,
-            Collapsed: false, // Added for collapsing tasks
-            Forecast: 0.5
-        };
+            Order: 0
+        });
+
         data.push(newCat);
         saveData();
         renderBoard();
@@ -436,24 +493,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const newId = generateUUID();
-        const newTask = {
+        const newTask = sanitizeItem({
             Id: newId,
             Type: 'task',
             ParentId: parentId,
             Name: name,
-            Order: 0,
-            Completed: false,
-            Counter: 0,
-            Percentage: 0,
-            Note: '',
-            Deleted: false,
-            // New fields
-            Priority: 500,
-            CreationDate: getTodayString(),
-            IterationDate: getTodayString(),
-            ResetDays: 0,
-            Forecast: 0.5
-        };
+            Order: 0
+        });
+
         data.push(newTask);
         lastAddedTaskId = newId;
         saveData();
@@ -992,24 +1039,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Export CSV
     function exportToCsv() {
-        const csvData = data.map(i => ({
-            Id: i.Id,
-            Type: i.Type,
-            ParentId: i.ParentId,
-            Name: i.Name,
-            Order: i.Order,
-            Completed: i.Completed,
-            Counter: i.Counter,
-            Percentage: i.Percentage,
-            Note: i.Note,
-            Deleted: i.Deleted,
-            Priority: i.Priority !== undefined ? i.Priority : 500,
-            CreationDate: i.CreationDate || '',
-            IterationDate: i.IterationDate || '',
-            ResetDays: i.ResetDays !== undefined ? i.ResetDays : 0,
-            Collapsed: i.Collapsed !== undefined ? i.Collapsed : false,
-            Forecast: i.Forecast !== undefined ? i.Forecast : 0.5
-        }));
+        // We use sanitizeItem on all data to ensure we are exporting every field defined in the schema
+        const csvData = data.map(i => sanitizeItem(i));
 
         const csvString = Papa.unparse(csvData);
         const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
@@ -1049,25 +1080,22 @@ document.addEventListener('DOMContentLoaded', () => {
     function applyImport(mode) {
         if (!importFileData) return;
 
-        // Clean up parsed data types
-        const parsedData = importFileData.map(row => ({
-            Id: String(row.Id || generateUUID()),
-            Type: String(row.Type || 'task'),
-            ParentId: row.ParentId ? String(row.ParentId) : '',
-            Name: String(row.Name || ''),
-            Order: parseInt(row.Order) || 0,
-            Completed: String(row.Completed).toLowerCase() === 'true',
-            Counter: parseInt(row.Counter) || 0,
-            Percentage: parseInt(row.Percentage) || 0,
-            Note: row.Note || '',
-            Deleted: String(row.Deleted).toLowerCase() === 'true',
-            Priority: parseInt(row.Priority) !== null && !isNaN(parseInt(row.Priority)) ? parseInt(row.Priority) : 500,
-            CreationDate: row.CreationDate || getTodayString(),
-            IterationDate: row.IterationDate || getTodayString(),
-            ResetDays: parseInt(row.ResetDays) || 0,
-            Collapsed: String(row.Collapsed).toLowerCase() === 'true',
-            Forecast: parseFloat(row.Forecast) !== null && !isNaN(parseFloat(row.Forecast)) ? parseFloat(row.Forecast) : 0.5
-        }));
+        // Clean up parsed data types and sanitize according to current schema
+        const parsedData = importFileData.map(row => {
+            // First, normalize types for boolean/numeric fields that might come as strings from CSV
+            const normalized = { ...row };
+            if (normalized.Order !== undefined) normalized.Order = parseInt(normalized.Order) || 0;
+            if (normalized.Completed !== undefined) normalized.Completed = String(normalized.Completed).toLowerCase() === 'true';
+            if (normalized.Counter !== undefined) normalized.Counter = parseInt(normalized.Counter) || 0;
+            if (normalized.Percentage !== undefined) normalized.Percentage = parseInt(normalized.Percentage) || 0;
+            if (normalized.Deleted !== undefined) normalized.Deleted = String(normalized.Deleted).toLowerCase() === 'true';
+            if (normalized.Priority !== undefined) normalized.Priority = parseInt(normalized.Priority) || 0;
+            if (normalized.ResetDays !== undefined) normalized.ResetDays = parseInt(normalized.ResetDays) || 0;
+            if (normalized.Collapsed !== undefined) normalized.Collapsed = String(normalized.Collapsed).toLowerCase() === 'true';
+            if (normalized.Forecast !== undefined) normalized.Forecast = parseFloat(normalized.Forecast) || 0.5;
+
+            return sanitizeItem(normalized);
+        });
 
         if (mode === 'overwrite') {
             data = parsedData;
