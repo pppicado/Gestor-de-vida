@@ -966,29 +966,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 let pressTimer;
                 let isLongPress = false;
 
-                const startPress = () => {
+                const startPress = (e) => {
                     isLongPress = false;
                     pressTimer = setTimeout(() => {
                         isLongPress = true;
-                        currentAttachmentTaskId = task.Id;
-                        attachmentUpload.click();
                     }, 1000);
                 };
 
-                const endPress = () => {
+                const endPress = (e) => {
                     clearTimeout(pressTimer);
+                    if (isLongPress) {
+                        currentAttachmentTaskId = task.Id;
+                        attachmentUpload.click();
+                    }
                 };
 
                 img.addEventListener('mousedown', startPress);
                 img.addEventListener('mouseup', endPress);
-                img.addEventListener('mouseleave', endPress);
+                img.addEventListener('mouseleave', () => clearTimeout(pressTimer));
 
-                img.addEventListener('touchstart', (e) => {
-                    startPress();
-                });
+                img.addEventListener('touchstart', startPress);
                 img.addEventListener('touchend', (e) => {
-                    endPress();
                     if (isLongPress) e.preventDefault();
+                    endPress();
                 });
 
                 img.addEventListener('click', (e) => {
@@ -1105,18 +1105,31 @@ document.addEventListener('DOMContentLoaded', () => {
             spentValBadge.textContent = newVal;
             updateItem(task.Id, { Spent: parseFloat(newVal) });
         };
-        btnSpentDec.addEventListener('click', () => updateSpent(parseFloat(inputSpent.value) - 0.5));
-        btnSpentInc.addEventListener('click', () => updateSpent(parseFloat(inputSpent.value) + 0.5));
-        inputSpent.addEventListener('change', (e) => updateSpent(parseFloat(e.target.value) || 0));
+        btnSpentDec.addEventListener('click', (e) => {
+            e.stopPropagation();
+            updateSpent(parseFloat(inputSpent.value) - 0.5);
+        });
+        btnSpentInc.addEventListener('click', (e) => {
+            e.stopPropagation();
+            updateSpent(parseFloat(inputSpent.value) + 0.5);
+        });
+        inputSpent.addEventListener('change', (e) => {
+            e.stopPropagation();
+            updateSpent(parseFloat(e.target.value) || 0);
+        });
 
         // History
-        btnShowHistory.addEventListener('click', () => {
+        btnShowHistory.addEventListener('click', (e) => {
+            e.stopPropagation();
             currentHistoryTaskId = task.Id;
             historyTextarea.value = task.History || '';
             modalHistory.classList.remove('hidden');
             historyTextarea.focus();
         });
 
+        if (planningDetails.open) {
+            btnShowHistory.classList.remove('hidden');
+        }
         planningDetails.addEventListener('toggle', () => {
             if (planningDetails.open) {
                 btnShowHistory.classList.remove('hidden');
